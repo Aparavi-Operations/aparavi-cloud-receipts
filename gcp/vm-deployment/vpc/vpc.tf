@@ -37,7 +37,7 @@ resource "google_compute_network" "aparavi_vpc" {
     project   = data.google_client_config.current.project 
     name = "aparavi-vpc"
     auto_create_subnetworks = false
-    mtu                     = 1460 
+   # mtu                     = 1460 
     }
 
 #################

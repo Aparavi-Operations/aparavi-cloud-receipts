@@ -4,11 +4,11 @@
 #}
 variable  "gcp_credentials"{
   description = "default location of your service account json key file"
-  default = "~/gcp-key.json"
+  default = "/home/lexa500/gcloud-auth-working.json"
 }
 
 variable "project" {
-  default = "playground-s-11-83a5e4fc"
+  default = "universal-team-347014"  #CHANGE ME
 }
 variable "region" {
     default = "us-east1"

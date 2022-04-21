@@ -8,7 +8,7 @@ variable  "gcp_credentials"{
 }
 
 variable "project" {
-  default = "playground-s-11-f538d00c"   # Change ME
+  default = "universal-team-347014"   # Change ME
 }
 variable "region" {
     default = "us-east1"
@@ -19,7 +19,7 @@ variable "zone" {
 }
 # VPC INFO
     variable "vnet_name" {
-      default = "Terravpc"
+      default = "aparavi-vpc"
     }
     
     variable "subnet-02_cidr" {
@@ -28,7 +28,7 @@ variable "zone" {
 
 # SUBNET INFO
     variable "subnet_name"{
-      default = "terrasub" 
+      default = "aparavi-sub" 
       }
 
     variable "subnet_cidr"{
@@ -46,7 +46,7 @@ variable "subnetwork_project" {
 
 variable "instances_name" {
   description = "Number of instances to create. This value is ignored if static_ips is provided."
-  default     = "terravm"
+  default     = "aparavi-app"
 }
 
 variable "admin" {
@@ -89,14 +89,14 @@ variable "hostname" {
       }
 variable "OS" {     # gcloud compute images list --filter=name:ubuntu
   description = "the selected ami based OS"
-  default       = "DEBIAN11" 
+  default       = "debian-11-bullseye-v20220406" 
 }
 
 variable  "os_image" {
   default = {
 
     UBUNTU       =  {
-          name = "ubuntu-os-cloud/ubuntu-2004-lts"
+          name = "debian-11-bullseye-v20220406"
   
         }
 
