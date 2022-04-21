@@ -1,7 +1,7 @@
 ############################
 # SERVICE ACCOUNT (OPTIONAL)
 ############################
-# Note: The user running terraform needs to have the IAM Admin role assigned to them before you can do this.
+# Note: The user running aparavi_form needs to have the IAM Admin role assigned to them before you can do this.
 # resource "google_service_account" "instance_admin" { 
 #  account_id   = "instance-admin"
 #  display_name = "instance s-account"
@@ -17,33 +17,33 @@
 # VPC
 #################
 
-resource "google_compute_network" "aparavi_vpc" {
+resource "google_compute_network" "aparavi-vpc" {
     project   = data.google_client_config.current.project 
-    name = "terra-vpc"
+    name = "aparavi-vpc"
     auto_create_subnetworks = false
-    mtu                     = 1460 
+    mtu                     = 1460
     }
 
 #################
 # SUBNET
 #################
 resource "google_compute_subnetwork" "aparavi_sub" {
-  name          = "terra-sub"
+  name          = "aparavi-sub"
   ip_cidr_range = var.subnet_cidr
   region        = var.region
-  network       = google_compute_network.aparavi_vpc.name
+  network       = google_compute_network.aparavi-vpc.name
   description   = "This is a custom subnet "
   private_ip_google_access = "true"
-  log_config {
-    aggregation_interval = "INTERVAL_10_MIN"
-    flow_sampling        = 0.5
-    metadata             = "INCLUDE_ALL_METADATA"
-  }   
+  #log_config {
+  #  aggregation_interval = "INTERVAL_10_MIN"
+  #  flow_sampling        = 0.5
+  #  metadata             = "INCLUDE_ALL_METADATA"
+  #}   
 
-    secondary_ip_range {
-                range_name    = "subnet-01-secondary-01"
-                ip_cidr_range = "192.168.64.0/24"
-            }
+  #  secondary_ip_range {
+  #              range_name    = "subnet-01-secondary-01"
+  #              ip_cidr_range = "192.168.64.0/24"
+  #          }
         
 
 }
@@ -51,18 +51,18 @@ resource "google_compute_subnetwork" "aparavi_sub" {
 # Firewall
 ######################    
 # web network tag
-resource "google_compute_firewall" "web-server" {
+resource "google_compute_firewall" "aparavi-app" {
   project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
-  name        = "allow-http-rule"
-  network     = google_compute_network.aparavi_vpc.name
+  name        = "allow-ssh-rule"
+  network     = google_compute_network.aparavi-vpc.name
   description = "Creates firewall rule targeting tagged instances"
 
   allow {
     protocol = "tcp"
-    ports    = ["80","22","443","3389"]
+    ports    = ["22"]
          }
    source_ranges = ["0.0.0.0/0"]
-   target_tags = ["web-server"]
+   target_tags = ["aparavi-app"]
     timeouts {}
 }
 

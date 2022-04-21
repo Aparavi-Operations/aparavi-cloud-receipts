@@ -4,7 +4,7 @@
 #}
 variable  "gcp_credentials"{
   description = "default location of your service account json key file"
-  default = "/home/lexa500/gcloud-auth-working.json"
+  default = "~/gcloud-auth-working.json"
 }
 
 variable "project" {

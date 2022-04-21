@@ -26,12 +26,12 @@ data "google_client_config" "current" {
   machine_type = var.vm_type
   
   metadata = {
-   ssh-keys = "${var.admin}:${file("~/id_rsa_gcp.pub")}"   # Change Me
+   ssh-keys = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}"   # Change Me
     startup-script        = ("${file(var.user_data)}")
   #  startup-script-custom = "stdlib::info Hello World"
   }
   network_interface {
-    network            = google_compute_network.aparavi_vpc.self_link
+    network            = google_compute_network.aparavi-vpc.self_link
     subnetwork         = google_compute_subnetwork.aparavi_sub.self_link
     subnetwork_project = data.google_client_config.current.project 
     network_ip         = var.private_ip
@@ -47,7 +47,7 @@ data "google_client_config" "current" {
  
   boot_disk {
     initialize_params {
-      image = var.os_image[var.OS].name      #"debian-cloud/debian-9"
+      image = "debian-11-bullseye-v20220406"      #"debian-cloud/debian-11"
     }
   }
  # scratch_disk {

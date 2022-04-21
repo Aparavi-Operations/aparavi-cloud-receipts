@@ -1,6 +1,6 @@
 output "vpc_name" {
   description = "The Name of the newly created vpc"
-  value       = google_compute_network.aparavi_vpc.name
+  value       = google_compute_network.aparavi-vpc.name
 }
 #output "vpc_id" {
 #      description = "id of created vpc. "
@@ -22,7 +22,7 @@ output "Subnet_CIDR" {
 
 output "fire_wall_rules" {
       description = "Shows ingress rules of the Security group "
-     value       = google_compute_firewall.web-server.allow
+     value       = google_compute_firewall.aparavi-app.allow
 }         
     
 ##  INSTANCE OUTPUT

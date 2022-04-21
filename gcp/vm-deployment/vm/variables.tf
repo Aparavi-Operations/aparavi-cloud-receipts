@@ -4,7 +4,7 @@
 #}
 variable  "gcp_credentials"{
   description = "default location of your service account json key file"
-  default = "~/gcp-key.json"
+  default = "~/gcloud-auth-working.json"
 }
 
 variable "project" {
@@ -22,8 +22,8 @@ variable "zone" {
       default = "aparavi-vpc"
     }
     
-    variable "subnet-02_cidr" {
-      default = "192.168.0.0/16"
+variable "subnet-02_cidr" {
+      default = "10.105.0.0/16"
     }
 
 # SUBNET INFO
@@ -32,8 +32,8 @@ variable "zone" {
       }
 
     variable "subnet_cidr"{
-      default = "192.168.10.0/24"
-      } 
+      default = "10.105.10.0/24"
+      }
   variable "firewall_name" {
     default = "aparavi_fw"
   }
@@ -51,12 +51,12 @@ variable "instances_name" {
 
 variable "admin" {
   description = "OS user"
-  default  = "centos"
+  default  = "admin"
 }
 
 # VNIC INFO
         variable "private_ip" {
-        default = "192.168.10.51"
+        default = "10.105.10.51"
       }
       
 # BOOT INFO      
@@ -70,7 +70,7 @@ variable "user_data" {
 
 variable "hostname" {
   description = "Hostname of instances"
-  default     = "aparavi-app"
+  default     = "aparavi-app.aparavi.com"
 }
   
 
@@ -87,19 +87,19 @@ variable "hostname" {
       variable "vm_type" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
         default = "e2-micro" #"f1-micro"
       }
-variable "OS" {     # gcloud compute images list --filter=name:ubuntu
-  description = "the selected ami based OS"
-  default       = "debian-11-bullseye-v20220406" 
-}
+#variable "OS" {     # gcloud compute images list --filter=name:ubuntu
+#  description = "the selected ami based OS"
+#  default       = "debian-11-bullseye-v20220406" 
+#}
 
-variable  "os_image" {
-  default = {
-
-    UBUNTU       =  {
-          name = "debian-11-bullseye-v20220406"
-  
-        }
-
-       }
-     }  
+#variable  "os_image" {
+#  default = {
+#
+#    DEBIAN       =  {
+#          name = "debian-11-bullseye-v20220406"
+#  
+#        }
+#
+#       }
+#     }  
 
