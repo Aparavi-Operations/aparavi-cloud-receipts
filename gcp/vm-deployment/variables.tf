@@ -44,9 +44,14 @@ variable "subnetwork_project" {
   default     = ""
 }
 
-variable "instances_name" {
+variable "instances_name_collector" {
   description = "Number of instances to create. This value is ignored if static_ips is provided."
-  default     = "aparavi-app"
+  default     = "aparavi-app-collector"
+}
+
+variable "instances_name_aggregator" {
+  description = "Number of instances to create. This value is ignored if static_ips is provided."
+  default     = "aparavi-app-aggregator"
 }
 
 variable "admin" {
@@ -74,11 +79,15 @@ variable "user_data_aggregator" {
 
 
 
-variable "hostname" {
-  description = "Hostname of instances"
-  default     = "aparavi-app.aparavi.com"
+variable "hostname_collector" {
+  description = "Hostname ofcollector instances"
+  default     = "aparavi-app-collector.aparavi.com"
 }
-  
+
+variable "hostname_aggregator" {
+  description = "Hostname of aggregator instances"
+  default     = "aparavi-app-aggregator.aparavi.com"
+}
 
 # COMPUTE INSTANCE INFO
 

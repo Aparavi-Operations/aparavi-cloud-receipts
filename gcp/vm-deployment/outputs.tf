@@ -27,29 +27,49 @@ output "fire_wall_rules" {
     
 ##  INSTANCE OUTPUT
 
-      output "instance_name" {
-        description = " id of created instances. "
-        value       = google_compute_instance.aparavi_instance.name
+      output "instance_name_collector" {
+        description = " id of created collector instances. "
+        value       = google_compute_instance.aparavi_instance_collector.name
       }
 
-      output "hostname" {
-        description = " id of created instances. "
-        value       = google_compute_instance.aparavi_instance.hostname
+      output "instance_name_aggregator" {
+        description = " id of created collector aggregator. "
+        value       = google_compute_instance.aparavi_instance_aggregator.name
+      }
+      output "hostname_collector" {
+        description = " id of created collector instances. "
+        value       = google_compute_instance.aparavi_instance_collector.hostname
+      }
+      output "hostname_aggregator" {
+        description = " id of created aggregator instances. "
+        value       = google_compute_instance.aparavi_instance_aggregator.hostname
       }
       
-      output "private_ip" {
-        description = "Private IPs of created instances. "
-        value       = google_compute_instance.aparavi_instance.network_interface.0.network_ip
+      output "private_ip_collector" {
+        description = "Private IPs of created collector instances. "
+        value       = google_compute_instance.aparavi_instance_collector.network_interface.0.network_ip
+      }
+      output "private_ip_aggregator" {
+        description = "Private IPs of created aggregator instances. "
+        value       = google_compute_instance.aparavi_instance_aggregator.network_interface.0.network_ip
       }
       
-      output "public_ip" {
-        description = "Public IPs of created instances. "
-        value       = google_compute_instance.aparavi_instance.network_interface.0.access_config.0.nat_ip
+      output "public_ip_collector" {
+        description = "Public IPs of created collector instances. "
+        value       = google_compute_instance.aparavi_instance_collector.network_interface.0.access_config.0.nat_ip
       }
 
- output "SSH_Connection" {
-     value      = format("ssh connection to instance  ${var.instance_name} ==> sudo ssh -i ~/id_rsa_gcp  ${var.admin}@%s",google_compute_instance.aparavi_instance.network_interface.0.access_config.0.nat_ip)
-}
+      output "public_ip_aggregator" {
+        description = "Public IPs of created aggregator instances. "
+        value       = google_compute_instance.aparavi_instance_aggregator.network_interface.0.access_config.0.nat_ip
+      }
+ #output "SSH_Connection_collector" {
+ #    value      = format("ssh connection to instance  ${var.instance_name_collector} ==> sudo ssh -i ~/id_rsa_gcp  ${var.admin}@%s",google_compute_instance.aparavi_instance_collector.network_interface.0.access_config.0.nat_ip)
+#}
+
+ #output "SSH_Connection_aggregator" {
+ #    value      = format("ssh connection to instance  ${var.instance_name_aggregator} ==> sudo ssh -i ~/id_rsa_gcp  ${var.admin}@%s",google_compute_instance.aparavi_instance_aggregator.network_interface.0.access_config.0.nat_ip)
+#}
 
   
   
