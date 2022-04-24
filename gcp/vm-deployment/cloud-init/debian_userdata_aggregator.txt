@@ -1,0 +1,20 @@
+#!/bin/sh
+sudo echo Script started > /tmp/script.log
+
+FILE="/tmp/install.sh"
+sudo /bin/cat <<EOF >$FILE
+#      - /opt/install-generic.run
+#      - --
+#      - /SILENT
+#      - /NOSTART
+#      - "/APPTYPE=aggregator"
+#      - "/BINDTO='%%PLATFORM%%'"
+#      - "/DBTYPE='mysql'"
+#      - "/DBHOST='%%DBHOST%%'"
+#      - "/DBPORT='%%DBPORT%%'"
+#      - "/DBUSER='%%USERNAME%%'"
+#      - "/DBPSWD='%%PASSWORD%%'"
+EOF
+
+sudo chmod +x /tmp/install.sh
+sudo /tmp/install.sh

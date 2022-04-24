@@ -55,17 +55,23 @@ variable "admin" {
 }
 
 # VNIC INFO
-        variable "private_ip" {
+      variable "private_ip_aggregator" {
         default = "10.105.10.51"
+      }
+      variable "private_ip_collector" {
+        default = "10.105.10.52"
       }
       
 # BOOT INFO      
   # user data
-variable "user_data" { 
-  default = "./cloud-init/debian_userdata.txt"
+variable "user_data_collector" { 
+  default = "./cloud-init/debian_userdata_collector.txt"
   }     
 
- 
+variable "user_data_aggregator" { 
+  default = "./cloud-init/debian_userdata_aggregator.txt"
+  }     
+
 
 
 variable "hostname" {
