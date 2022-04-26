@@ -1,8 +1,3 @@
-# GCP Service account region and authentication 
-# variable "prefix" {
-#  description = "The prefix used for all resources in this example"
-#}
-
 
 variable "project" {
   default = "universal-team-347014"   # Change ME
@@ -12,7 +7,7 @@ variable "region" {
 }
 
 variable "parentid" {
-    #default = "bbbbbbbb-bbbb-bbbb-bbbb-brdimitrenko"
+
 }
 variable "bind_addr"{ #DNS name of the platform without https:// part
    #default = "aaa.bbb.com" #DNS name of the platform without https:// part
@@ -113,6 +108,9 @@ variable "hostname_bastion" {
       }
       variable "vm_type" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
         default = "n2-standard-2" #"f1-micro"
+      }
+      variable "vm_type_bastion" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
+        default = "e2-micro" #"f1-micro"
       }
 
 # Note, after a name db instance is used, it cannot be reused for up to one week.
