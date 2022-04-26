@@ -22,7 +22,7 @@ output "Subnet_CIDR" {
 
 output "fire_wall_rules" {
       description = "Shows ingress rules of the Security group "
-     value       = google_compute_firewall.aparavi-app.allow
+     value       = google_compute_firewall.aparavi-app-aggregator.allow
 }         
     
 ##  INSTANCE OUTPUT

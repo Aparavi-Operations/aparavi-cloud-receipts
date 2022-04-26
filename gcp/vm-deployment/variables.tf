@@ -159,7 +159,7 @@ variable "master_user_password" {
 variable "mysql_version" {
   description = "The engine version of the database, e.g. `MYSQL_5_6` or `MYSQL_5_7`. See https://cloud.google.com/sql/docs/features for supported versions."
   type        = string
-  default     = "MYSQL_5_7"
+  default     = "MYSQL_8_0"
 }
 
 variable "machine_type" {

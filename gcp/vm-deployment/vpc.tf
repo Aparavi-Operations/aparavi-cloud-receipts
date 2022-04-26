@@ -51,9 +51,9 @@ resource "google_compute_subnetwork" "aparavi_sub" {
 # Firewall
 ######################    
 # web network tag
-resource "google_compute_firewall" "aparavi-app" {
+resource "google_compute_firewall" "aparavi-app-ssh" {
   project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
-  name        = "allow-ssh-rule"
+  name        = "allow-ssh-rule-all"
   network     = google_compute_network.aparavi-vpc.name
   description = "Creates firewall rule targeting tagged instances"
 
@@ -66,6 +66,21 @@ resource "google_compute_firewall" "aparavi-app" {
     timeouts {}
 }
 
+
+resource "google_compute_firewall" "aparavi-app-aggregator" {
+  project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
+  name        = "allow-dataport-rule-local"
+  network     = google_compute_network.aparavi-vpc.name
+  description = "Creates firewall rule targeting tagged instances"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["9552", "9545"]
+         }
+   source_ranges = ["10.105.10.0/24"]
+   target_tags = ["aparavi-app"]
+    timeouts {}
+}
 output "project" {
   value = "${data.google_client_config.current.project}"
 }
