@@ -1,5 +1,5 @@
 # aparavi-cloud-receipts
-Here is a collection of Aparavi cloud receipts for Google Cloud
+Here is a collection of Aparavi cloud receipts
 ## Google Cloud VM deployment
 Please switch to gcp/vm-deployment folder and check README.md there
 ## Google Cloud Kubernetes deployment
