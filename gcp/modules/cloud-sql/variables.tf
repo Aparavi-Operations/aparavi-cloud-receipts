@@ -114,13 +114,13 @@ variable "maintenance_track" {
 variable "db_charset" {
   description = "The charset for the default database."
   type        = string
-  default     = null
+  default     = "utf8mb4"
 }
 
 variable "db_collation" {
   description = "The collation for the default database. Example for MySQL databases: 'utf8_general_ci'."
   type        = string
-  default     = null
+  default     = "utf8mb4_unicode_ci"
 }
 
 variable "database_flags" {

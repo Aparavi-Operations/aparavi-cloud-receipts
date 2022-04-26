@@ -185,7 +185,7 @@ resource "google_sql_database_instance" "failover_replica" {
   }
 
   settings {
-    crash_safe_replication = true
+    #crash_safe_replication = true
 
     tier            = var.machine_type
     disk_autoresize = var.disk_autoresize
