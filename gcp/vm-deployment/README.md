@@ -3,7 +3,7 @@ Here you can deploy Aparavi app with VM GCP instances
 
 ## Installation
 Please be sure to have gcloud CLI tool installed and configured
-You can obtain gcloud CLI [here] (https://cloud.google.com/sdk/docs/install)
+You can obtain gcloud CLI [here](https://cloud.google.com/sdk/docs/install)
 
 Gcloud CLI configuation example:
 ```
@@ -12,7 +12,7 @@ gcloud config set project <PROJECT-ID>
 gcloud auth application-default login
 ```
 Be sure to have Terraform installed
-You can obtain gcloud CLI [here](ttps://learn.hashicorp.com/tutorials/terraform/install-cli)
+You can obtain gcloud CLI [here](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
 Be sure to have ssh keypair at hand, you can generate it with this command (linux only)
 Be careful not to overwrite existing keys
