@@ -23,6 +23,7 @@ data "google_client_config" "current" {
   metadata = {
    ssh-keys = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}"   # Change Me
     startup-script        = ("${file(var.user_data_collector)}")
+    #startup-script        = (templatefile("../debian_userdata_collector.sh", local.vars))
   #  startup-script-custom = "stdlib::info Hello World"
   }
   network_interface {
@@ -71,8 +72,8 @@ resource "google_compute_instance" "aparavi_instance_aggregator" {
   
   metadata = {
    ssh-keys = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}"   # Change Me
-    startup-script        = ("${file(var.user_data_aggregator)}")
-  #  startup-script-custom = "stdlib::info Hello World"
+    #startup-script        = ("${file(var.user_data_aggregator)}")
+    startup-script = ("${data.template_file.cloudsql_tmpl_aggregator.rendered}")
   }
   network_interface {
     network            = google_compute_network.aparavi-vpc.self_link
@@ -85,6 +86,7 @@ resource "google_compute_instance" "aparavi_instance_aggregator" {
  }
  
   depends_on = [data.google_client_config.current]
+
 ######################
 # IMAGE
 ######################
@@ -149,3 +151,15 @@ output "ip_aggregator" {
 
 
 
+ data "template_file" "cloudsql_tmpl_aggregator" {
+   template = file("cloud-init/debian_userdata_aggregator.sh")
+   vars = {
+     db_addr = "${module.mysql.master_private_ip_address}"
+     db_user = "${var.master_user_name}"
+     db_passwd = "${var.master_user_password}"
+     parentId = "${var.parentid}"
+   }
+  depends_on = [ module.mysql.google_sql_database_instance
+
+  ]
+ }

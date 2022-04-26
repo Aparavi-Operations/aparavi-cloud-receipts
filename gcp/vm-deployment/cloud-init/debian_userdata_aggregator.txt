@@ -1,7 +1,0 @@
-#!/bin/sh
-sudo echo Script started > /tmp/script.log
-sudo apt update
-sudo install wget
-wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run
-chmod +x linux-installer-latest.run
-./linux-installer-latest.run -- /APPTYPE=aggregator /BINDTO="preview.aparavi.com" /DBTYPE="mysql" /DBHOST="10.122.0.3" /DBPORT="3306" /DBUSER="admin" /DBPSWD="admin123" /SILENT

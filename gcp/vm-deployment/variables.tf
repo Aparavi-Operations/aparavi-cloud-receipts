@@ -14,6 +14,10 @@ variable "region" {
     default = "us-east1"
 }
 
+variable "parentid" {
+    default = "bbbbbbbb-bbbb-bbbb-bbbb-brdimitrenko"
+}
+
 variable "zone" {
     default = "us-east1-b"
 }
@@ -70,11 +74,11 @@ variable "admin" {
 # BOOT INFO      
   # user data
 variable "user_data_collector" { 
-  default = "./cloud-init/debian_userdata_collector.txt"
+  default = "./cloud-init/debian_userdata_collector.sh"
   }     
 
 variable "user_data_aggregator" { 
-  default = "./cloud-init/debian_userdata_aggregator.txt"
+  default = "./cloud-init/debian_userdata_aggregator.sh"
   }     
 
 

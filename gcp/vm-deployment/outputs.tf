@@ -63,6 +63,10 @@ output "fire_wall_rules" {
         description = "Public IPs of created aggregator instances. "
         value       = google_compute_instance.aparavi_instance_aggregator.network_interface.0.access_config.0.nat_ip
       }
+      output "private_ip_cloudsql" {
+        description = "CloudSQL private ip. "
+        value       = module.mysql.master_private_ip_address
+      }
  #output "SSH_Connection_collector" {
  #    value      = format("ssh connection to instance  ${var.instance_name_collector} ==> sudo ssh -i ~/id_rsa_gcp  ${var.admin}@%s",google_compute_instance.aparavi_instance_collector.network_interface.0.access_config.0.nat_ip)
 #}

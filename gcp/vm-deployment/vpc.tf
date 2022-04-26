@@ -32,7 +32,7 @@ resource "google_compute_subnetwork" "aparavi_sub" {
   ip_cidr_range = var.subnet_cidr
   region        = var.region
   network       = google_compute_network.aparavi-vpc.name
-  description   = "This is a custom subnet "
+  description   = "This is a custom subnet for Aparavi apps"
   private_ip_google_access = "true"
   #log_config {
   #  aggregation_interval = "INTERVAL_10_MIN"
