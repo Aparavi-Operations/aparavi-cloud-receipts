@@ -1,6 +1,6 @@
 
 variable "project" {
-  default = "universal-team-347014"   # Change ME
+  default = "YOUR_PROJECT_ID"   # Change ME
 }
 variable "region" {
     default = "us-east1"
