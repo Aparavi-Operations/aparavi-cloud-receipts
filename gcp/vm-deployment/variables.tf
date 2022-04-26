@@ -50,12 +50,12 @@ variable "subnetwork_project" {
 
 variable "instances_name_collector" {
   description = "Number of instances to create. This value is ignored if static_ips is provided."
-  default     = "aparavi-app-collector"
+  default     = "aparavi-app-collector-test-dpl"
 }
 
 variable "instances_name_aggregator" {
   description = "Number of instances to create. This value is ignored if static_ips is provided."
-  default     = "aparavi-app-aggregator"
+  default     = "aparavi-app-aggregator-test-dpl"
 }
 
 variable "admin" {
@@ -85,12 +85,12 @@ variable "user_data_aggregator" {
 
 variable "hostname_collector" {
   description = "Hostname ofcollector instances"
-  default     = "aparavi-app-collector.aparavi.com"
+  default     = "aparavi-app-collector-test-dpl.org.info"
 }
 
 variable "hostname_aggregator" {
   description = "Hostname of aggregator instances"
-  default     = "aparavi-app-aggregator.aparavi.com"
+  default     = "aparavi-app-aggregator-test-dpl.org.info"
 }
 
 # COMPUTE INSTANCE INFO
@@ -104,7 +104,7 @@ variable "hostname_aggregator" {
         default = "30"
       }
       variable "vm_type" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
-        default = "e2-micro" #"f1-micro"
+        default = "n2-standard-2" #"f1-micro"
       }
 #variable "OS" {     # gcloud compute images list --filter=name:ubuntu
 #  description = "the selected ami based OS"
