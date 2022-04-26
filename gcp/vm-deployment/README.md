@@ -17,6 +17,7 @@ Be sure to have Terraform installed
 
 You can obtain terraform [here](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
+
 Be sure to have ssh keypair at hand, you can generate it with this command (linux only)
 Be careful not to overwrite existing keys
 ```
