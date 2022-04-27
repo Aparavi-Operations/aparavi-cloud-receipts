@@ -33,13 +33,13 @@ variable "MANAGEMENT_NETWORK" {
 
 variable "PUBLIC" {
   description = "Whether to deploy EC2 in Public subnets"
-  default     = true
+  default     = "true"
 }
 
 # Aggregator settings
 variable "AGGREGATOR_ENABLED" {
   description = "Deploy aggregator stack or not"
-  default     = True
+  default     = "True"
 }
 
 variable "AGGREGATOR_INSTANCE_TYPE" {
@@ -52,7 +52,6 @@ variable "PLATFORM" {
   default     = "preview.aparavi.com"
 }
 
-PARENT_ID = ""   # ID from Aparavi Portal
 variable "PARENT_ID" {
   description = "ID from Aparavi Portal"
   default     = ""
@@ -61,10 +60,10 @@ variable "PARENT_ID" {
 # Collector setings
 variable "COLLECTOR_ENABLED" {
   description = "Deploy collector stack or not"
-  default     = True
+  default     = "True"
 }
 
-variable "example" {
+variable "COLLECTOR_INSTANCE_TYPE" {
   description = "Type of AWS instance"
   default     = "t3.medium"
 }
@@ -72,7 +71,7 @@ variable "example" {
 # Monitoring settings
 variable "MONITORING_ENABLED" {
   description = "Deploy monitoring stack or not"
-  default     = True
+  default     = "True"
 }
 
 # Other settings
