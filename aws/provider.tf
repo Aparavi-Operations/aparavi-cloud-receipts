@@ -5,6 +5,10 @@ terraform {
       version = "~> 3.0"
     }
   }
+  
+  backend "local" {
+    path = "terraform.tfstate"
+  }
 }
 
 # Configure the AWS Provider
