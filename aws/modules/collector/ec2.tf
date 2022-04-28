@@ -12,16 +12,16 @@ resource "aws_instance" "collector_ec2" {
 
   user_data = <<EOF
 #!/bin/bash
-sleep 120
-echo "${var.aggregator_hostname}" >> /opt/envvars 
+sleep 240
+echo "${var.aggregator_private_ip}" >> /opt/envvars 
 /opt/bootstrap.py
 rm /opt/bootstrap.py /opt/envvars  
 /opt/aparavi-data-ia/aggregator/app/startapp
 EOF
 
   tags = {
-    Name = "AparaviCollectorInstance"
-    "aparavi:role" = "aggregator"
-    "aparavi:deployment" = "test"
+    Name = "Aparavi Collector Instance (${var.deployment_tag})"
+    "aparavi:role" = "collector"
+    "aparavi:deployment" = "${var.deployment_tag}"
   }
 }

@@ -18,7 +18,7 @@ cd aparavi-cloud-receipts/aws
 
 ## Configure variables
 
-open VARIABLES.TF and fill mandatory variables
+open aws/VARIABLES.TF and fill default values for all mandatory variables
 
 ## Login to AWS
 

@@ -1,6 +1,6 @@
 resource "aws_security_group" "ec2" {
-  name        = "Aggregator_EC2_SG"
-  description = "Set of rules for EC2 access"
+  name        = "Aggregator_EC2_SG_${var.deployment_tag}"
+  description = "Set of rules for EC2 access (${var.deployment_tag})"
   vpc_id      = var.network_vpc_id
 
   ingress {
@@ -49,15 +49,11 @@ resource "aws_security_group" "ec2" {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
   }
-
-  /*tags = {
-    Name = "allow_tls"
-  }*/
 }
 
 resource "aws_security_group" "rds" {
-  name        = "RDS_SG"
-  description = "Set of rules for RDS access"
+  name        = "RDS_SG_${var.deployment_tag}"
+  description = "Set of rules for RDS access (${var.deployment_tag})"
   vpc_id      = var.network_vpc_id
 
   ingress {
@@ -74,8 +70,4 @@ resource "aws_security_group" "rds" {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
   }
-
-  /*tags = {
-    Name = "allow_tls"
-  }*/
 }

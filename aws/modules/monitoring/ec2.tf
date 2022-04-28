@@ -14,7 +14,7 @@ resource "aws_instance" "monitoring_ec2" {
   user_data = <<EOF
 #!/bin/bash
 cd /root/monitoring
-sed -i 's/<<deployment>>/test/g' vmagent/scrape.yml
+sed -i 's/<<deployment>>/${var.deployment_tag}/g' vmagent/scrape.yml
 docker-compose up -d
 docker-compose restart vmagent
 EOF
@@ -27,6 +27,8 @@ EOF
   }
 
   tags = {
-    Name = "AparaviMonitoringInstance"
+    Name = "Aparavi Monitoring Instance (${var.deployment_tag})"
+    "aparavi:role" = "monitoring"
+    "aparavi:deployment" = "${var.deployment_tag}"
   }
 }

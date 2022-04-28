@@ -1,14 +1,14 @@
 resource "aws_db_subnet_group" "rds_subnet_group" {
-  name       = "aggregator_rds_subnet_group"
+  name       = "aggregator_rds_subnet_group_${var.deployment_tag}"
   subnet_ids = [var.rds_subnet_id_a,var.rds_subnet_id_b]
 
   tags = {
-    Name = "Aggregator RDS Subnet group"
+    Name = "Aggregator_RDS_Subnet_group_${var.deployment_tag}"
   }
 }
 
 resource "aws_db_instance" "aggregator_rds" {
-  name                 = "AparaviAggregatorDB"
+  name                 = "AparaviAggregatorDB_${var.deployment_tag}"
   db_subnet_group_name = aws_db_subnet_group.rds_subnet_group.id
   allocated_storage    = 20
   port                 = local.mysql_port
@@ -23,6 +23,6 @@ resource "aws_db_instance" "aggregator_rds" {
   vpc_security_group_ids = [aws_security_group.rds.id]
 
   tags = {
-    Name = "AggregatorRDSInstance"
+    Name = "Aggregator_RDS_Instance_${var.deployment_tag}"
   }
 }

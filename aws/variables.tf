@@ -1,7 +1,6 @@
-# EC2 Settings
 variable "KEY_NAME" {
   description = "MANDATORY SSH Key name to attach to ec2 instances"
-  default     = "gkudinov"
+  default     = ""
   
   validation {
     condition     = length(var.KEY_NAME) > 0
@@ -9,10 +8,9 @@ variable "KEY_NAME" {
   }
 }
 
-# Network and security
 variable "MANAGEMENT_NETWORK" {
-  description = "MANDATORY Management network to allow connections from"
-  default     = "0.0.0.0/0"
+  description = "MANDATORY Management network to allow connections from (e.g. 0.0.0.0/0 for all incoming connection)"
+  default     = ""
   
   validation {
     condition     = length(var.MANAGEMENT_NETWORK) > 0
@@ -21,18 +19,18 @@ variable "MANAGEMENT_NETWORK" {
 }
 
 variable "PLATFORM" {
-  description = "MANDATORY Platform to attach aggregator to"
-  default     = "preview.aparavi.com"
+  description = "MANDATORY Platform to attach aggregator to (e.g. preview.aparavi.com)"
+  default     = ""
 
   validation {
     condition     = length(var.PLATFORM) > 0
-    error_message = "You must specify the host for platform so aggregator could connect to it."
+    error_message = "You must specify the host for platform so aggregator could connect to it. (e.g. preview.aparavi.com)"
   }
 }
 
 variable "PARENT_ID" {
   description = "ID from Aparavi Portal"
-  default     = "bbbbbbbb-bbbb-bbbb-bbbb-brdimitrenko"
+  default     = ""
 
   validation {
     condition     = length(var.PARENT_ID) > 0
@@ -40,8 +38,12 @@ variable "PARENT_ID" {
   }
 }
 
-# Other settings
 variable "DEPLOYMENT" {
-  description = "Unique name of the deployment. Multiple deployments of this stack in single VPC are supported"
-  default     = "test"
+  description = "MANDATORY Unique name of the deployment. Multiple deployments of this stack in single VPC are supported (e.g. attempt1)"
+  default     = ""
+  
+  validation {
+    condition     = length(var.DEPLOYMENT) > 0
+    error_message = "You must specify the deployment tag in order to separate deployments."
+  }
 }

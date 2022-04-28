@@ -7,6 +7,7 @@
 
 module "network" {
   source  = "./modules/network"
+  deployment_tag      = var.DEPLOYMENT
 }
 
 module "aggregator" {
@@ -20,7 +21,6 @@ module "aggregator" {
   vm_subnet_id        = module.network.vm_subnet_id
   rds_subnet_id_a     = module.network.rds_subnet_id_a
   rds_subnet_id_b     = module.network.rds_subnet_id_b
-  depends_on = [module.network,]
 }
 
 module "collector" {
@@ -30,8 +30,7 @@ module "collector" {
   deployment_tag      = var.DEPLOYMENT
   network_vpc_id      = module.network.vpc_id
   vm_subnet_id        = module.network.vm_subnet_id
-  aggregator_hostname = module.aggregator.private_dns
-  depends_on = [module.network, module.aggregator]
+  aggregator_private_ip = module.aggregator.private_ip
 }
 
 module "monitoring" {

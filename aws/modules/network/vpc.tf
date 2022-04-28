@@ -1,7 +1,7 @@
 resource "aws_vpc" "vpc" {
   cidr_block = "10.10.0.0/16"
   tags = {
-    Name = local.vpc_name
+    Name = "${local.vpc_name} (${var.deployment_tag})"
   }
 }
 
@@ -12,7 +12,7 @@ resource "aws_subnet" "vm_subnet" {
   availability_zone = "${data.aws_region.current.name}a"
 
   tags = {
-    Name = local.vpc_vm_subnet_name
+    Name = "${local.vpc_vm_subnet_name} (${var.deployment_tag})"
   }
 }
 
@@ -22,7 +22,7 @@ resource "aws_subnet" "rds_subnet_a" {
   availability_zone = "${data.aws_region.current.name}a"
 
   tags = {
-    Name = local.vpc_rds_subnet_name
+    Name = "${local.vpc_rds_subnet_name} (${var.deployment_tag})"
   }
 }
 
@@ -32,7 +32,7 @@ resource "aws_subnet" "rds_subnet_b" {
   availability_zone = "${data.aws_region.current.name}b"
 
   tags = {
-    Name = local.vpc_rds_subnet_name
+    Name = "${local.vpc_rds_subnet_name} (${var.deployment_tag})"
   }
 }
 

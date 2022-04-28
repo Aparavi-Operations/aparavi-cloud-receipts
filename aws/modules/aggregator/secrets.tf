@@ -11,7 +11,7 @@ resource "random_string" "secret_suffix" {
 }
  
 resource "aws_secretsmanager_secret" "rds_secret" {
-   name = "RDS_Credentials_${random_string.secret_suffix.result}"
+   name = "RDS_Credentials_${random_string.secret_suffix.result}_${var.deployment_tag}"
 }
  
 resource "aws_secretsmanager_secret_version" "rds_creds" {

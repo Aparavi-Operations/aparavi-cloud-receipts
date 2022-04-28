@@ -23,8 +23,8 @@ EOF
   iam_instance_profile = aws_iam_instance_profile.aggregator_profile.name
 
   tags = {
-    Name = "AparaviAggregatorInstance"
+    Name = "Aparavi Aggregator Instance (${var.deployment_tag})"
     "aparavi:role" = "aggregator"
-    "aparavi:deployment" = "test"
+    "aparavi:deployment" = "${var.deployment_tag}"
   }
 }

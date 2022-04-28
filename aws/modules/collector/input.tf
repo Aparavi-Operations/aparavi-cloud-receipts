@@ -19,7 +19,7 @@ variable "management_network" {
   type = string
 }
 
-variable "aggregator_hostname" {
+variable "aggregator_private_ip" {
   type = string
 }
 

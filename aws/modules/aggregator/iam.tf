@@ -1,5 +1,5 @@
 resource "aws_iam_role" "aggregator_role" {
-  name                = "AggregatorSecrets"
+  name                = "AggregatorRole_${var.deployment_tag}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -16,11 +16,9 @@ resource "aws_iam_role" "aggregator_role" {
 }
 
 resource "aws_iam_role_policy" "aggregator_policy" {
-  name = "Aggregator_Policy"
+  name = "Aggregator_Policy_${var.deployment_tag}"
   role = aws_iam_role.aggregator_role.id
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -40,6 +38,6 @@ resource "aws_iam_role_policy" "aggregator_policy" {
 }
 
 resource "aws_iam_instance_profile" "aggregator_profile" {
-  name = "Aggregator_Profile"
+  name = "Aggregator_Profile_${var.deployment_tag}"
   role = aws_iam_role.aggregator_role.name
 }
