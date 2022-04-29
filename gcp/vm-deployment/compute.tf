@@ -259,6 +259,7 @@ resource "google_compute_address" "internal_reserved_subnet_ip_monitoring" {
   data "template_file" "cloudsql_tmpl_monitoring" {
    template = file("cloud-init/debian_userdata_monitoring.sh")
    vars = {
+     deployment_name = "deployment_1"
      aggregator_private_ip = "${var.private_ip_aggregator}"
      collector_private_ip = "${var.private_ip_collector}"
      monitoring_private_ip = "${var.private_ip_monitoring}"
