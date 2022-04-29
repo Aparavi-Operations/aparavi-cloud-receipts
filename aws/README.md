@@ -3,15 +3,24 @@
 This documentation will show you how to deploy Aparavi applications using Terraform using Linux
 
 ## Setup tooling
+# Install AWS CLI first
 
 ```
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
 ```
-
+## Add Hashicorp repository to install Terraform
+# Let’s add the HashiCorp GPG key.
 ```
-sudo apt update && sudo apt install terraform git
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update
+sudo apt-get install terraform
+```
+# Install git package and download Aparavi repo
+```
+sudo apt install git
 git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
 cd aparavi-cloud-receipts/aws
 ```
