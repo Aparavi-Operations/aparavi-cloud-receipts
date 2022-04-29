@@ -124,7 +124,7 @@ variable "hostname_monitoring" {
         default = "e2-micro" #"f1-micro"
       }
      variable "vm_type_monitoring" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
-        default = "e2-micro" #"f1-micro"
+        default = "e2-medium" #"f1-micro"
       }
 
 # Note, after a name db instance is used, it cannot be reused for up to one week.
