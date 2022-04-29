@@ -69,7 +69,7 @@ output "Subnet_CIDR" {
       }
       output "private_ip_monitoring" {
         description = "Private IPs of created monitoring instances. "
-        value       = google_compute_instance.aparavi_instance_aggregator.network_interface.0.network_ip
+        value       = google_compute_instance.aparavi_instance_monitoring.network_interface.0.network_ip
       }
       output "public_ip_bastion" {
         description = "Public IPs of created bastion instances. "

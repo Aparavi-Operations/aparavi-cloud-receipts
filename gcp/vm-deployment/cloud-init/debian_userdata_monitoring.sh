@@ -51,6 +51,7 @@ chmod 0750 /usr/local/bin/docker-compose
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
 cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
+cp /root/aparavi-cloud-receipts/monitoring/templates/monitoring/vmagent/scrape_gcp.yml /root/monitoring/vmagent/scrape_gcp.yml
 
 sed -i 's/<<aggregator_ip>>/${aggregator_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
 sed -i 's/<<collector_ip>>/${collector_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
