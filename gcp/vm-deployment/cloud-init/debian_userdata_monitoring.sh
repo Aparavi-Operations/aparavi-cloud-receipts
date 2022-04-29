@@ -1,7 +1,9 @@
 #!/bin/sh
+set -ex
 sudo echo Script started > /tmp/script.log
 sudo apt update
 sudo apt install --assume-yes  wget
+sudo apt install --assume-yes  git
 wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run 
 chmod +x linux-installer-latest.run
 ./linux-installer-latest.run -- /APPTYPE=aggregator /BINDTO="${platform_bind_addr}" /DBTYPE="mysql" /DBHOST="${db_addr}" /DBPORT="3306" /DBUSER="${db_user}" /DBPSWD="${db_passwd}" /SILENT /NOSTART
@@ -28,122 +30,39 @@ ExecStart=/usr/local/bin/node_exporter
 WantedBy=multi-user.target
 EOF
 
-sudo systemctl daemon-reload
-sudo systemctl enable node_exporter
-sudo systemctl start node_exporter
 
-sudo apt-get install ca-certificates curl gnupg lsb-release
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-sudo systemctl enable docker
-sudo systemctl start docker
 
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+while fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1; do echo 'Waiting for release of dpkg/apt locks'; sleep 5; done;
+sleep 10
+apt update
+apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
+DOCKER_COMPOSE_VERSION='2.3.0'
+NODE_EXPORTER_VERSION='1.3.1'
+MONITORING_BRANCH='main'
 
-sudo mkdir /opt/monitoring-stack
-sudo mkdir /vmagentdata
-sudo mkdir /storage
-sudo mkdir /etc/vmalert
-sudo mkdir /var/lib/grafana
-sudo mkdir /etc/grafana/
-sudo mkdir /etc/alertmanager/
-sudo cat <<EOF > /opt/monitoring-stack/docker-compose.yaml
----
+curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
 
-version: '3.5'
-services:
-  vmagent:
-    container_name: vmagent
-    image: victoriametrics/vmagent
-    depends_on:
-      - "victoriametrics"
-    ports:
-      - 8429:8429
-    volumes:
-      - vmagentdata:/vmagentdata
-      - ./vmagent/:/etc/vmagent/
-    command:
-      - '--promscrape.config=/etc/vmagent/vmagent.yml'
-      - '--remoteWrite.url=http://victoriametrics:8428/api/v1/write'
-    networks:
-      - vm_net
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-    restart: on-failure
-  victoriametrics:
-    container_name: victoriametrics
-    image: victoriametrics/victoria-metrics
-    ports:
-      - 8428:8428
-      - 8089:8089
-      - 8089:8089/udp
-      - 2003:2003
-      - 2003:2003/udp
-      - 4242:4242
-    volumes:
-      - vmdata:/storage
-    command:
-      - '--storageDataPath=/storage'
-      - '--graphiteListenAddr=:2003'
-      - '--opentsdbListenAddr=:4242'
-      - '--httpListenAddr=:8428'
-      - '--influxListenAddr=:8089'
-    networks:
-      - vm_net
-    restart: on-failure
-  grafana:
-    container_name: grafana
-    image: grafana/grafana:8.4.3
-    depends_on:
-      - "victoriametrics"
-    ports:
-      - 80:3000
-    volumes:
-      - grafanadata:/var/lib/grafana
-      - ./grafana/:/etc/grafana/
-    networks:
-      - vm_net
-    restart: on-failure
-  vmalert:
-    container_name: vmalert
-    image: victoriametrics/vmalert
-    depends_on:
-      - "victoriametrics"
-      - "alertmanager"
-    ports:
-      - 8880:8880
-    volumes:
-      - ./vmalert/:/etc/vmalert/
-    command:
-      - '--datasource.url=http://victoriametrics:8428/'
-      - '--remoteRead.url=http://victoriametrics:8428/'
-      - '--remoteWrite.url=http://victoriametrics:8428/'
-      - '--notifier.url=http://alertmanager:9093/'
-      - '--rule=/etc/vmalert/*.yml'
-      # display source of alerts in grafana
-      - '-external.url=http://127.0.0.1:3000' #grafana outside container
-    networks:
-      - vm_net
-    restart: on-failure
-  alertmanager:
-    container_name: alertmanager
-    image:  prom/alertmanager
-    volumes:
-      - ./alertmanager/:/etc/alertmanager/
-    command:
-      - '--config.file=/etc/alertmanager/config.yml'
-    ports:
-      - 9093:9093
-    networks:
-      - vm_net
-    restart: on-failure
-volumes:
-  vmagentdata: {}
-  vmdata: {}
-  grafanadata: {}
-networks:
-  vm_net:
-EOF
+apt update
+apt -y install docker-ce docker-ce-cli containerd.io
+systemctl enable --now docker
+
+wget -q https://github.com/docker/compose/releases/download/v$${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
+chmod 0750 /usr/local/bin/docker-compose
+
+cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
+cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
+cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
+
+sed -i 's/<<aggregator_ip>>/${aggregator_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
+sed -i 's/<<collector_ip>>/${collector_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
+sed -i 's/<<monitoring_ip>>/${monitoring_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
+rm /root/monitoring/vmagent/scrape_gcp.yml
+cp /root/monitoring/aparavi-monitoring.service /etc/systemd/system/aparavi-monitoring.service
+systemctl daemon-reload
+systemctl enable aparavi-monitoring
+systemctl start aparavi-monitoring
+

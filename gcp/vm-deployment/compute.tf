@@ -117,6 +117,7 @@ resource "google_compute_instance" "aparavi_instance_monitoring" {
 
   metadata = {
    ssh-keys = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}"   # Change Me
+   startup-script = ("${data.template_file.cloudsql_tmpl_monitoring.rendered}")
    
   }
   network_interface {
@@ -251,6 +252,18 @@ resource "google_compute_address" "internal_reserved_subnet_ip_monitoring" {
      parentId = "${var.parentid}"
    }
   depends_on = [ module.mysql.google_sql_database_instance
+
+  ]
+ }
+
+  data "template_file" "cloudsql_tmpl_monitoring" {
+   template = file("cloud-init/debian_userdata_monitoring.sh")
+   vars = {
+     aggregator_private_ip = "${var.private_ip_aggregator}"
+     collector_private_ip = "${var.private_ip_collector}"
+     monitoring_private_ip = "${var.private_ip_monitoring}"
+
+   }
 
   ]
  }
