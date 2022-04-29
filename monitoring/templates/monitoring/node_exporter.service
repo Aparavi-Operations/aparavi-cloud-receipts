@@ -1,0 +1,20 @@
+[Unit]
+Description=Prometheus Node Exporter
+After=network.target
+
+[Service]
+Type=simple
+User=node-exp
+Group=node-exp
+Nice=-5
+ExecStart=/usr/local/bin/node_exporter \
+    --collector.systemd \
+    --collector.filesystem.ignored-fs-types='^(sys|proc|auto|rpc_pipe|tmp)fs$' \
+    --collector.filesystem.ignored-mount-points='^/(sys|proc|dev)($|/)' \
+    --web.listen-address=0.0.0.0:9100
+
+SyslogIdentifier=node_exporter
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
