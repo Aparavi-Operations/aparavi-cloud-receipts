@@ -56,7 +56,7 @@ scheduling {
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
- tags = ["aparavi-app"]
+ tags = ["aparavi-app", "collector"]
 } 
 
 resource "google_compute_instance" "aparavi_instance_aggregator" {
@@ -105,19 +105,66 @@ scheduling {
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
- tags = ["aparavi-app"]
+ tags = ["aparavi-app", "aggregator"]
 }
 
-resource "google_compute_instance" "aparavi_instance_bastion" {
+resource "google_compute_instance" "aparavi_instance_monitoring" {
+  name     = var.instance_name_monitoring
+  hostname = var.hostname_monitoring
+  project  = data.google_client_config.current.project
+  zone     = var.zone 
+  machine_type = var.vm_type_monitoring
+
+  metadata = {
+   ssh-keys = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}"   # Change Me
+   startup-script = ("${data.template_file.cloudsql_tmpl_monitoring.rendered}")
+   
+  }
+  network_interface {
+    network            = google_compute_network.aparavi-vpc.self_link
+    subnetwork         = google_compute_subnetwork.aparavi_sub.self_link
+    subnetwork_project = data.google_client_config.current.project 
+    network_ip         = var.private_ip_monitoring
+  access_config {
+      // Include this section to give the VM an external ip address
+   }
+ }
+ 
+  depends_on = [data.google_client_config.current]
+######################
+# IMAGE
+######################
+ 
+  boot_disk {
+    initialize_params {
+      image = "debian-11-bullseye-v20220406"      #"debian-cloud/debian-11"
+    }
+  }
+ # scratch_disk {
+  #  interface = "SCSI"
+  #}
+
+scheduling {
+  on_host_maintenance = "MIGRATE"
+  automatic_restart   =  true
+}
+
+
+# service account
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
+ tags = ["aparavi-app", "monitoring"]
+}
+ resource "google_compute_instance" "aparavi_instance_bastion" {
   name     = var.instance_name_bastion
   hostname = var.hostname_bastion
   project  = data.google_client_config.current.project
   zone     = var.zone 
-  machine_type = var.vm_type_bastion
+  machine_type = var.vm_type
   
   metadata = {
    ssh-keys = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}"   # Change Me
-   
   }
   network_interface {
     network            = google_compute_network.aparavi-vpc.self_link
@@ -153,9 +200,8 @@ scheduling {
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
- tags = ["aparavi-bastion"]
+ tags = ["aparavi-app", "bastion"]
 }
-
 
 ######################
 # ADDRESS
@@ -187,6 +233,15 @@ resource "google_compute_address" "internal_reserved_subnet_ip_bastion" {
   region       = var.region
 }
 
+# Reserving a static internal IP address 
+resource "google_compute_address" "internal_reserved_subnet_ip_monitoring" {
+  name         = "internal-address-monitoring"
+  subnetwork   = google_compute_subnetwork.aparavi_sub.id
+  address_type = "INTERNAL"
+  address      = var.private_ip_monitoring
+  region       = var.region
+}
+
  data "template_file" "cloudsql_tmpl_aggregator" {
    template = file("cloud-init/debian_userdata_aggregator.sh")
    vars = {
@@ -200,3 +255,15 @@ resource "google_compute_address" "internal_reserved_subnet_ip_bastion" {
 
   ]
  }
+
+  data "template_file" "cloudsql_tmpl_monitoring" {
+   template = file("cloud-init/debian_userdata_monitoring.sh")
+   vars = {
+     deployment_name = "deployment_1"
+     aggregator_private_ip = "${var.private_ip_aggregator}"
+     collector_private_ip = "${var.private_ip_collector}"
+     monitoring_private_ip = "${var.private_ip_monitoring}"
+
+  }
+
+}

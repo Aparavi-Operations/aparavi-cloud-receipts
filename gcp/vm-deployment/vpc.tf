@@ -62,7 +62,22 @@ resource "google_compute_firewall" "aparavi-bastion-ssh" {
     ports    = ["22"]
          }
    source_ranges = ["0.0.0.0/0"]
-   target_tags = ["aparavi-bastion"]
+   target_tags = ["bastion"]
+    timeouts {}
+}
+
+resource "google_compute_firewall" "aparavi-monitoring-web" {
+  project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
+  name        = "allow-ssh-rule-monitoring"
+  network     = google_compute_network.aparavi-vpc.name
+  description = "Creates firewall rule to allow http to monitoring host"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+         }
+   source_ranges = ["0.0.0.0/0"]
+   target_tags = ["monitoring"]
     timeouts {}
 }
 
@@ -95,6 +110,21 @@ resource "google_compute_firewall" "aparavi-app-aggregator" {
    target_tags = ["aparavi-app"]
     timeouts {}
 }
+resource "google_compute_firewall" "aparavi-app-node_exporter" {
+  project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
+  name        = "allow-node-exporter-rule-local"
+  network     = google_compute_network.aparavi-vpc.name
+  description = "Creates firewall rule targeting tagged instances"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["9100"]
+         }
+   source_ranges = ["10.105.10.0/24"]
+   target_tags = ["aparavi-app"]
+    timeouts {}
+}
+
 output "project" {
   value = "${data.google_client_config.current.project}"
 }

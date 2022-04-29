@@ -54,6 +54,9 @@ variable "instances_name_aggregator" {
 variable "instance_name_bastion" {
   default     = "aparavi-bastion-test-dpl"
 }
+variable "instance_name_monitoring" {
+  default     = "aparavi-monitoring-test-dpl"
+}
 variable "admin" {
   description = "OS user"
   default  = "admin"
@@ -65,6 +68,9 @@ variable "admin" {
       }
       variable "private_ip_collector" {
         default = "10.105.10.52"
+      }
+      variable "private_ip_monitoring" {
+        default = "10.105.10.54"
       }
       variable "private_ip_bastion" {
         default = "10.105.10.53"
@@ -96,6 +102,11 @@ variable "hostname_bastion" {
   default     = "aparavi-bastion-test-dpl.org.info"
 }
 
+variable "hostname_monitoring" {
+  description = "Hostname of monitoring instance"
+  default     = "aparavi-monitoring-test-dpl.org.info"
+}
+
 # COMPUTE INSTANCE INFO
 
       variable "instance_name" {
@@ -111,6 +122,9 @@ variable "hostname_bastion" {
       }
       variable "vm_type_bastion" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
         default = "e2-micro" #"f1-micro"
+      }
+     variable "vm_type_monitoring" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
+        default = "e2-medium" #"f1-micro"
       }
 
 # Note, after a name db instance is used, it cannot be reused for up to one week.
