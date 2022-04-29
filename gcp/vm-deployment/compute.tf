@@ -263,7 +263,6 @@ resource "google_compute_address" "internal_reserved_subnet_ip_monitoring" {
      collector_private_ip = "${var.private_ip_collector}"
      monitoring_private_ip = "${var.private_ip_monitoring}"
 
-   }
+  }
 
-  ]
- }
+}
