@@ -1,6 +1,7 @@
 ---
 
-- job_name: 'nodeexporter'
+- job_name: 'nodeexporter_gcp'
+
   static_configs:
     - labels:
         service: 'aparavi'
