@@ -94,7 +94,8 @@ output "Subnet_CIDR" {
       }
  output "SSH_Connection_bastion" {
      value      = format("ssh connection to instance  ${var.instance_name_bastion} ==> sudo ssh -i ~/.ssh/id_rsa_aparavi  ${var.admin}@%s",google_compute_instance.aparavi_instance_bastion.network_interface.0.access_config.0.nat_ip)
-}
+ }
+
 
  #output "SSH_Connection_aggregator" {
  #    value      = format("ssh connection to instance  ${var.instance_name_aggregator} ==> sudo ssh -i ~/id_rsa_gcp  ${var.admin}@%s",google_compute_instance.aparavi_instance_aggregator.network_interface.0.access_config.0.nat_ip)
