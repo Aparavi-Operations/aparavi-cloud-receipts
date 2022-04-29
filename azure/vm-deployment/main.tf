@@ -4,7 +4,7 @@ locals {
 
 sudo echo Script started > /tmp/script.log
 NODE_EXPORTER_VERSION='1.3.1'
-MONITORING_BRANCH='monitoring'
+MONITORING_BRANCH='main'
 while fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1; do echo 'Waiting for release of dpkg/apt locks'; sleep 5; done;
 sleep 10
 sudo apt install --assume-yes wget
@@ -33,7 +33,7 @@ EOF
 #!/bin/sh
 sudo echo Script started > /tmp/script.log
 NODE_EXPORTER_VERSION='1.3.1'
-MONITORING_BRANCH='monitoring'
+MONITORING_BRANCH='main'
 while fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1; do echo 'Waiting for release of dpkg/apt locks'; sleep 5; done;
 sleep 10
 sudo apt install --assume-yes wget
@@ -68,7 +68,7 @@ apt update
 apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
 DOCKER_COMPOSE_VERSION='2.3.0'
 NODE_EXPORTER_VERSION='1.3.1'
-MONITORING_BRANCH='monitoring'
+MONITORING_BRANCH='main'
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 add-apt-repository \
