@@ -29,14 +29,14 @@ Review compute.tf to check public ssh key path
 Run 
 ```
 terraform init
-terraform apply -var="master_user_name=admin" -var="master_user_password=SecUrePassW0rd"  -var="parentid=<APP_PARENT_ID>" -var="bind_addr=<PLATFORM_ADDRESS>" -var="project_id=<UNIQUE_GOOGLE_PROJECT_ID>"
+terraform apply -var="master_user_name=admin" -var="master_user_password=SecUrePassW0rd"  -var="parentid=<APP_PARENT_ID>" -var="bind_addr=<PLATFORM_ADDRESS>" -var="project=<UNIQUE_GOOGLE_PROJECT_ID>"
 ```
 You can obtain APP_PARENT_ID and PLATFORM_ADDRESS values via Aparavi Support Team.
 Be sure to store terraform.tfstate file, or use GCP Bucket to save it.
 Also you can check terraform outputs to review created resources info
 ## How to delete
 ```
-terraform destroy -var="master_user_name=admin" -var="master_user_password=SecUrePassW0rd"  -var="parentid=<APP-PARENT-ID>" -var="bind_addr=<PLATFORM_ADDRESS>" -var="project_id=<UNIQUE_GOOGLE_PROJECT_ID>"
+terraform destroy -var="master_user_name=admin" -var="master_user_password=SecUrePassW0rd"  -var="parentid=<APP-PARENT-ID>" -var="bind_addr=<PLATFORM_ADDRESS>" -var="project=<UNIQUE_GOOGLE_PROJECT_ID>"
 ```
 ## How to connect via bastion ssh host
 This applies to linux only,  
