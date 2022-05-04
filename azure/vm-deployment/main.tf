@@ -195,11 +195,11 @@ module "collector" {
   tags = var.tags
 }
 
-resource "azurerm_role_assignment" "monitoring_role" {
-  scope                = data.azurerm_subscription.current.id
-  role_definition_name = var.monitoring_role_name
-  principal_id         = module.monitoring.node_identity[0].principal_id
-}
+#resource "azurerm_role_assignment" "monitoring_role" {
+#  scope                = data.azurerm_subscription.current.id
+#  role_definition_name = var.monitoring_role_name
+#  principal_id         = module.monitoring.node_identity[0].principal_id
+#}
 
 module "monitoring" {
   source = "./modules/node"

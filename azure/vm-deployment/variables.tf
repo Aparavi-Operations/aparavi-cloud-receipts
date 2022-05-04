@@ -10,22 +10,6 @@ variable "vnet_cidr" {
   default = "10.0.0.0/8"
 }
 
-variable "client_id" {
-  type = string
-}
-
-variable "client_secret" {
-  type = string
-}
-
-variable "subscription_id" {
-  type = string
-}
-
-variable "tenant_id" {
-  type = string
-}
-
 variable "location" {
   type = string
 }
