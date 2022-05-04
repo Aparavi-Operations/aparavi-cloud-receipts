@@ -1,9 +1,3 @@
-# Service principal credentials and subscription information
-client_id = ""
-client_secret = ""
-subscription_id = ""
-tenant_id = ""
-
 # Network CIDR for new VNET
 vnet_cidr = "10.240.8.0/21"
 
