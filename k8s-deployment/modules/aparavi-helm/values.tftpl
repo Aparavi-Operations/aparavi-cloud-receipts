@@ -1,0 +1,30 @@
+mysql:
+  enabled: false
+externalMysql:
+  hostname: ${mysqlHostname}
+aggregator:
+  config:
+    mysql:
+      password: ${mysqlPassword}
+    platform:
+      host: ${platformHost}
+      nodeId: ${platformNodeId}
+    nodeName: ${aggregatorNodeName}
+  resources:
+    requests:
+      cpu: 7.5
+collector:
+  config:
+    nodeName: ${collectorNodeName}
+  resources:
+    requests:
+      cpu: 7.5
+  %{~ if generateSampleData ~}
+  extraVolumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: ${claimName}
+  extraVolumeMounts:
+    - name: data
+      mountPath: /opt/data
+  %{~ endif ~}
