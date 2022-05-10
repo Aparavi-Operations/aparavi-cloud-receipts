@@ -1,0 +1,5 @@
+.terraform
+terraform.tfstate*
+.terraform.tfstate.lock.info
+default.tfvars
+modules/aparavi-helm/values.yaml
