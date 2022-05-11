@@ -19,6 +19,7 @@ module "eks" {
   min_size                       = var.eks_min_size
   max_size                       = var.eks_max_size
   desired_size                   = var.eks_desired_size
+  depends_on                     = [module.network]
 }
 
 module "rds" {
@@ -33,6 +34,7 @@ module "rds" {
   subnet_ids          = module.network.private_subnet_ids
   vpc_id              = module.network.vpc_id
   sg_cidr_blocks      = var.vpc_private_subnets
+  depends_on          = [module.network]
 }
 
 module "aparavi" {
@@ -45,5 +47,5 @@ module "aparavi" {
   aggregator_node_name = var.aggregator_node_name
   collector_node_name  = var.collector_node_name
   generate_sample_data = var.generate_sample_data
-  depends_on           = [module.eks]
+  depends_on           = [module.eks, module.rds]
 }
