@@ -5,20 +5,14 @@ externalMysql:
 aggregator:
   config:
     mysql:
-      password: ${mysqlPassword}
+      password: ${format("%q", mysqlPassword)}
     platform:
       host: ${platformHost}
       nodeId: ${platformNodeId}
     nodeName: ${aggregatorNodeName}
-  resources:
-    requests:
-      cpu: 7.5
 collector:
   config:
     nodeName: ${collectorNodeName}
-  resources:
-    requests:
-      cpu: 7.5
   %{~ if generateSampleData ~}
   extraVolumes:
     - name: data

@@ -25,7 +25,7 @@ resource "kubernetes_persistent_volume_claim" "data" {
 }
 
 resource "local_file" "values" {
-  filename = "${path.module}/values.yaml"
+  filename = "${path.cwd}/values.yaml"
   content = templatefile(
     "${path.module}/values.tftpl",
     {
@@ -43,13 +43,14 @@ resource "local_file" "values" {
       )
     }
   )
+  file_permission = "0664"
 }
 
 resource "helm_release" "aparavi" {
   name             = var.name
   repository       = "https://aparavi-operations.github.io/helm-charts"
   chart            = "aparavi"
-  version          = "0.9.0"
+  version          = "0.11.0"
   namespace        = local.namespace
   create_namespace = true
   values           = [local_file.values.content]
@@ -70,6 +71,20 @@ resource "kubernetes_job" "data" {
     template {
       metadata {}
       spec {
+        affinity {
+          pod_affinity {
+            required_during_scheduling_ignored_during_execution {
+              label_selector {
+                match_expressions {
+                  key      = "app.kubernetes.io/component"
+                  operator = "In"
+                  values   = ["collector"]
+                }
+              }
+              topology_key = "kubernetes.io/hostname"
+            }
+          }
+        }
         container {
           name    = "populate-data"
           image   = "busybox"
