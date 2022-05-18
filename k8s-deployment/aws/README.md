@@ -35,10 +35,11 @@ the minimal set of variables you'll most likely want to override.
 
 ### Deploy
 
-Assuming you put terraform variable definitions in `vars.tfvars` file:
+Assuming you put terraform variable definitions in `override.tfvars` file:
 
 ```
-terraform apply -var-file=vars.tfvars
+terraform init
+terraform apply -var-file=override.tfvars
 ```
 
 This will deploy Aparavi aggregator and collector on EKS, along with all
@@ -49,5 +50,5 @@ variable to.
 ### Destroy
 
 ```
-terraform destroy -var-file=vars.tfvars
+terraform destroy -var-file=override.tfvars
 ```
