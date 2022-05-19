@@ -97,7 +97,7 @@ provider "kubernetes" {
 }
 
 module "aparavi" {
-  source = "../../../modules/aparavi-helm"
+  source = "../../../modules/helm"
 
   name                 = var.name
   mysql_hostname       = module.cloudsql.address

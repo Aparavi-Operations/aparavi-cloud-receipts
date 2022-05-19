@@ -38,7 +38,7 @@ module "rds" {
 }
 
 module "aparavi" {
-  source               = "../modules/aparavi-helm"
+  source               = "../modules/helm"
   name                 = "aparavi"
   mysql_hostname       = module.rds.db_instance_address
   mysql_password       = module.rds.db_instance_password
