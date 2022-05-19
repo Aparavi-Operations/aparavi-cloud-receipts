@@ -1,5 +1,5 @@
 module "network" {
-  source = "../../../modules/gcp/modules/network"
+  source = "../modules/network"
   name   = var.name
   labels = var.labels
   region = var.region
@@ -67,7 +67,7 @@ resource "google_container_node_pool" "default" {
 }
 
 module "cloudsql" {
-  source  = "../../../modules/gcp/modules/cloudsql"
+  source  = "../modules/cloudsql"
   name    = var.name
   labels  = var.labels
   region  = var.region
@@ -97,7 +97,7 @@ provider "kubernetes" {
 }
 
 module "aparavi" {
-  source = "../../../modules/helm"
+  source = "../../helm"
 
   name                 = var.name
   mysql_hostname       = module.cloudsql.address
