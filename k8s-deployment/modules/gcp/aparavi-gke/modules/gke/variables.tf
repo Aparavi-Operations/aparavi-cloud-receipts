@@ -1,5 +1,7 @@
 variable "name" {
-  description = "Main name of resources, such as VPC, Cloud NAT, etc."
+  description = <<-EOT
+    Main name of resources, such as subnet, GKE cluster...
+  EOT
   type        = string
 }
 
@@ -10,7 +12,7 @@ variable "labels" {
 }
 
 variable "region" {
-  description = "GCP region"
+  description = "GCP region where resources reside"
   type        = string
 }
 
@@ -19,12 +21,12 @@ variable "zone" {
   type        = string
 }
 
-variable "network" {
-  description = "ID of the network to connect db instance to"
+variable "machine_type" {
+  description = "GCE machine type name to use in default node group"
   type        = string
 }
 
-variable "tier" {
-  description = "The machine type to use"
+variable "network" {
+  description = "ID of the network to connect db instance to"
   type        = string
 }

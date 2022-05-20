@@ -50,7 +50,7 @@ resource "helm_release" "aparavi" {
   name             = var.name
   repository       = "https://aparavi-operations.github.io/helm-charts"
   chart            = "aparavi"
-  version          = "0.11.0"
+  version          = var.chart_version
   namespace        = local.namespace
   create_namespace = true
   values           = [local_file.values.content]

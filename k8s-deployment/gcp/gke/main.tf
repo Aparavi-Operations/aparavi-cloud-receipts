@@ -1,5 +1,5 @@
-module "aparavi" {
-  source               = "../../modules/gcp/gke"
+module "aparavi-gke" {
+  source               = "../../modules/gcp/aparavi-gke"
   name                 = var.name
   region               = var.region
   zone                 = var.zone

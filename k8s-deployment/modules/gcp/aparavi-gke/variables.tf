@@ -36,8 +36,14 @@ variable "cloudsql_tier" {
   default     = "db-f1-micro"
 }
 
+variable "aparavi_chart_version" {
+  description = "Aparavi Helm chart version. Default: latest"
+  type        = string
+  default     = ""
+}
+
 variable "platform_host" {
-  description = "Aparavi platform host to connect aggregator to"
+  description = "Aparavi platform hostname[:port] to connect aggregator to"
   type        = string
 }
 
@@ -47,19 +53,19 @@ variable "platform_node_id" {
 }
 
 variable "aggregator_node_name" {
-  description = "Aggregator node name"
+  description = "Aggregator node name. Default: \"$${var.name}-aggregator\""
   type        = string
-  default     = "aggregator"
+  default     = ""
 }
 
 variable "collector_node_name" {
-  description = "Collector node name"
+  description = "Collector node name. Default: \"$${var.name}-collector\""
   type        = string
-  default     = "collector"
+  default     = ""
 }
 
 variable "generate_sample_data" {
-  description = "Generate sample data for collector"
+  description = "Generate sample data in collector"
   type        = bool
   default     = false
 }

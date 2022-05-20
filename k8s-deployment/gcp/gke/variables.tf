@@ -1,17 +1,3 @@
-variable "name" {
-  description = <<-EOT
-    Main name of resources, such as network, GKE cluster, Cloud SQl...
-  EOT
-  type        = string
-  default     = "aparavi"
-}
-
-variable "labels" {
-  description = "Labels to apply to resources that support it"
-  type        = map(string)
-  default     = { service : "aparavi" }
-}
-
 variable "project" {
   description = "GCP Project ID"
   type        = string
@@ -27,6 +13,20 @@ variable "zone" {
   description = "GCP zone to deploy GKE cluster in"
   type        = string
   default     = "us-west1-a"
+}
+
+variable "name" {
+  description = <<-EOT
+    Main name of resources, such as network, GKE cluster, Cloud SQl...
+  EOT
+  type        = string
+  default     = "aparavi"
+}
+
+variable "labels" {
+  description = "Labels to apply to resources that support it"
+  type        = map(string)
+  default     = { service : "aparavi" }
 }
 
 variable "gke_machine_type" {
@@ -52,19 +52,19 @@ variable "platform_node_id" {
 }
 
 variable "aggregator_node_name" {
-  description = "Aggregator node name"
+  description = "Aggregator node name. Default: \"$${var.name}-aggregator\""
   type        = string
-  default     = "aggregator"
+  default     = ""
 }
 
 variable "collector_node_name" {
-  description = "Collector node name"
+  description = "Collector node name. Default: \"$${var.name}-collector\""
   type        = string
-  default     = "collector"
+  default     = ""
 }
 
 variable "generate_sample_data" {
   description = "Generate sample data for collector"
   type        = bool
-  default     = true
+  default     = false
 }

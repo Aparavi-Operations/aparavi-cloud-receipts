@@ -1,8 +1,10 @@
 output "address" {
-  value = google_sql_database_instance.this.private_ip_address
+  description = "Cloud SQL instance address"
+  value       = google_sql_database_instance.this.private_ip_address
 }
 
 output "password" {
-  value     = random_password.password.result
-  sensitive = true
+  description = "Password of user 'aggregator'"
+  value       = random_password.password.result
+  sensitive   = true
 }
