@@ -14,7 +14,7 @@ resource "aws_instance" "monitoring_ec2" {
   user_data = <<EOF
 #!/bin/bash
 cd /root/monitoring
-sed -i 's/<<deployment>>/${var.deployment_tag}/g' vmagent/scrape.yml
+sed -i 's/<<deployment>>/${var.deployment_tag}/g' vmagent/scrape_ec2.yml
 docker-compose up -d
 docker-compose restart vmagent
 EOF
