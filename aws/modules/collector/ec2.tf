@@ -16,7 +16,7 @@ sleep 240
 echo "${var.aggregator_private_ip}" >> /opt/envvars 
 /opt/bootstrap.py
 rm /opt/bootstrap.py /opt/envvars  
-/opt/aparavi-data-ia/aggregator/app/startapp
+/opt/aparavi-data-ia/collector/app/startapp
 EOF
 
   tags = {
