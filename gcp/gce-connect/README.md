@@ -46,7 +46,7 @@ Host bastion
   User admin
   Hostname [BASTION EXTERNAL IP]
   IdentityFile ~/.ssh/id_rsa_aparavi
-Host aggregator
+Host appagent
   Hostname 10.105.10.51
   User admin
   ProxyCommand ssh bastion -W %h:%p
@@ -54,5 +54,5 @@ Host aggregator
 ```
 then run
 ```
-ssh aggregator
+ssh appagent
 ```
