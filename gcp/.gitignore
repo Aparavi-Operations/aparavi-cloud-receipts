@@ -1,6 +1,0 @@
-.terraform
-terraform.tfstate
-.terraform.lock.hcl
-.terraform.tfstate.lock.info
-terraform.tfstate.backup
-linux_amd64
