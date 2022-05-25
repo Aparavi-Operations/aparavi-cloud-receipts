@@ -12,7 +12,7 @@ locals {
 
 module "mysql" {
 
-  source = "../modules/cloud-sql"
+  source = "./modules/cloud-sql"
 
   project = var.project
   region  = var.region
