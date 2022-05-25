@@ -1,5 +1,5 @@
 module "aparavi-gce" {
-  source = "../../modules/gcp/aparavi-gce"
+  source = "../../modules/gcp/aparavi-gce-connect"
 
   project                   = var.project
   region                    = var.region
