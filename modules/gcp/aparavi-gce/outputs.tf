@@ -25,23 +25,29 @@ output "Subnet_CIDR" {
         description = " id of created bastion instance. "
         value       = google_compute_instance.aparavi_instance_bastion.name
       }
-
+      output "instance_name_appagent" {
+        description = " id of created aggregator-collector. "
+        value       = google_compute_instance.aparavi_instance_appagent.name
+      }
       output "instance_name_collector" {
-        description = " id of created collector instances. "
+        description = " id of created collector. "
         value       = google_compute_instance.aparavi_instance_collector.name
       }
-
       output "instance_name_aggregator" {
-        description = " id of created collector aggregator. "
+        description = " id of created aggregator. "
         value       = google_compute_instance.aparavi_instance_aggregator.name
       }
       output "instance_name_monitoring" {
-        description = " id of created collector aggregator. "
+        description = " id of created monitoring. "
         value       = google_compute_instance.aparavi_instance_monitoring.name
       }
       output "hostname_bastion" {
         description = " id of created bastion instances. "
         value       = google_compute_instance.aparavi_instance_bastion.hostname
+      }
+      output "hostname_appagent" {
+        description = " id of created aggregator-collector instances. "
+        value       = google_compute_instance.aparavi_instance_appagent.hostname
       }
       output "hostname_collector" {
         description = " id of created collector instances. "
@@ -59,6 +65,10 @@ output "Subnet_CIDR" {
         description = "Private IPs of created bastion instance. "
         value       = google_compute_instance.aparavi_instance_bastion.network_interface.0.network_ip
       }
+      output "private_ip_appagent" {
+        description = "Private IPs of created aggregator-collector instances. "
+        value       = google_compute_instance.aparavi_instance_appagent.network_interface.0.network_ip
+      }
       output "private_ip_collector" {
         description = "Private IPs of created collector instances. "
         value       = google_compute_instance.aparavi_instance_collector.network_interface.0.network_ip
@@ -75,11 +85,14 @@ output "Subnet_CIDR" {
         description = "Public IPs of created bastion instances. "
         value       = google_compute_instance.aparavi_instance_bastion.network_interface.0.access_config.0.nat_ip
       }
+      output "public_ip_appagent" {
+        description = "Public IPs of created aggregator-collector instances. "
+        value       = google_compute_instance.aparavi_instance_appagent.network_interface.0.access_config.0.nat_ip
+      }
       output "public_ip_collector" {
         description = "Public IPs of created collector instances. "
         value       = google_compute_instance.aparavi_instance_collector.network_interface.0.access_config.0.nat_ip
       }
-
       output "public_ip_aggregator" {
         description = "Public IPs of created aggregator instances. "
         value       = google_compute_instance.aparavi_instance_aggregator.network_interface.0.access_config.0.nat_ip
