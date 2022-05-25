@@ -1,3 +1,12 @@
+data "aws_network_interface" "nic" {
+  id = aws_instance.monitoring_ec2.primary_network_interface_id
+}
+module "cloudinit_config" {
+  source              = "./cloudinit-config"
+  deployment_name     = var.deployment_name
+  appagent_private_ip = var.appagent_private_ip
+  # monitoring_private_ip = data.aws_network_interface.nic.private_ip
+}
 resource "aws_instance" "monitoring_ec2" {
   subnet_id              = var.vm_subnet_id
   ami                    = data.aws_ami.monitoring_ami.id
@@ -10,25 +19,15 @@ resource "aws_instance" "monitoring_ec2" {
     volume_size = local.monitoring_ebs_size
     volume_type = "gp3"
   }
-
-  user_data = <<EOF
-#!/bin/bash
-cd /root/monitoring
-sed -i 's/<<deployment>>/${var.deployment_tag}/g' vmagent/scrape_ec2.yml
-docker-compose up -d
-docker-compose restart vmagent
-EOF
-
+  user_data_base64     = module.cloudinit_config.rendered_config
   iam_instance_profile = aws_iam_instance_profile.monitoring_profile.name
-
   metadata_options {
-    http_endpoint = "enabled"
+    http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
   }
-
   tags = {
-    Name = "Aparavi Monitoring Instance (${var.deployment_tag})"
-    "aparavi:role" = "monitoring"
-    "aparavi:deployment" = "${var.deployment_tag}"
+    Name                 = "Aparavi Monitoring Instance (${var.deployment_name})"
+    "aparavi:role"       = "monitoring"
+    "aparavi:deployment" = "${var.deployment_name}"
   }
 }

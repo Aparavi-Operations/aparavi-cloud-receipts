@@ -1,5 +1,5 @@
 resource "aws_iam_role" "aggregator_role" {
-  name                = "AggregatorRole_${var.deployment_tag}"
+  name = "AggregatorRole_${var.deployment_tag}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -23,13 +23,13 @@ resource "aws_iam_role_policy" "aggregator_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action   = [
-            "secretsmanager:GetResourcePolicy",
-            "secretsmanager:GetSecretValue",
-            "secretsmanager:DescribeSecret",
-            "secretsmanager:ListSecretVersionIds",
-            "rds:DescribeDBInstances",
-            ]
+        Action = [
+          "secretsmanager:GetResourcePolicy",
+          "secretsmanager:GetSecretValue",
+          "secretsmanager:DescribeSecret",
+          "secretsmanager:ListSecretVersionIds",
+          "rds:DescribeDBInstances",
+        ]
         Effect   = "Allow"
         Resource = "*"
       },

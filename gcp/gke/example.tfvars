@@ -1,13 +1,13 @@
 # GCP project ID, region and zone you want to deploy resources in.
-project="my-gcp-project-id"
-region = "us-west1"
-zone = "us-west1-b"
+project = "my-gcp-project-id"
+region  = "us-west1"
+zone    = "us-west1-b"
 
 # Main name of most of resources, such as VPC, EKS, RDS...
 name = "aparavi"
 # Labels to attach to resources
 labels = {
-  service: "aparavi",
+  service : "aparavi",
 }
 
 # Aparavi platform host in HOSTNAME[:PORT] format

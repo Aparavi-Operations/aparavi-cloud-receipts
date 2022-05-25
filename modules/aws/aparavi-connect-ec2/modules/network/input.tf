@@ -1,9 +1,9 @@
 variable "public" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "deployment_tag" {
-  type = string
+  type    = string
   default = "1"
 }

@@ -15,8 +15,8 @@ resource "azurerm_network_interface" "bastion" {
     name                          = "internal"
     subnet_id                     = var.vm_subnet
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = azurerm_public_ip.bastion.id
-    primary = true
+    public_ip_address_id          = azurerm_public_ip.bastion.id
+    primary                       = true
   }
 }
 
@@ -62,10 +62,10 @@ resource "azurerm_network_interface_security_group_association" "bastion" {
 }
 
 resource "azurerm_linux_virtual_machine" "bastion" {
-  name                = "${var.name}-bastion"
+  name          = "${var.name}-bastion"
   computer_name = "${var.name}-bastion"
-  custom_data = var.custom_data
-  user_data = var.user_data
+  custom_data   = var.custom_data
+  user_data     = var.user_data
   //encryption_at_host_enabled = true
 
   location            = var.resource_group_location
@@ -83,8 +83,8 @@ resource "azurerm_linux_virtual_machine" "bastion" {
 
   os_disk {
     caching              = "ReadWrite"
-    disk_size_gb  = var.disk_size
-    name = "${var.name}-bastiondisk"
+    disk_size_gb         = var.disk_size
+    name                 = "${var.name}-bastiondisk"
     storage_account_type = "Standard_LRS"
   }
 

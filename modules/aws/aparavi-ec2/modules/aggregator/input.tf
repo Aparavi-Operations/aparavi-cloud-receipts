@@ -1,5 +1,5 @@
 variable "instance_count" {
-  type = number
+  type    = number
   default = 1
 }
 
@@ -36,6 +36,6 @@ variable "parent_id" {
 }
 
 variable "deployment_tag" {
-  type = string
+  type    = string
   default = "1"
 }

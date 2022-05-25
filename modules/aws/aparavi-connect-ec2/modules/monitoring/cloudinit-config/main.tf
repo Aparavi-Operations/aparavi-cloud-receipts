@@ -5,11 +5,9 @@ data "cloudinit_config" "this" {
     content_type = "text/x-shellscript"
     filename     = "user-data.sh"
     content = templatefile("${path.module}/user-data.sh.tpl", {
-      platform_bind_addr = var.platform_bind_addr
-      db_addr            = var.db_addr
-      db_user            = var.db_user
-      db_passwd          = var.db_passwd
-      parentId           = var.parentid
+      deployment_name       = var.deployment_name
+      appagent_private_ip   = var.appagent_private_ip
+      monitoring_private_ip = var.monitoring_private_ip
     })
   }
 }

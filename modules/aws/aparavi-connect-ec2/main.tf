@@ -24,10 +24,11 @@ module "appagent" {
 }
 
 module "monitoring" {
-  source             = "./modules/monitoring"
-  key_name           = var.KEY_NAME
-  management_network = var.MANAGEMENT_NETWORK
-  deployment_tag     = var.DEPLOYMENT
-  network_vpc_id     = module.network.vpc_id
-  vm_subnet_id       = module.network.vm_subnet_id
+  source              = "./modules/monitoring"
+  key_name            = var.KEY_NAME
+  management_network  = var.MANAGEMENT_NETWORK
+  deployment_name     = var.DEPLOYMENT
+  network_vpc_id      = module.network.vpc_id
+  vm_subnet_id        = module.network.vm_subnet_id
+  appagent_private_ip = module.appagent.private_ip
 }

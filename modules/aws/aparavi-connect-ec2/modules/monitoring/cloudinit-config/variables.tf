@@ -6,10 +6,9 @@ variable "cloudinit_config_base64_encode" {
   type    = bool
   default = true
 }
-variable "parentid" {}
-variable "platform_bind_addr" {}
-variable "db_addr" {}
-variable "db_user" {}
-variable "db_passwd" {
-  sensitive = true
+variable "deployment_name" {}
+variable "appagent_private_ip" {}
+variable "monitoring_private_ip" {
+  type    = string
+  default = "127.0.0.1"
 }

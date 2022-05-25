@@ -6,10 +6,10 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "vm_subnet" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.10.1.0/24"
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.10.1.0/24"
   map_public_ip_on_launch = true
-  availability_zone = "${data.aws_region.current.name}a"
+  availability_zone       = "${data.aws_region.current.name}a"
 
   tags = {
     Name = "${local.vpc_vm_subnet_name} (${var.deployment_tag})"
@@ -17,8 +17,8 @@ resource "aws_subnet" "vm_subnet" {
 }
 
 resource "aws_subnet" "rds_subnet_a" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.10.2.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.10.2.0/24"
   availability_zone = "${data.aws_region.current.name}a"
 
   tags = {
@@ -27,8 +27,8 @@ resource "aws_subnet" "rds_subnet_a" {
 }
 
 resource "aws_subnet" "rds_subnet_b" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.10.3.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.10.3.0/24"
   availability_zone = "${data.aws_region.current.name}b"
 
   tags = {

@@ -15,6 +15,6 @@ variable "management_network" {
 }
 
 variable "deployment_tag" {
-  type = string
+  type    = string
   default = "1"
 }
