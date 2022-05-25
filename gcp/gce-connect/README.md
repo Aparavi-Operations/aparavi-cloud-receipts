@@ -47,7 +47,7 @@ Host bastion
   Hostname [BASTION EXTERNAL IP]
   IdentityFile ~/.ssh/id_rsa_aparavi
 Host appagent
-  Hostname 10.105.10.51
+  Hostname 10.105.10.50
   User admin
   ProxyCommand ssh bastion -W %h:%p
   IdentityFile ~/.ssh/id_rsa_aparavi

@@ -59,7 +59,7 @@ variable "admin" {
 
 # VNIC INFO
 variable "private_ip_appagent" {
-  default = "10.105.10.51"
+  default = "10.105.10.50"
 }
 variable "private_ip_monitoring" {
   default = "10.105.10.54"
