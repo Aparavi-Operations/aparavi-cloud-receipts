@@ -9,13 +9,13 @@ resource "random_string" "secret_suffix" {
   special          = false
   override_special = "_%@"
 }
- 
+
 resource "aws_secretsmanager_secret" "rds_secret" {
-   name = "RDS_Credentials_${random_string.secret_suffix.result}_${var.deployment_tag}"
+  name = "RDS_Credentials_${random_string.secret_suffix.result}_${var.deployment_tag}"
 }
- 
+
 resource "aws_secretsmanager_secret_version" "rds_creds" {
-  secret_id = aws_secretsmanager_secret.rds_secret.id
+  secret_id     = aws_secretsmanager_secret.rds_secret.id
   secret_string = <<EOF
    {
     "username": "${local.mysql_username}",
