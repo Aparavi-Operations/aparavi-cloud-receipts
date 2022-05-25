@@ -58,6 +58,7 @@ module "aparavi" {
   name                 = "aparavi"
   chart_version        = var.aparavi_chart_version
   mysql_hostname       = module.cloudsql.address
+  mysql_username       = module.cloudsql.username
   mysql_password       = module.cloudsql.password
   platform_host        = var.platform_host
   platform_node_id     = var.platform_node_id

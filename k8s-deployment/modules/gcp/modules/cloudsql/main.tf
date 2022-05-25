@@ -40,14 +40,9 @@ resource "google_sql_database_instance" "this" {
   depends_on = [google_service_networking_connection.private_vpc_connection]
 }
 
-resource "google_sql_database" "aggregator" {
-  name     = "aggregator"
-  instance = google_sql_database_instance.this.name
-}
-
 resource "random_password" "password" {
-  length  = 16
-  special = true
+  length  = 32
+  special = false # APARAVI Data IA Installer misbehaves on some of these.
 }
 
 resource "google_sql_user" "user" {

@@ -15,8 +15,13 @@ variable "mysql_hostname" {
   type        = string
 }
 
+variable "mysql_username" {
+  description = "MySQL username for aggregator"
+  type        = string
+}
+
 variable "mysql_password" {
-  description = "MySQL password of 'aggregator' user"
+  description = "MySQL password for aggregator"
   type        = string
 }
 

@@ -5,6 +5,7 @@ externalMysql:
 aggregator:
   config:
     mysql:
+      username: ${mysqlUsername}
       password: ${format("%q", mysqlPassword)}
     platform:
       host: ${platformHost}

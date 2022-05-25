@@ -1,25 +1,3 @@
-resource "aws_eks_cluster" "this" {
-  name     = var.name
-  version  = var.master_version
-  role_arn = aws_iam_role.cluster.arn
-
-  vpc_config {
-    subnet_ids              = var.subnet_ids
-    endpoint_private_access = true
-    endpoint_public_access  = var.cluster_endpoint_public_access
-  }
-
-  tags = merge(
-    var.tags,
-    var.cluster_tags,
-  )
-
-  depends_on = [
-    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.AmazonEKSVPCResourceController
-  ]
-}
-
 resource "aws_iam_role" "cluster" {
   name = "${var.name}-cluster"
 
@@ -38,10 +16,7 @@ resource "aws_iam_role" "cluster" {
     }
     EOT
 
-  tags = merge(
-    var.tags,
-    var.cluster_iam_role_tags
-  )
+  tags = merge({ Name = var.name }, var.tags)
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
@@ -54,32 +29,21 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
   role       = aws_iam_role.cluster.name
 }
 
-resource "aws_eks_node_group" "default" {
-  cluster_name    = aws_eks_cluster.this.name
-  node_group_name = "default"
-  instance_types  = var.instance_types
-  node_role_arn   = aws_iam_role.node.arn
-  subnet_ids      = var.subnet_ids
+resource "aws_eks_cluster" "this" {
+  name     = var.name
+  role_arn = aws_iam_role.cluster.arn
 
-  scaling_config {
-    desired_size = var.desired_size
-    max_size     = var.max_size
-    min_size     = var.min_size
+  vpc_config {
+    subnet_ids              = var.subnet_ids
+    endpoint_private_access = true
+    endpoint_public_access  = true
   }
 
-  tags = merge(
-    var.tags,
-    { Name = "default" }
-  )
-
-  lifecycle {
-    ignore_changes = [scaling_config[0].desired_size]
-  }
+  tags = merge({ Name = var.name }, var.tags)
 
   depends_on = [
-    aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
-    aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.AmazonEKSVPCResourceController
   ]
 }
 
@@ -101,10 +65,7 @@ resource "aws_iam_role" "node" {
     }
   EOT
 
-  tags = merge(
-    var.tags,
-    var.node_iam_role_tags
-  )
+  tags = merge({ Name = var.name }, var.tags)
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
@@ -120,4 +81,30 @@ resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
 resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.node.name
+}
+
+resource "aws_eks_node_group" "default" {
+  cluster_name    = aws_eks_cluster.this.name
+  node_group_name = "default"
+  instance_types  = var.instance_types
+  node_role_arn   = aws_iam_role.node.arn
+  subnet_ids      = var.subnet_ids
+
+  scaling_config {
+    desired_size = 2
+    max_size     = 2
+    min_size     = 2
+  }
+
+  tags = merge({ Name = var.name }, var.tags)
+
+  lifecycle {
+    ignore_changes = [scaling_config[0].desired_size]
+  }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
+  ]
 }

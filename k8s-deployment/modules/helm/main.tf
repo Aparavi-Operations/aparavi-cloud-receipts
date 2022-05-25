@@ -30,6 +30,7 @@ resource "local_file" "values" {
     "${path.module}/values.tftpl",
     {
       mysqlHostname      = var.mysql_hostname
+      mysqlUsername      = var.mysql_username
       mysqlPassword      = var.mysql_password
       platformHost       = var.platform_host
       platformNodeId     = var.platform_node_id
