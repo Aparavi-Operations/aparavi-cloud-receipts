@@ -36,6 +36,14 @@ resource "aws_security_group" "ec2" {
   }
 
   ingress {
+    description = "Allow access to Grafana from Internet"
+    from_port   = local.vmagent_http_port
+    to_port     = local.vmagent_http_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "Allow access to VMagent http console from the management network"
     from_port   = local.vmagent_http_port
     to_port     = local.vmagent_http_port

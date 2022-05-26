@@ -1,11 +1,6 @@
-data "aws_network_interface" "nic" {
-  id = aws_instance.monitoring_ec2.primary_network_interface_id
-}
 module "cloudinit_config" {
   source              = "./cloudinit-config"
   deployment_name     = var.deployment_name
-  appagent_private_ip = var.appagent_private_ip
-  # monitoring_private_ip = data.aws_network_interface.nic.private_ip
 }
 resource "aws_instance" "monitoring_ec2" {
   subnet_id              = var.vm_subnet_id

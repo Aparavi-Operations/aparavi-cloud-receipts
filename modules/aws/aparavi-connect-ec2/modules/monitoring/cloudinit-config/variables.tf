@@ -7,8 +7,3 @@ variable "cloudinit_config_base64_encode" {
   default = true
 }
 variable "deployment_name" {}
-variable "appagent_private_ip" {}
-variable "monitoring_private_ip" {
-  type    = string
-  default = "127.0.0.1"
-}

@@ -78,12 +78,9 @@ cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receip
 cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
 rm -f /root/monitoring/vmagent/scrape_azure.yml
-rm -f /root/monitoring/vmagent/scrape_ec2.yml
-sed -i 's/<<deployment>>/${deployment_name}/g' /root/monitoring/vmagent/scrape_gcp.yml
-sed -i 's/<<aggregator_ip>>/${appagent_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
-sed -i 's/<<monitoring_ip>>/{{ ds.meta_data.local_ipv4 }}/g' /root/monitoring/vmagent/scrape_gcp.yml
+rm -f /root/monitoring/vmagent/scrape_gcp.yml
+sed -i 's/<<deployment>>/${deployment_name}/g' /root/monitoring/vmagent/scrape_ec2.yml
 cp /root/monitoring/aparavi-monitoring.service /etc/systemd/system/aparavi-monitoring.service
 systemctl daemon-reload
 systemctl enable aparavi-monitoring
 systemctl start aparavi-monitoring
-

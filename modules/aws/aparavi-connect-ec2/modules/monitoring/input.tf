@@ -17,6 +17,3 @@ variable "management_network" {
 variable "deployment_name" {
   type = string
 }
-variable "appagent_private_ip" {
-  type = string
-}

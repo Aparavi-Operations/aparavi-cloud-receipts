@@ -11,8 +11,8 @@ output "username" {
 output "password" {
   value       = random_password.this.result
   description = <<EOT
-     The database password (this password may be old, because Terraform doesn't
-     track it after initial creation)
-     EOT
+    The database password (this password may be old, because Terraform doesn't
+    track it after initial creation)
+    EOT
   sensitive   = true
 }

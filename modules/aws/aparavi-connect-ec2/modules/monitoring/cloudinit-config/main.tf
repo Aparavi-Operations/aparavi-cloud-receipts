@@ -6,8 +6,6 @@ data "cloudinit_config" "this" {
     filename     = "user-data.sh"
     content = templatefile("${path.module}/user-data.sh.tpl", {
       deployment_name       = var.deployment_name
-      appagent_private_ip   = var.appagent_private_ip
-      monitoring_private_ip = var.monitoring_private_ip
     })
   }
 }
