@@ -1,18 +1,10 @@
-# Aparavi on Google Cloud Platform (GCP)
+# Aparavi On Google Cloud Platform (GCP)
 
-## Requirements
+Terraform configuration files and modules to deploy Aparavi application on
+Google Cloud Platform (GCP).
 
-Make sure you have downloaded and installed [gcloud CLI](https://cloud.google.com/sdk/gcloud#download_and_install_the). Installation
-instructions are available at https://cloud.google.com/sdk/docs/install.
-Setting up gcloud CLI instructions are available at
-https://cloud.google.com/sdk/docs/initializing. You will need to acquire new
-user credentials to use for Application Default Credentials in order for
-terraform to authenticate to GCP:
+## Directory Structure
 
-```
-gcloud auth application-default login
-```
+[`gce/`](gce/): Deployment example of Aparavi on Google Compute Engine (GCE).
 
-## Organization of GCP cloud receipts
-
-[`gke/`](gke/): Deployment example of Aparavi on Google Kubernetes Engine (GKE)
+[`gke/`](gke/): Deployment example of Aparavi on Google Kubernetes Engine (GKE).

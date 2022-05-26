@@ -22,13 +22,13 @@ EOF
   iam_instance_profile = aws_iam_instance_profile.monitoring_profile.name
 
   metadata_options {
-    http_endpoint = "enabled"
+    http_endpoint               = "enabled"
     http_put_response_hop_limit = 2
   }
 
   tags = {
-    Name = "Aparavi Monitoring Instance (${var.deployment_tag})"
-    "aparavi:role" = "monitoring"
+    Name                 = "Aparavi Monitoring Instance (${var.deployment_tag})"
+    "aparavi:role"       = "monitoring"
     "aparavi:deployment" = "${var.deployment_tag}"
   }
 }

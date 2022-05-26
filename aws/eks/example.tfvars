@@ -1,6 +1,6 @@
 # Name of AWS CLI profile you want to use. This can be omitted if the [default]
 # profile points to the account you want to deploy in.
-aws_profile="my-profile"
+aws_profile = "my-profile"
 # AWS region to deploy resources in. If left blank or unspecified, CLI
 # configuration value will be used.
 region = "us-west-1"
