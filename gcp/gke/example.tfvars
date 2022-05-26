@@ -3,7 +3,7 @@ project="my-gcp-project-id"
 region = "us-west1"
 zone = "us-west1-b"
 
-# Main name of most of resources, such as VPC, EKS, RDS...
+# Main name of most of resources, such as VPC, GKE, Cloud SQL...
 name = "aparavi"
 # Labels to attach to resources
 labels = {

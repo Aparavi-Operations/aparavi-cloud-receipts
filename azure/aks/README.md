@@ -2,9 +2,16 @@
 
 ## Requirements
 
-Make sure you have installed and configured
-[terraform](../../README.md#requirements) and
-[Azure CLI](../README.md#requirements).
+You will need Terraform CLI installed on your system. Packages are available at
+https://www.terraform.io/downloads. There is also a tutorial on how to install
+Terraform at https://learn.hashicorp.com/tutorials/terraform/install-cli.
+
+Make sure you have installed
+[Azure CLI](https://docs.microsoft.com/en-us/cli/azure/).
+Installation instructions are available at
+https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+You should also make sure you are signed in sith Azure CLI. Any method described
+at https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli should do.
 
 ## Configuration, deployment and destroy
 

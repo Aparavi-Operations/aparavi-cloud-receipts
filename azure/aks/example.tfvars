@@ -1,10 +1,10 @@
 # Azure location want to deploy resources in.
 location="eastus"
 
-# Main name of most of resources, such as VPC, EKS, RDS...
+# Main name of most of resources, such as VNet, AKS, MySQL...
 name = "aparavi"
 # Labels to attach to resources
-labels = {
+tags = {
   service: "aparavi",
 }
 
