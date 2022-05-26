@@ -1,7 +1,7 @@
-# Aparavi On AWS EKS Terraform Module
+# Aparavi on Amazon Web Services (AWS) Elastic Kubernetes Service (EKS)
 
-Terraform configuration files and modules for deploying Aparavi application on
-AWS EKS.
+Terraform configuration files for deploying Aparavi on Amazon Web Services (AWS)
+Elastic Kubernetes Service (EKS).
 
 ## Requirements
 
