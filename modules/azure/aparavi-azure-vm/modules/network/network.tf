@@ -13,14 +13,14 @@ resource "azurerm_virtual_network" "main" {
 
 resource "azurerm_subnet" "public" {
   name                 = "${var.name}-public"
-  resource_group_name = var.resource_group_name
+  resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes = [cidrsubnet(var.vnet_cidr, 2, 1)]
+  address_prefixes     = [cidrsubnet(var.vnet_cidr, 2, 1)]
 }
 
 resource "azurerm_subnet" "private" {
   name                 = "${var.name}-private"
-  resource_group_name = var.resource_group_name
+  resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes = [cidrsubnet(var.vnet_cidr, 2, 2)]
+  address_prefixes     = [cidrsubnet(var.vnet_cidr, 2, 2)]
 }

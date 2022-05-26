@@ -15,8 +15,8 @@ resource "azurerm_network_interface" "node" {
     name                          = "internal"
     subnet_id                     = var.vm_subnet
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = azurerm_public_ip.node.id
-    primary = true
+    public_ip_address_id          = azurerm_public_ip.node.id
+    primary                       = true
   }
 }
 
@@ -57,16 +57,16 @@ resource "azurerm_network_security_rule" "node-ssh-in" {
 }
 
 resource "azurerm_network_security_rule" "node-specific-in" {
-  for_each = var.fw_ports
+  for_each                    = var.fw_ports
   name                        = "${var.name}-${each.key}-rule"
-  priority                    = "${lookup(each.value, "priority", 200)}"
+  priority                    = lookup(each.value, "priority", 200)
   direction                   = "Inbound"
   access                      = "Allow"
-  protocol                    = "${lookup(each.value, "protocol", "Tcp")}"
+  protocol                    = lookup(each.value, "protocol", "Tcp")
   source_port_range           = "*"
-  destination_port_range      = "${each.value.port}"
-  source_address_prefix       = "${lookup(each.value, "source", "VirtualNetwork")}"
-  destination_address_prefix  = "${lookup(each.value, "destination", "VirtualNetwork")}"
+  destination_port_range      = each.value.port
+  source_address_prefix       = lookup(each.value, "source", "VirtualNetwork")
+  destination_address_prefix  = lookup(each.value, "destination", "VirtualNetwork")
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.node.name
 }
@@ -77,10 +77,10 @@ resource "azurerm_network_interface_security_group_association" "node" {
 }
 
 resource "azurerm_linux_virtual_machine" "node" {
-  name                = "${var.name}-vm"
+  name          = "${var.name}-vm"
   computer_name = "${var.name}-${replace(azurerm_public_ip.node.ip_address, ".", "-")}"
-  custom_data = var.custom_data
-  user_data = var.user_data
+  custom_data   = var.custom_data
+  user_data     = var.user_data
   //encryption_at_host_enabled = true
 
   location            = var.resource_group_location
@@ -94,7 +94,7 @@ resource "azurerm_linux_virtual_machine" "node" {
   dynamic "identity" {
     for_each = toset(var.identity)
     content {
-      type = identity.value["type"]
+      type         = identity.value["type"]
       identity_ids = lookup(identity.value, "identity_ids", [])
     }
   }
@@ -105,8 +105,8 @@ resource "azurerm_linux_virtual_machine" "node" {
 
   os_disk {
     caching              = "ReadWrite"
-    disk_size_gb  = var.disk_size
-    name = "${var.name}-disk"
+    disk_size_gb         = var.disk_size
+    name                 = "${var.name}-disk"
     storage_account_type = "Standard_LRS"
   }
 

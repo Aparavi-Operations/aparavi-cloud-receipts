@@ -20,8 +20,8 @@ rm /opt/bootstrap.py /opt/envvars
 EOF
 
   tags = {
-    Name = "Aparavi Collector Instance (${var.deployment_tag})"
-    "aparavi:role" = "collector"
+    Name                 = "Aparavi Collector Instance (${var.deployment_tag})"
+    "aparavi:role"       = "collector"
     "aparavi:deployment" = "${var.deployment_tag}"
   }
 }

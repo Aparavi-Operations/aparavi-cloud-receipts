@@ -1,5 +1,5 @@
 resource "aws_iam_role" "monitoring_role" {
-  name                = "MonitoringRole_${var.deployment_tag}"
+  name = "MonitoringRole_${var.deployment_tag}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -23,10 +23,10 @@ resource "aws_iam_role_policy" "aggregator_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action   = [
-            "ec2:DescribeInstances",
-            "ec2:DescribeAvailabilityZones",
-            ]
+        Action = [
+          "ec2:DescribeInstances",
+          "ec2:DescribeAvailabilityZones",
+        ]
         Effect   = "Allow"
         Resource = "*"
       },

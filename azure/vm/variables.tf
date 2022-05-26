@@ -1,13 +1,13 @@
 variable "name" {
   description = "Common resources name"
-  type = string
-  default = "aparavienv"
+  type        = string
+  default     = "aparavienv"
 }
 
 variable "vnet_cidr" {
   description = "Virtual network common CIDR"
-  type = string
-  default = "10.0.0.0/8"
+  type        = string
+  default     = "10.0.0.0/8"
 }
 
 variable "location" {
@@ -15,7 +15,7 @@ variable "location" {
 }
 
 variable "platform" {
-  type = string
+  type    = string
   default = "preview.aparavi.com"
 }
 
@@ -24,12 +24,12 @@ variable "parent_id" {
 }
 
 variable "bastion_size" {
-  type = string
+  type    = string
   default = "Standard_DS1"
 }
 
 variable "db_shape" {
-  type = string
+  type    = string
   default = "GP_Gen5_4"
 }
 
@@ -38,7 +38,7 @@ variable "collector_storage_size" {
 }
 
 variable "db_user" {
-  type = string
+  type    = string
   default = "aparavi"
 }
 
@@ -47,22 +47,22 @@ variable "db_password" {
 }
 
 variable "aggregator_size" {
-  type = string
+  type    = string
   default = "Standard_E4bs_v5"
 }
 
 variable "collector_size" {
-  type = string
+  type    = string
   default = "Standard_E4bs_v5"
 }
 
 variable "monitoring_size" {
-  type = string
+  type    = string
   default = "Standard_DS1"
 }
 
 variable "monitoring_role_name" {
-  type = string
+  type    = string
   default = "Reader"
 }
 
@@ -72,6 +72,6 @@ variable "ssh_key" {
 
 variable "tags" {
   description = "Tags associated with resources"
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
 }

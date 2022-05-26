@@ -19,7 +19,7 @@ collector_storage_size = 200
 
 # VM shapes
 aggregator_size = "Standard_E2bs_v5"
-collector_size = "Standard_E2bs_v5"
+collector_size  = "Standard_E2bs_v5"
 
 # SSH key for aparavi user on all VMs
 ssh_key = "ssh-rsa XXXXX...."

@@ -8,8 +8,8 @@ resource "azurerm_public_ip" "nat" {
 
 resource "azurerm_nat_gateway" "main" {
   name                    = "${var.name}-nat"
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
+  location                = var.resource_group_location
+  resource_group_name     = var.resource_group_name
   sku_name                = "Standard"
   idle_timeout_in_minutes = 10
 }

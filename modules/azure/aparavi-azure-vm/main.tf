@@ -29,7 +29,7 @@ systemctl start node_exporter
 rm -rf $${TEMPORARY_DIR}
 EOF
 
-  collector_install = <<EOF
+  collector_install  = <<EOF
 #!/bin/sh
 sudo echo Script started > /tmp/script.log
 NODE_EXPORTER_VERSION='1.3.1'
@@ -56,7 +56,7 @@ systemctl enable node_exporter
 systemctl start node_exporter
 rm -rf $${TEMPORARY_DIR}
 EOF
-  monitoring_install =<<EOF
+  monitoring_install = <<EOF
 ## template: jinja
 #!/bin/sh
 
@@ -121,48 +121,48 @@ resource "azurerm_resource_group" "main" {
 }
 
 module "network" {
-  source = "./modules/network"
-  name = var.name
-  vnet_cidr = var.vnet_cidr
+  source                  = "./modules/network"
+  name                    = var.name
+  vnet_cidr               = var.vnet_cidr
   resource_group_location = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  tags = var.tags
+  resource_group_name     = azurerm_resource_group.main.name
+  tags                    = var.tags
 }
 
 module "bastion" {
-  source = "./modules/bastion"
-  name = var.name
+  source                  = "./modules/bastion"
+  name                    = var.name
   resource_group_location = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name  
-  vm_subnet = module.network.public_subnet
-  vm_size = var.bastion_size
-  ssh_key = var.ssh_key
-  tags = var.tags
+  resource_group_name     = azurerm_resource_group.main.name
+  vm_subnet               = module.network.public_subnet
+  vm_size                 = var.bastion_size
+  ssh_key                 = var.ssh_key
+  tags                    = var.tags
 }
 
 module "aggregator_db" {
-  source = "./modules/database"
-  name = "${var.name}-aggregatordb"
+  source                  = "./modules/database"
+  name                    = "${var.name}-aggregatordb"
   resource_group_location = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  db_shape = var.db_shape
-  db_size = ceil(var.collector_storage_size / 2) * 1024
-  db_user = var.db_user
-  db_password = var.db_password
-  db_access_ip = module.aggregator.node_public_ip
-  tags = var.tags
+  resource_group_name     = azurerm_resource_group.main.name
+  db_shape                = var.db_shape
+  db_size                 = ceil(var.collector_storage_size / 2) * 1024
+  db_user                 = var.db_user
+  db_password             = var.db_password
+  db_access_ip            = module.aggregator.node_public_ip
+  tags                    = var.tags
 }
 
 module "aggregator" {
-  source = "./modules/node"
-  name = "${var.name}-aggregator"
+  source                  = "./modules/node"
+  name                    = "${var.name}-aggregator"
   resource_group_location = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name  
-  vm_subnet = module.network.public_subnet
-  vm_size = var.aggregator_size
-  ssh_key = var.ssh_key
-  disk_size = ceil(var.collector_storage_size / 3) + 50
-  custom_data = base64encode(local.aggregator_install)
+  resource_group_name     = azurerm_resource_group.main.name
+  vm_subnet               = module.network.public_subnet
+  vm_size                 = var.aggregator_size
+  ssh_key                 = var.ssh_key
+  disk_size               = ceil(var.collector_storage_size / 3) + 50
+  custom_data             = base64encode(local.aggregator_install)
   fw_ports = {
     "data" = {
       "priority" = 200,
@@ -177,15 +177,15 @@ module "aggregator" {
 }
 
 module "collector" {
-  source = "./modules/node"
-  name = "${var.name}-collector"
+  source                  = "./modules/node"
+  name                    = "${var.name}-collector"
   resource_group_location = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name  
-  vm_subnet = module.network.public_subnet
-  vm_size = var.collector_size
-  ssh_key = var.ssh_key
-  disk_size = var.collector_storage_size + 50
-  custom_data = base64encode(local.collector_install)
+  resource_group_name     = azurerm_resource_group.main.name
+  vm_subnet               = module.network.public_subnet
+  vm_size                 = var.collector_size
+  ssh_key                 = var.ssh_key
+  disk_size               = var.collector_storage_size + 50
+  custom_data             = base64encode(local.collector_install)
   fw_ports = {
     "node_forwarder" = {
       "priority" = 210,
@@ -202,15 +202,15 @@ module "collector" {
 #}
 
 module "monitoring" {
-  source = "./modules/node"
-  name = "${var.name}-monitoring"
+  source                  = "./modules/node"
+  name                    = "${var.name}-monitoring"
   resource_group_location = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name  
-  vm_subnet = module.network.public_subnet
-  vm_size = var.monitoring_size
-  ssh_key = var.ssh_key
-  disk_size = 30
-  custom_data = base64encode(local.monitoring_install)
+  resource_group_name     = azurerm_resource_group.main.name
+  vm_subnet               = module.network.public_subnet
+  vm_size                 = var.monitoring_size
+  ssh_key                 = var.ssh_key
+  disk_size               = 30
+  custom_data             = base64encode(local.monitoring_install)
   identity = [
     { type = "SystemAssigned" }
   ]

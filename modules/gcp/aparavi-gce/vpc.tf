@@ -18,21 +18,21 @@
 #################
 
 resource "google_compute_network" "aparavi-vpc" {
-    project   = data.google_client_config.current.project 
-    name = "aparavi-vpc"
-    auto_create_subnetworks = false
-    mtu                     = 1460
-    }
+  project                 = data.google_client_config.current.project
+  name                    = "aparavi-vpc"
+  auto_create_subnetworks = false
+  mtu                     = 1460
+}
 
 #################
 # SUBNET
 #################
 resource "google_compute_subnetwork" "aparavi_sub" {
-  name          = "aparavi-sub"
-  ip_cidr_range = var.subnet_cidr
-  region        = var.region
-  network       = google_compute_network.aparavi-vpc.name
-  description   = "This is a custom subnet for Aparavi apps"
+  name                     = "aparavi-sub"
+  ip_cidr_range            = var.subnet_cidr
+  region                   = var.region
+  network                  = google_compute_network.aparavi-vpc.name
+  description              = "This is a custom subnet for Aparavi apps"
   private_ip_google_access = "true"
   #log_config {
   #  aggregation_interval = "INTERVAL_10_MIN"
@@ -44,7 +44,7 @@ resource "google_compute_subnetwork" "aparavi_sub" {
   #              range_name    = "subnet-01-secondary-01"
   #              ip_cidr_range = "192.168.64.0/24"
   #          }
-        
+
 
 }
 ######################
@@ -52,7 +52,7 @@ resource "google_compute_subnetwork" "aparavi_sub" {
 ######################    
 # web network tag
 resource "google_compute_firewall" "aparavi-bastion-ssh" {
-  project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
+  project     = data.google_client_config.current.project # you can Replace this with your project ID in quotes var.project_id
   name        = "allow-ssh-rule-bastion"
   network     = google_compute_network.aparavi-vpc.name
   description = "Creates firewall rule to allow ssh to bastion host"
@@ -60,14 +60,14 @@ resource "google_compute_firewall" "aparavi-bastion-ssh" {
   allow {
     protocol = "tcp"
     ports    = ["22"]
-         }
-   source_ranges = ["0.0.0.0/0"]
-   target_tags = ["bastion"]
-    timeouts {}
+  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["bastion"]
+  timeouts {}
 }
 
 resource "google_compute_firewall" "aparavi-monitoring-web" {
-  project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
+  project     = data.google_client_config.current.project # you can Replace this with your project ID in quotes var.project_id
   name        = "allow-ssh-rule-monitoring"
   network     = google_compute_network.aparavi-vpc.name
   description = "Creates firewall rule to allow http to monitoring host"
@@ -75,14 +75,14 @@ resource "google_compute_firewall" "aparavi-monitoring-web" {
   allow {
     protocol = "tcp"
     ports    = ["80"]
-         }
-   source_ranges = ["0.0.0.0/0"]
-   target_tags = ["monitoring"]
-    timeouts {}
+  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["monitoring"]
+  timeouts {}
 }
 
 resource "google_compute_firewall" "aparavi-app-ssh" {
-  project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
+  project     = data.google_client_config.current.project # you can Replace this with your project ID in quotes var.project_id
   name        = "allow-ssh-rule-app"
   network     = google_compute_network.aparavi-vpc.name
   description = "Creates firewall rule to allow ssh to local addresses of app"
@@ -90,14 +90,14 @@ resource "google_compute_firewall" "aparavi-app-ssh" {
   allow {
     protocol = "tcp"
     ports    = ["22"]
-         }
-   source_ranges = ["10.105.10.53/32"]
-   target_tags = ["aparavi-app"]
-    timeouts {}
+  }
+  source_ranges = ["10.105.10.53/32"]
+  target_tags   = ["aparavi-app"]
+  timeouts {}
 }
 
 resource "google_compute_firewall" "aparavi-app-aggregator" {
-  project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
+  project     = data.google_client_config.current.project # you can Replace this with your project ID in quotes var.project_id
   name        = "allow-dataport-rule-local"
   network     = google_compute_network.aparavi-vpc.name
   description = "Creates firewall rule targeting tagged instances"
@@ -105,13 +105,13 @@ resource "google_compute_firewall" "aparavi-app-aggregator" {
   allow {
     protocol = "tcp"
     ports    = ["9552", "9545"]
-         }
-   source_ranges = ["10.105.10.0/24"]
-   target_tags = ["aparavi-app"]
-    timeouts {}
+  }
+  source_ranges = ["10.105.10.0/24"]
+  target_tags   = ["aparavi-app"]
+  timeouts {}
 }
 resource "google_compute_firewall" "aparavi-app-node_exporter" {
-  project     = data.google_client_config.current.project  # you can Replace this with your project ID in quotes var.project_id
+  project     = data.google_client_config.current.project # you can Replace this with your project ID in quotes var.project_id
   name        = "allow-node-exporter-rule-local"
   network     = google_compute_network.aparavi-vpc.name
   description = "Creates firewall rule targeting tagged instances"
@@ -119,12 +119,12 @@ resource "google_compute_firewall" "aparavi-app-node_exporter" {
   allow {
     protocol = "tcp"
     ports    = ["9100"]
-         }
-   source_ranges = ["10.105.10.0/24"]
-   target_tags = ["aparavi-app"]
-    timeouts {}
+  }
+  source_ranges = ["10.105.10.0/24"]
+  target_tags   = ["aparavi-app"]
+  timeouts {}
 }
 
 output "project" {
-  value = "${data.google_client_config.current.project}"
+  value = data.google_client_config.current.project
 }

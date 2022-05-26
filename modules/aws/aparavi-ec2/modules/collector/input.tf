@@ -1,5 +1,5 @@
 variable "instance_count" {
-  type = number
+  type    = number
   default = 1
 }
 
@@ -24,6 +24,6 @@ variable "aggregator_private_ip" {
 }
 
 variable "deployment_tag" {
-  type = string
+  type    = string
   default = "1"
 }
