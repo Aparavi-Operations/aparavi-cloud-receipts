@@ -1,13 +1,11 @@
-# GCP project ID, region and zone you want to deploy resources in.
-project = "my-gcp-project-id"
-region  = "us-west1"
-zone    = "us-west1-b"
+# Azure location want to deploy resources in.
+location="eastus"
 
-# Main name of most of resources, such as VPC, GKE, Cloud SQL...
+# Main name of most of resources, such as VNet, AKS, MySQL...
 name = "aparavi"
 # Labels to attach to resources
-labels = {
-  service : "aparavi",
+tags = {
+  service: "aparavi",
 }
 
 # Aparavi platform host in HOSTNAME[:PORT] format
