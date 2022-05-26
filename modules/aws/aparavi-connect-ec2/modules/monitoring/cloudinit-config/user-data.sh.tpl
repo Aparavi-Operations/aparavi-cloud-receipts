@@ -23,7 +23,6 @@ export ANSIBLE_ROLES_PATH=/root/.ansible/collections/ansible_collections/devsec/
 export ANSIBLE_HOST_KEY_CHECKING=false
 ansible-playbook /tmp/debian11_infrastructure.yml --connection=local -i 127.0.0.1, -v
 
-
 set -ex
 sudo echo Script started > /tmp/script.log
 sudo apt update
