@@ -25,6 +25,7 @@ module "aggregator" {
 
 module "collector" {
   source                = "./modules/collector"
+  instance_count        = var.collector_instance_count
   key_name              = var.KEY_NAME
   management_network    = var.MANAGEMENT_NETWORK
   deployment_tag        = var.DEPLOYMENT
