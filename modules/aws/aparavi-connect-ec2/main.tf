@@ -30,5 +30,4 @@ module "monitoring" {
   deployment_name     = var.DEPLOYMENT
   network_vpc_id      = module.network.vpc_id
   vm_subnet_id        = module.network.vm_subnet_id
-  appagent_private_ip = module.appagent.private_ip
 }

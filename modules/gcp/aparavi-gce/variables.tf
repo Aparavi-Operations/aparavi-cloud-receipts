@@ -43,12 +43,11 @@ variable "subnetwork_project" {
 }
 
 variable "instances_name_collector" {
-
   default = "aparavi-app-collector-test-dpl"
 }
+
 variable "instances_name_appagent" {
-  
-  default     = "aparavi-app-appagent-test-dpl"
+  default = "aparavi-app-appagent-test-dpl"
 }
 variable "instances_name_aggregator" {
 
@@ -87,7 +86,6 @@ variable "user_data_collector" {
 variable "user_data_aggregator" {
   default = "./cloud-init/debian_userdata_aggregator.sh"
 }
-
 
 variable "hostname_appagent" {
   description = "Hostname of aggregator-collector instances"

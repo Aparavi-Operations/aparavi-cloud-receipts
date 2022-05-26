@@ -7,6 +7,7 @@
         - name: tag:aparavi:role
           values:
             - collector
+            - appagent
             - aggregator
             - monitoring
         - name: tag:aparavi:deployment
@@ -21,7 +22,7 @@
       regex: '(.+)'
     - target_label: 'service'
       source_labels: ['__meta_ec2_tag_aparavi_role']
-      regex: '(collector|aggregator)'
+      regex: '(collector|appagent|aggregator)'
       replacement: 'aparavi'
     - target_label: 'service'
       source_labels: ['__meta_ec2_tag_aparavi_role']
