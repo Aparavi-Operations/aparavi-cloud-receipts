@@ -42,17 +42,9 @@ variable "subnetwork_project" {
   default     = ""
 }
 
-variable "instances_name_collector" {
-
-  default = "aparavi-app-collector-test-dpl"
-}
 variable "instances_name_appagent" {
-  
-  default     = "aparavi-app-appagent-test-dpl"
-}
-variable "instances_name_aggregator" {
 
-  default = "aparavi-app-aggregator-test-dpl"
+  default = "aparavi-app-appagent-test-dpl"
 }
 variable "instance_name_bastion" {
   default = "aparavi-bastion-test-dpl"
@@ -66,11 +58,8 @@ variable "admin" {
 }
 
 # VNIC INFO
-variable "private_ip_aggregator" {
-  default = "10.105.10.51"
-}
-variable "private_ip_collector" {
-  default = "10.105.10.52"
+variable "private_ip_appagent" {
+  default = "10.105.10.50"
 }
 variable "private_ip_monitoring" {
   default = "10.105.10.54"
@@ -78,29 +67,15 @@ variable "private_ip_monitoring" {
 variable "private_ip_bastion" {
   default = "10.105.10.53"
 }
-# BOOT INFO      
+# BOOT INFO
 # user data
-variable "user_data_collector" {
-  default = "./cloud-init/debian_userdata_collector.sh"
+variable "user_data_appagent" {
+  default = "./cloud-init/debian_userdata_appagent.sh"
 }
-
-variable "user_data_aggregator" {
-  default = "./cloud-init/debian_userdata_aggregator.sh"
-}
-
 
 variable "hostname_appagent" {
-  description = "Hostname of aggregator-collector instances"
+  description = "Hostname of appagent instances"
   default     = "aparavi-app-appagent-test-dpl.org.info"
-}
-variable "hostname_collector" {
-  description = "Hostname of collector instances"
-  default     = "aparavi-app-collector-test-dpl.org.info"
-}
-
-variable "hostname_aggregator" {
-  description = "Hostname of aggregator instances"
-  default     = "aparavi-app-aggregator-test-dpl.org.info"
 }
 
 variable "hostname_bastion" {

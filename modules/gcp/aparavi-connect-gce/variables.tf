@@ -1,106 +1,81 @@
 
 variable "project" {
-  default = "YOUR_PROJECT_ID" # Change ME
+  default = "YOUR_PROJECT_ID"   # Change ME
 }
 variable "region" {
-  default = "us-east1"
+    default = "us-east1"
 }
 
 variable "parentid" {
 
 }
-variable "bind_addr" { #DNS name of the platform without https:// part
-  #default = "aaa.bbb.com" #DNS name of the platform without https:// part
+variable "bind_addr"{ #DNS name of the platform without https:// part
+   #default = "aaa.bbb.com" #DNS name of the platform without https:// part
 }
 variable "zone" {
-  default = "us-east1-b"
+    default = "us-east1-b"
 }
 # VPC INFO
-variable "vnet_name" {
-  default = "aparavi-vpc"
-}
-
+    variable "vnet_name" {
+      default = "aparavi-vpc"
+    }
+    
 variable "subnet-02_cidr" {
-  default = "10.105.0.0/16"
-}
+      default = "10.105.0.0/16"
+    }
 
 # SUBNET INFO
-variable "subnet_name" {
-  default = "aparavi-sub"
-}
+    variable "subnet_name"{
+      default = "aparavi-sub" 
+      }
 
-variable "subnet_cidr" {
-  default = "10.105.10.0/24"
-}
-variable "firewall_name" {
-  default = "aparavi_fw"
-}
+    variable "subnet_cidr"{
+      default = "10.105.10.0/24"
+      }
+  variable "firewall_name" {
+    default = "aparavi_fw"
+  }
 
-
+ 
 variable "subnetwork_project" {
   description = "The project that subnetwork belongs to"
   default     = ""
 }
 
-variable "instances_name_collector" {
-
-  default = "aparavi-app-collector-test-dpl"
-}
 variable "instances_name_appagent" {
   
   default     = "aparavi-app-appagent-test-dpl"
 }
-variable "instances_name_aggregator" {
-
-  default = "aparavi-app-aggregator-test-dpl"
-}
 variable "instance_name_bastion" {
-  default = "aparavi-bastion-test-dpl"
+  default     = "aparavi-bastion-test-dpl"
 }
 variable "instance_name_monitoring" {
-  default = "aparavi-monitoring-test-dpl"
+  default     = "aparavi-monitoring-test-dpl"
 }
 variable "admin" {
   description = "OS user"
-  default     = "admin"
+  default  = "admin"
 }
 
 # VNIC INFO
-variable "private_ip_aggregator" {
-  default = "10.105.10.51"
-}
-variable "private_ip_collector" {
-  default = "10.105.10.52"
-}
-variable "private_ip_monitoring" {
-  default = "10.105.10.54"
-}
-variable "private_ip_bastion" {
-  default = "10.105.10.53"
-}
+      variable "private_ip_appagent" {
+        default = "10.105.10.50"
+      }
+      variable "private_ip_monitoring" {
+        default = "10.105.10.54"
+      }
+      variable "private_ip_bastion" {
+        default = "10.105.10.53"
+      }
 # BOOT INFO      
-# user data
-variable "user_data_collector" {
-  default = "./cloud-init/debian_userdata_collector.sh"
-}
-
-variable "user_data_aggregator" {
-  default = "./cloud-init/debian_userdata_aggregator.sh"
-}
-
+  # user data
+variable "user_data_appagent" { 
+  default = "./cloud-init/debian_userdata_appagent.sh"
+  }
 
 variable "hostname_appagent" {
   description = "Hostname of aggregator-collector instances"
   default     = "aparavi-app-appagent-test-dpl.org.info"
-}
-variable "hostname_collector" {
-  description = "Hostname of collector instances"
-  default     = "aparavi-app-collector-test-dpl.org.info"
-}
-
-variable "hostname_aggregator" {
-  description = "Hostname of aggregator instances"
-  default     = "aparavi-app-aggregator-test-dpl.org.info"
 }
 
 variable "hostname_bastion" {
@@ -115,29 +90,29 @@ variable "hostname_monitoring" {
 
 # COMPUTE INSTANCE INFO
 
-variable "instance_name" {
-  default = "aparavi-app"
-}
+      variable "instance_name" {
+        default = "aparavi-app"
+      }
 
 
-variable "osdisk_size" {
-  default = "30"
-}
-variable "vm_type" {        # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
-  default = "n2-standard-2" #"f1-micro"
-}
-variable "vm_type_bastion" { # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
-  default = "e2-micro"       #"f1-micro"
-}
-variable "vm_type_monitoring" { # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
-  default = "e2-medium"         #"f1-micro"
-}
+      variable "osdisk_size" {
+        default = "30"
+      }
+      variable "vm_type" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
+        default = "n2-standard-2" #"f1-micro"
+      }
+      variable "vm_type_bastion" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
+        default = "e2-micro" #"f1-micro"
+      }
+     variable "vm_type_monitoring" {   # gcloud compute machine-types list --filter="zone:us-east1-b and name:e2-micro"
+        default = "e2-medium" #"f1-micro"
+      }
 
 # Note, after a name db instance is used, it cannot be reused for up to one week.
 variable "name_prefix" {
   description = "The name prefix for the database instance. Will be appended with a random string. Use lowercase letters, numbers, and hyphens. Start with a letter."
   type        = string
-  default     = "aparavi"
+  default = "aparavi"
 }
 
 variable "master_user_name" {
