@@ -1,4 +1,4 @@
-module "apravi-ec2" {
+module "aparavi-ec2" {
   source = "../../modules/aws/aparavi-ec2"
 
   KEY_NAME                 = var.KEY_NAME
