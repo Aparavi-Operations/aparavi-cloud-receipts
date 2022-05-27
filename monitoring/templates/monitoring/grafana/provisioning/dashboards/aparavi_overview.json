@@ -35,7 +35,7 @@
           "links": [
             {
               "title": "Drill down to node details",
-              "url": "/d/kYMcSdOnz/node-exporter-full?var-env=$env&var-service=${__field.labels.service}п»ї&var-component=${__field.labels.component}&${__url_time_range}"
+              "url": "/d/kYMcSdOnz/node-exporter-full?var-env=$env&var-service=${__field.labels.service}&var-component=${__field.labels.component}&${__url_time_range}"
             }
           ],
           "mappings": [
