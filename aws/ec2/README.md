@@ -51,6 +51,17 @@ required resources, such as VPC and RDS. Aggregator and collector will be
 visible shortly after in platform UI you pointed `platform_host` terraform
 variable to.
 
+#### SSH into instances
+
+`terraform output` (also `terraform apply` upon completion) will output SSH
+addresses for connecting to deployed instances. Aggregator and collector are
+deployed into private subnets not routable from Internet, so in order to
+connect to them use bastion as SSH jump host. That is:
+
+```
+ssh -J <bastion_ssh_address> <aggregator_ssh_address>
+```
+
 ### Destroy
 
 ```
