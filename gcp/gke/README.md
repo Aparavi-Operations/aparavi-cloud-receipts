@@ -1,5 +1,8 @@
 # Aparavi on Google Kubernetes Engine (GKE)
 
+Terraform configuration files for deploying Aparavi on Google Kubernetes Engine
+(GKE)
+
 ## Requirements
 
 You will need Terraform CLI installed on your system. Packages are available at

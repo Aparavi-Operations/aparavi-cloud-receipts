@@ -47,3 +47,9 @@ variable "DEPLOYMENT" {
     error_message = "You must specify the deployment tag in order to separate deployments."
   }
 }
+
+variable "collector_instance_count" {
+  description = "Number of collector instances"
+  type        = number
+  default     = 1
+}

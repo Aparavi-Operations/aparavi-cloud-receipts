@@ -1,5 +1,8 @@
 # Aparavi on Azure Kubernetes Service (AKS)
 
+Terraform configuration files for deploying Aparavi on Azure Kubernetes Service
+(AKS).
+
 ## Requirements
 
 You will need Terraform CLI installed on your system. Packages are available at

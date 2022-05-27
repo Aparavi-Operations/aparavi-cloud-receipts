@@ -1,38 +1,58 @@
-## AWS Terraform deployment
+# Aparavi on Amazon Web Services (AWS) Elastic Compute Cloud (EC2)
 
-This documentation will show you how to deploy Aparavi applications using Terraform using Linux
+Terraform configuration files for deploying Aparavi on Amazon Web Services (AWS)
+Elastic Compute Cloud (EC2).
 
-# Setup tooling
-## Install AWS CLI first
+## Requirements
+
+You will need Terraform CLI installed on your system. Packages are available at
+https://www.terraform.io/downloads. There is also a tutorial on how to install
+Terraform at https://learn.hashicorp.com/tutorials/terraform/install-cli.
+
+This module relies on AWS CLI local configuration files (`.aws` directory). More
+info on installing and configuring AWS CLI is available at
+https://aws.amazon.com/cli/
+
+You will need to point your AWS CLI `[default]` profile to the AWS account you
+want to deploy this module on. Alternatively, you can set the `aws_profile`
+terraform variable to AWS CLI profile you want to use. For example:
 
 ```
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-```
-## Add Hashicorp repository to install Terraform
-```
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt-get update
-sudo apt-get install terraform
-```
-## Install git package and download Aparavi repo
-```
-sudo apt install git
-git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
-cd aparavi-cloud-receipts/aws
+terraform apply -var=aws_profile=my-profile ...
 ```
 
-# Configure variables
+Yet another option is to export `AWS_PROFILE` environment variable:
 
-open aws/VARIABLES.TF and fill default values for all mandatory variables
-
-# Login to AWS
-Please follow the official documentation provided by AWS:
-https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config
-
-# Deploy Aparavi applications
 ```
-terraform init && terraform apply
+export AWS_PROFILE=my-profile
+terraform apply ...
+```
+
+`aws sts get-caller-identity` might be useful in determinig where your AWS CLI
+points to.
+
+## Configuration, deployment and destroy
+
+Input variables are listed in [variables.tf](./variables.tf). There is an
+[example.tfvars](./example.tfvars) variable definitions file, which describes
+the minimal set of variables you'll most likely want to override.
+
+### Deploy
+
+Assuming you put terraform variable definitions in `override.tfvars` file:
+
+```
+terraform init
+terraform apply -var-file=override.tfvars
+```
+
+This will deploy Aparavi aggregator and collector on EKS, along with all
+required resources, such as VPC and RDS. Aggregator and collector will be
+visible shortly after in platform UI you pointed `platform_host` terraform
+variable to.
+
+### Destroy
+
+```
+terraform destroy -var-file=override.tfvars
 ```
