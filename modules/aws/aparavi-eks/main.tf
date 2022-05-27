@@ -1,11 +1,27 @@
-module "network" {
-  source = "../modules/network"
+data "aws_availability_zones" "available" {
+  count = length(var.azs) > 0 ? 0 : 1
+}
 
-  name                 = var.name
-  tags                 = var.tags
-  cidr                 = var.vpc_cidr
-  private_subnet_cidrs = var.vpc_private_subnet_cidrs
-  public_subnet_cidrs  = var.vpc_public_subnet_cidrs
+locals {
+  azs = (
+    length(var.azs) > 0 ?
+    var.azs :
+    data.aws_availability_zones.available[0].names
+  )
+}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 3.14.0"
+
+  name               = var.name
+  tags               = var.tags
+  cidr               = var.vpc_cidr
+  azs                = local.azs
+  private_subnets    = var.vpc_private_subnet_cidrs
+  public_subnets     = var.vpc_public_subnet_cidrs
+  enable_nat_gateway = true
+  single_nat_gateway = true
 }
 
 module "eks" {
@@ -13,10 +29,10 @@ module "eks" {
 
   name           = var.name
   tags           = var.tags
-  subnet_ids     = module.network.private_subnet_ids
+  subnet_ids     = module.vpc.private_subnets
   instance_types = var.eks_instance_types
 
-  depends_on = [module.network]
+  depends_on = [module.vpc]
 }
 
 module "rds" {
@@ -27,11 +43,11 @@ module "rds" {
   instance_class        = var.rds_instance_class
   allocated_storage     = var.rds_allocated_storage
   max_allocated_storage = var.rds_max_allocated_storage
-  subnet_ids            = module.network.private_subnet_ids
-  vpc_id                = module.network.vpc_id
+  subnet_ids            = module.vpc.private_subnets
+  vpc_id                = module.vpc.vpc_id
   sg_cidr_blocks        = var.vpc_private_subnet_cidrs
 
-  depends_on = [module.network]
+  depends_on = [module.vpc]
 }
 
 data "aws_eks_cluster_auth" "cluster" {
