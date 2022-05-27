@@ -1,28 +1,4 @@
-## template: jinja
-#!/bin/bash -x
-
-sudo cat <<EOF > /tmp/debian11_infrastructure.yml
----
-- name: Debian 11 Aparavi
-  hosts: 
-    - "all"
-  become: true
-  gather_facts: true
-  roles:
-    - os_hardening
-    - ssh_hardening
-EOF
-
-apt-get update
-apt-get install software-properties-common
-apt-add-repository -y ppa:ansible/ansible
-apt-get update
-apt-get install -y ansible git 
-ansible-galaxy collection install devsec.hardening
-export ANSIBLE_ROLES_PATH=/root/.ansible/collections/ansible_collections/devsec/hardening/roles/
-export ANSIBLE_HOST_KEY_CHECKING=false
-ansible-playbook /tmp/debian11_infrastructure.yml --connection=local -i 127.0.0.1, -v
-
+#!/bin/sh
 set -ex
 sudo echo Script started > /tmp/script.log
 sudo apt update
@@ -63,9 +39,9 @@ MONITORING_BRANCH='main'
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 add-apt-repository \
-    "deb [arch=amd64] https://download.docker.com/linux/debian \
-    $(lsb_release -cs) \
-    stable"
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
 
 apt update
 apt -y install docker-ce docker-ce-cli containerd.io
@@ -78,8 +54,10 @@ cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receip
 cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
 rm -f /root/monitoring/vmagent/scrape_azure.yml
-rm -f /root/monitoring/vmagent/scrape_gcp.yml
-sed -i 's/<<deployment>>/${deployment_name}/g' /root/monitoring/vmagent/scrape_ec2.yml
+rm -f /root/monitoring/vmagent/scrape_ec2.yml
+sed -i 's/<<deployment>>/${deployment_name}/g' /root/monitoring/vmagent/scrape_gcp.yml
+sed -i 's/<<appagent_ip>>/${appagent_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
+sed -i 's/<<monitoring_ip>>/${monitoring_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
 cp /root/monitoring/aparavi-monitoring.service /etc/systemd/system/aparavi-monitoring.service
 systemctl daemon-reload
 systemctl enable aparavi-monitoring
