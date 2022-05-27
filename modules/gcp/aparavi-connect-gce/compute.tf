@@ -194,7 +194,6 @@ data "template_file" "cloudsql_tmpl_appagent" {
     parentId           = "${var.parentid}"
   }
   depends_on = [module.mysql.google_sql_database_instance
-
   ]
 }
 
@@ -204,7 +203,5 @@ data "template_file" "cloudsql_tmpl_monitoring" {
     deployment_name       = "deployment_1"
     appagent_private_ip   = "${var.private_ip_appagent}"
     monitoring_private_ip = "${var.private_ip_monitoring}"
-
   }
-
 }

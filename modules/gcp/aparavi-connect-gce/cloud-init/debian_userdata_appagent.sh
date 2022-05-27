@@ -1,4 +1,27 @@
-#!/bin/sh
+#!/bin/bash -x
+
+sudo cat <<EOF > /tmp/debian11_infrastructure.yml
+---
+- name: Debian 11 Aparavi
+  hosts: 
+    - "all"
+  become: true
+  gather_facts: true
+  roles:
+    - os_hardening
+    - ssh_hardening
+EOF
+
+apt-get update
+apt-get install software-properties-common
+apt-add-repository -y ppa:ansible/ansible
+apt-get update
+apt-get install -y ansible git 
+ansible-galaxy collection install devsec.hardening
+export ANSIBLE_ROLES_PATH=/root/.ansible/collections/ansible_collections/devsec/hardening/roles/
+export ANSIBLE_HOST_KEY_CHECKING=false
+ansible-playbook /tmp/debian11_infrastructure.yml --connection=local -i 127.0.0.1, -v
+
 sudo echo Script started > /tmp/script.log
 sudo apt install --assume-yes  wget
 wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run 
