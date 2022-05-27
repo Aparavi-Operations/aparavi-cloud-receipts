@@ -1,7 +1,7 @@
-# Aparavi on Amazon Web Services (AWS) Elastic Compute Cloud (EC2)
+# Aparavi on Amazon Web Services (AWS) Elastic Kubernetes Service (EKS)
 
 Terraform configuration files for deploying Aparavi on Amazon Web Services (AWS)
-Elastic Compute Cloud (EC2).
+Elastic Kubernetes Service (EKS).
 
 ## Requirements
 

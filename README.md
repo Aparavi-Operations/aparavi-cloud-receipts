@@ -1,18 +1,12 @@
-# Aparavi Kubernetes Terraform Configurations
+# Aparavi Cloud Receipts
 
 Terraform configuration files and modules to deploy Aparavi application on
-public cloud managed Kubernetes services.
+public cloud services.
 
-## Requirements
-
-You will need Terraform CLI installed on your system. Packages are available at
-https://www.terraform.io/downloads. There is also a tutorial on how to install
-Terraform at https://learn.hashicorp.com/tutorials/terraform/install-cli.
-
-## Organization of Configuration Files
+## Directory Structure
 
 [`aws/`](aws/): Amazon Web Service (AWS)
 
 [`gcp/`](gcp/): Google Cloud Platform (GCP)
 
-`modules/`: Shared Terraform modules
+[`azure/`](azure/): Azure

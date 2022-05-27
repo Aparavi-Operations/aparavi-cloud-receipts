@@ -1,10 +1,3 @@
-/* ============================================
-
-  Please adjust VALUES.TF in order to
-  provide correct configuration for deployment
-
-=============================================== */
-
 module "aparavi-connect-ec2" {
   source = "../../modules/aws/aparavi-connect-ec2"
 

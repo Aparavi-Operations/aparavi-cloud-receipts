@@ -1,3 +1,11 @@
+variable "aws_profile" {
+  description = <<-EOT
+    AWS profile name as set in the shared configuration and credentials files
+    EOT
+  type        = string
+  default     = null
+}
+
 variable "KEY_NAME" {
   description = "MANDATORY - SSH Key name to attach to ec2 instances"
   default     = ""
@@ -46,4 +54,10 @@ variable "DEPLOYMENT" {
     condition     = length(var.DEPLOYMENT) > 0
     error_message = "You must specify the deployment tag in order to separate deployments."
   }
+}
+
+variable "collector_instance_count" {
+  description = "Number of collector instances"
+  type        = number
+  default     = 1
 }

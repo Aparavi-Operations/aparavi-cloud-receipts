@@ -1,7 +1,7 @@
-# Aparavi on Google Kubernetes Engine (GKE)
+# Aparavi on Azure Kubernetes Service (AKS)
 
-Terraform configuration files for deploying Aparavi on Google Kubernetes Engine
-(GKE)
+Terraform configuration files for deploying Aparavi on Azure Kubernetes Service
+(AKS).
 
 ## Requirements
 
@@ -9,16 +9,12 @@ You will need Terraform CLI installed on your system. Packages are available at
 https://www.terraform.io/downloads. There is also a tutorial on how to install
 Terraform at https://learn.hashicorp.com/tutorials/terraform/install-cli.
 
-Make sure you have downloaded and installed [gcloud CLI](https://cloud.google.com/sdk/gcloud#download_and_install_the). Installation
-instructions are available at https://cloud.google.com/sdk/docs/install.
-Setting up gcloud CLI instructions are available at
-https://cloud.google.com/sdk/docs/initializing. You will need to acquire new
-user credentials to use for Application Default Credentials in order for
-terraform to authenticate to GCP:
-
-```
-gcloud auth application-default login
-```
+Make sure you have installed
+[Azure CLI](https://docs.microsoft.com/en-us/cli/azure/).
+Installation instructions are available at
+https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+You should also make sure you are signed in sith Azure CLI. Any method described
+at https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli should do.
 
 ## Configuration, deployment and destroy
 
