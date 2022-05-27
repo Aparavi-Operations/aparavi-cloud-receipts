@@ -1,10 +1,11 @@
 resource "aws_instance" "collector_ec2" {
-  count                  = var.instance_count
-  subnet_id              = var.vm_subnet_id
-  ami                    = data.aws_ami.collector_ami.id
-  instance_type          = local.collector_instance_type
-  key_name               = var.key_name
-  vpc_security_group_ids = [aws_security_group.ec2.id]
+  count                       = var.instance_count
+  subnet_id                   = var.vm_subnet_id
+  associate_public_ip_address = false
+  ami                         = data.aws_ami.collector_ami.id
+  instance_type               = local.collector_instance_type
+  key_name                    = var.key_name
+  vpc_security_group_ids      = [aws_security_group.ec2.id]
 
   ebs_block_device {
     device_name = "/dev/sda1"
