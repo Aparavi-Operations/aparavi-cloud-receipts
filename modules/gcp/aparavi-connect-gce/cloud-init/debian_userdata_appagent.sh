@@ -9,7 +9,6 @@ sudo cat <<EOF > /tmp/debian11_infrastructure.yml
   gather_facts: true
   roles:
     - os_hardening
-    - ssh_hardening
 EOF
 
 apt-get update
