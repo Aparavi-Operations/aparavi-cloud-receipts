@@ -1,5 +1,6 @@
 locals {
   aggregator_type = var.appagent ? "aggregator-collector" : "aggregator"
+  collector_ip = var.appagent ? "none" : module.collector[0].node_private_ip
   aggregator_install = <<EOF
 #!/bin/sh
 
@@ -90,7 +91,7 @@ cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
 sed -i 's/<<deployment>>/${azurerm_resource_group.main.name}/g' /root/monitoring/vmagent/scrape_azure.yml
 if [[ ${local.aggregator_type} -eq "aggregator" ]]; then
   sed -i 's/<<aggregator_ip>>/${module.node.node_private_ip}/g' /root/monitoring/vmagent/scrape_azure.yml
-  sed -i 's/<<collector_ip>>/${module.collector[0].node_private_ip}/g' /root/monitoring/vmagent/scrape_azure.yml
+  sed -i 's/<<collector_ip>>/${local.collector_ip}/g' /root/monitoring/vmagent/scrape_azure.yml
 elif [[ ${local.aggregator_type} -eq "aggregator-collector" ]]; then
   sed -i 's/<<appagent_ip>>/${module.node.node_private_ip}/g' /root/monitoring/vmagent/scrape_azure.yml
 fi
