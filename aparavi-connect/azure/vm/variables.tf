@@ -12,7 +12,7 @@ variable "vnet_cidr" {
 
 variable "location" {
   type = string
-  default = "East US"
+  default = "westeurope"
 }
 
 variable "platform" {
@@ -27,7 +27,7 @@ variable "parent_id" {
 
 variable "bastion_size" {
   type    = string
-  default = "Standard_DS1"
+  default = "Standard_D2s_v4"
 }
 
 variable "db_shape" {
@@ -52,17 +52,17 @@ variable "db_password" {
 
 variable "node_size" {
   type    = string
-  default = "Standard_E4bs_v5"
+  default = "Standard_D2s_v4"
 }
 
 variable "collector_size" {
   type    = string
-  default = "Standard_E4bs_v5"
+  default = "Standard_D2s_v4"
 }
 
 variable "monitoring_size" {
   type    = string
-  default = "Standard_DS1"
+  default = "Standard_D2s_v4"
 }
 
 variable "monitoring_role_name" {

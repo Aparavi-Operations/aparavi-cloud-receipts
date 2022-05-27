@@ -70,7 +70,7 @@ apt update
 apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
 DOCKER_COMPOSE_VERSION='2.3.0'
 NODE_EXPORTER_VERSION='1.3.1'
-MONITORING_BRANCH='main'
+MONITORING_BRANCH='OPS-1177-Aparavi-Connect-Azure'
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 add-apt-repository \
@@ -98,6 +98,7 @@ fi
   sed -i 's/<<monitoring_ip>>/{{ ds.meta_data.imds.network.interface[0].ipv4.ipAddress[0].privateIpAddress }}/g' /root/monitoring/vmagent/scrape_azure.yml
 
 rm /root/monitoring/vmagent/scrape_ec2.yml
+rm /root/monitoring/vmagent/scrape_gcp.yml
 cp /root/monitoring/aparavi-monitoring.service /etc/systemd/system/aparavi-monitoring.service
 systemctl daemon-reload
 systemctl enable aparavi-monitoring

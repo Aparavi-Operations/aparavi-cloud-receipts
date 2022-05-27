@@ -5,7 +5,7 @@ vnet_cidr = "10.240.8.0/21"
 name = "azuretest"
 
 # Azure location
-location = "eastus2"
+location = "euwest"
 
 # Node id in platform hierarchy to attach resources to
 parent_id = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
