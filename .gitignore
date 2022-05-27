@@ -3,3 +3,4 @@ terraform.tfstate*
 .terraform.tfstate.lock.info
 values.yaml
 *.auto.tfvars
+aparavi-connect/azure/vm/.terraform.lock.hcl
