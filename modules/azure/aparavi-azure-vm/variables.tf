@@ -6,8 +6,8 @@ variable "name" {
 
 variable "appagent" {
   description = "Is it appagent type?"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "vnet_cidr" {

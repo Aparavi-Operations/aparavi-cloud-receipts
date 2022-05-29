@@ -1,6 +1,6 @@
 module "cloudinit_config" {
-  source              = "./cloudinit-config"
-  deployment_name     = var.deployment_name
+  source          = "./cloudinit-config"
+  deployment_name = var.deployment_name
 }
 resource "aws_instance" "monitoring_ec2" {
   subnet_id              = var.vm_subnet_id

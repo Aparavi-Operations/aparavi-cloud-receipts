@@ -117,7 +117,7 @@ resource "azurerm_linux_virtual_machine" "node" {
     version   = "latest"
   }
 
-    tags  = merge({
+  tags = merge({
     "Name" = "${var.name}-vm"
   }, var.tags)
 }

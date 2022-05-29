@@ -1,11 +1,11 @@
 # Azure location want to deploy resources in.
-location="eastus"
+location = "eastus"
 
 # Main name of most of resources, such as VNet, AKS, MySQL...
 name = "aparavi"
 # Labels to attach to resources
 tags = {
-  service: "aparavi",
+  service : "aparavi",
 }
 
 # Aparavi platform host in HOSTNAME[:PORT] format
