@@ -1,6 +1,6 @@
 locals {
-  aggregator_type = var.appagent ? "aggregator-collector" : "aggregator"
-  collector_ip = var.appagent ? "none" : module.collector[0].node_private_ip
+  aggregator_type    = var.appagent ? "aggregator-collector" : "aggregator"
+  collector_ip       = var.appagent ? "none" : module.collector[0].node_private_ip
   aggregator_install = <<EOF
 #!/bin/sh
 
@@ -31,7 +31,7 @@ systemctl start node_exporter
 rm -rf $${TEMPORARY_DIR}
 EOF
 
-  collector_install  =  var.appagent ? null : <<EOF
+  collector_install  = var.appagent ? null : <<EOF
 #!/bin/sh
 sudo echo Script started > /tmp/script.log
 NODE_EXPORTER_VERSION='1.3.1'
@@ -183,7 +183,7 @@ module "node" {
 }
 
 module "collector" {
-  count = var.appagent ? 0 : 1
+  count                   = var.appagent ? 0 : 1
   source                  = "./modules/node"
   name                    = "${var.name}-collector"
   resource_group_location = azurerm_resource_group.main.location
