@@ -40,7 +40,7 @@ module "monitoring" {
   management_network = var.MANAGEMENT_NETWORK
   deployment_tag     = var.DEPLOYMENT
   network_vpc_id     = module.network.vpc_id
-  vm_subnet_id       = module.network.vm_subnet_id
+  vm_subnet_id       = module.network.public_subnet_id
 }
 
 module "bastion" {
@@ -48,7 +48,7 @@ module "bastion" {
 
   deployment_tag = var.DEPLOYMENT
   vpc_id         = module.network.vpc_id
-  subnet_id      = module.network.vm_subnet_id
+  subnet_id      = module.network.public_subnet_id
   sg_cidr_blocks = var.MANAGEMENT_NETWORK
   key_name       = var.KEY_NAME
 }

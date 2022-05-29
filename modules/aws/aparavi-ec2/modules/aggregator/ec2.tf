@@ -1,9 +1,10 @@
 resource "aws_instance" "aggregator_ec2" {
-  subnet_id              = var.vm_subnet_id
-  ami                    = data.aws_ami.aggregator_ami.id
-  instance_type          = local.aggregator_instance_type
-  key_name               = var.key_name
-  vpc_security_group_ids = [aws_security_group.ec2.id]
+  subnet_id                   = var.vm_subnet_id
+  associate_public_ip_address = false
+  ami                         = data.aws_ami.aggregator_ami.id
+  instance_type               = local.aggregator_instance_type
+  key_name                    = var.key_name
+  vpc_security_group_ids      = [aws_security_group.ec2.id]
 
   ebs_block_device {
     device_name = "/dev/sda1"
