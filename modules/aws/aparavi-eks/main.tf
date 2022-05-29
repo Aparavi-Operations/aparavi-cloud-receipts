@@ -36,18 +36,46 @@ module "eks" {
 }
 
 module "rds" {
-  source = "../modules/rds"
+  source  = "terraform-aws-modules/rds/aws"
+  version = "~> 4.3.0"
 
-  name                  = var.name
-  tags                  = var.tags
-  instance_class        = var.rds_instance_class
-  allocated_storage     = var.rds_allocated_storage
-  max_allocated_storage = var.rds_max_allocated_storage
-  subnet_ids            = module.vpc.private_subnets
-  vpc_id                = module.vpc.vpc_id
-  sg_cidr_blocks        = var.vpc_private_subnet_cidrs
+  identifier                = var.name
+  tags                      = var.tags
+  engine                    = "mysql"
+  engine_version            = "8.0.28"
+  allocated_storage         = var.rds_allocated_storage
+  max_allocated_storage     = var.rds_max_allocated_storage
+  instance_class            = var.rds_instance_class
+  username                  = "aggregator"
+  vpc_security_group_ids    = [aws_security_group.allow_mysql.id]
+  subnet_ids                = module.vpc.private_subnets
+  create_db_subnet_group    = true
+  db_subnet_group_name      = var.name
+  create_db_option_group    = false
+  create_db_parameter_group = false
+  apply_immediately         = true
+  skip_final_snapshot       = true
 
   depends_on = [module.vpc]
+}
+
+resource "aws_security_group" "allow_mysql" {
+  name        = "allow-mysql"
+  description = "Allow MySQL inbound traffic"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "MySQL from VPC"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = var.vpc_private_subnet_cidrs
+  }
+
+  tags = merge(
+    var.tags,
+    { "Name" = "allow-mysql" },
+  )
 }
 
 data "aws_eks_cluster_auth" "cluster" {
@@ -92,9 +120,9 @@ module "aparavi" {
 
   name                 = "aparavi"
   chart_version        = var.aparavi_chart_version
-  mysql_hostname       = module.rds.address
-  mysql_username       = module.rds.username
-  mysql_password       = module.rds.password
+  mysql_hostname       = module.rds.db_instance_address
+  mysql_username       = module.rds.db_instance_username
+  mysql_password       = module.rds.db_instance_password
   platform_host        = var.platform_host
   platform_node_id     = var.platform_node_id
   aggregator_node_name = local.aggregator_node_name
