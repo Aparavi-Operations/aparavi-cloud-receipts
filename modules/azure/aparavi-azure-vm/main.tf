@@ -60,8 +60,7 @@ rm -rf $${TEMPORARY_DIR}
 EOF
   monitoring_install = <<EOF
 ## template: jinja
-#!/bin/sh
-
+#!/bin/bash
 set -ex
 
 while fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1; do echo 'Waiting for release of dpkg/apt locks'; sleep 5; done;
@@ -89,13 +88,13 @@ cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receip
 cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
 sed -i 's/<<deployment>>/${azurerm_resource_group.main.name}/g' /root/monitoring/vmagent/scrape_azure.yml
-if [[ ${local.aggregator_type} -eq "aggregator" ]]; then
+if [[ ${local.aggregator_type} -eq "aggregator-collector" ]]; then
+  sed -i 's/<<appagent_ip>>/${module.node.node_private_ip}/g' /root/monitoring/vmagent/scrape_azure.yml
+elif [[ ${local.aggregator_type} -eq "aggregator" ]]; then
   sed -i 's/<<aggregator_ip>>/${module.node.node_private_ip}/g' /root/monitoring/vmagent/scrape_azure.yml
   sed -i 's/<<collector_ip>>/${local.collector_ip}/g' /root/monitoring/vmagent/scrape_azure.yml
-elif [[ ${local.aggregator_type} -eq "aggregator-collector" ]]; then
-  sed -i 's/<<appagent_ip>>/${module.node.node_private_ip}/g' /root/monitoring/vmagent/scrape_azure.yml
 fi
-  sed -i 's/<<monitoring_ip>>/{{ ds.meta_data.imds.network.interface[0].ipv4.ipAddress[0].privateIpAddress }}/g' /root/monitoring/vmagent/scrape_azure.yml
+sed -i 's/<<monitoring_ip>>/{{ ds.meta_data.imds.network.interface[0].ipv4.ipAddress[0].privateIpAddress }}/g' /root/monitoring/vmagent/scrape_azure.yml
 
 rm /root/monitoring/vmagent/scrape_ec2.yml
 rm /root/monitoring/vmagent/scrape_gcp.yml

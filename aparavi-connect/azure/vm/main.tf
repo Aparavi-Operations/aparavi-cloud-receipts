@@ -12,7 +12,7 @@ module "aparavi-azure-vm" {
   collector_storage_size = var.collector_storage_size
   db_user                = var.db_user
   db_password            = var.db_password
-  node_size               = var.node_size
+  node_size              = var.node_size
   monitoring_size        = var.monitoring_size
   monitoring_role_name   = var.monitoring_role_name
   ssh_key                = var.ssh_key
