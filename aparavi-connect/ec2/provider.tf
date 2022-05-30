@@ -10,9 +10,7 @@ terraform {
     path = "terraform.tfstate"
   }
 }
-
 # Configure the AWS Provider
 provider "aws" {
   region  = "us-east-1"
-  profile = "dev"
 }
