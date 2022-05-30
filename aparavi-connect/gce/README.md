@@ -31,6 +31,7 @@ Run
 terraform init
 terraform apply -var="master_user_name=admin" -var="master_user_password=SecUrePassW0rd"  -var="parentid=<APP_PARENT_ID>" -var="bind_addr=<PLATFORM_ADDRESS>" -var="project=<UNIQUE_GOOGLE_PROJECT_ID>"
 ```
+Add Google Cloud Project name to variables.tf as default value of project variable.
 You can obtain APP_PARENT_ID and PLATFORM_ADDRESS values via Aparavi Support Team.
 Be sure to store terraform.tfstate file, or use GCP Bucket to save it.
 Also you can check terraform outputs to review created resources info
