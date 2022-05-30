@@ -35,8 +35,10 @@ variable "subnet_cidr" {
 variable "firewall_name" {
   default = "aparavi_fw"
 }
-
-
+variable "pub_ssh_key_path" {
+  description = "Public SSH key"
+  default ="~/.ssh/id_rsa_aparavi.pub"
+}
 variable "subnetwork_project" {
   description = "The project that subnetwork belongs to"
   default     = ""

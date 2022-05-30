@@ -73,7 +73,12 @@ output "private_ip_cloudsql" {
   description = "CloudSQL private ip. "
   value       = module.mysql.master_private_ip_address
 }
-output "SSH_Connection_bastion" {
-  value = format("ssh connection to instance  ${var.instance_name_bastion} ==> sudo ssh -i ~/.ssh/id_rsa_aparavi  ${var.admin}@%s", google_compute_instance.aparavi_instance_bastion.network_interface.0.access_config.0.nat_ip)
+locals {
+  ssh_key_path = replace("${var.pub_ssh_key_path}", ".pub", "")
 }
-    
+output "SSH_Connection_bastion" {
+  value = format("ssh connection to instance  ${var.instance_name_bastion} ==> sudo ssh -i ${local.ssh_key_path} ${var.admin}@%s", google_compute_instance.aparavi_instance_bastion.network_interface.0.access_config.0.nat_ip)
+}
+output "monitoring_dashboard" {
+  value = "http://${google_compute_instance.aparavi_instance_monitoring.network_interface.0.access_config.0.nat_ip}"
+}

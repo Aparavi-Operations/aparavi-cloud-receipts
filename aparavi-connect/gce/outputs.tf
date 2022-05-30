@@ -77,21 +77,6 @@ output "private_ip_cloudsql" {
 output "SSH_Connection_bastion" {
   value = module.aparavi-gce.SSH_Connection_bastion
 }
-
-
-#output "SSH_Connection_appagent" {
-#    value      = format("ssh connection to instance  ${var.instance_name_appagent} ==> sudo ssh -i ~/id_rsa_gcp  ${var.admin}@%s",google_compute_instance.aparavi_instance_appagent.network_interface.0.access_config.0.nat_ip)
-#}
-
-
-#  output "ip_collector" {
-# value = google_compute_instance.aparavi_instance_collector.network_interface.0.access_config.0.nat_ip
-#}
-
-#output "ip_appagent" {
-# value = google_compute_instance.aparavi_instance_appagent.network_interface.0.access_config.0.nat_ip
-#}
-
-#output "ip_bastion" {
-# value = google_compute_instance.aparavi_instance_bastion.network_interface.0.access_config.0.nat_ip
-#}
+output "monitoring_dashboard" {
+  value = module.aparavi-gce.monitoring_dashboard
+}
