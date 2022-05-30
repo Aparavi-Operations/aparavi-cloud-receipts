@@ -1,6 +1,6 @@
 variable "KEY_NAME" {
   description = "MANDATORY - SSH Key name to attach to ec2 instances"
-  default     = "itaskaev"
+  default     = ""
 
   validation {
     condition     = length(var.KEY_NAME) > 0
@@ -30,7 +30,7 @@ variable "PLATFORM" {
 
 variable "PARENT_ID" {
   description = "MANDATORY - activeNodeId from Aparavi Portal"
-  default     = "bbbbbbbb-bbbb-bbbb-bbbb-brdimitrenko"
+  default     = ""
 
   validation {
     condition     = length(var.PARENT_ID) > 0
