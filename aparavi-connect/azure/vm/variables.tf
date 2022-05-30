@@ -4,12 +4,6 @@ variable "name" {
   default     = "aparavienv"
 }
 
-variable "appagent" {
-  description = "Is it appagent type?"
-  type        = bool
-  default     = false
-}
-
 variable "vnet_cidr" {
   description = "Virtual network common CIDR"
   type        = string
@@ -17,7 +11,8 @@ variable "vnet_cidr" {
 }
 
 variable "location" {
-  type = string
+  type    = string
+  default = "westeurope"
 }
 
 variable "platform" {
@@ -52,7 +47,7 @@ variable "db_password" {
   type = string
 }
 
-variable "node_size" {
+variable "aggregator_size" {
   type    = string
   default = "Standard_E4bs_v5"
 }
@@ -81,3 +76,4 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+

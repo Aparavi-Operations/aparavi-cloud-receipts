@@ -18,7 +18,7 @@ resource "google_compute_instance" "aparavi_instance_appagent" {
   machine_type = var.vm_type
 
   metadata = {
-    ssh-keys       = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}" # Change Me
+    ssh-keys       = "${var.admin}:${file("${var.pub_ssh_key_path}")}"
     startup-script = ("${data.template_file.cloudsql_tmpl_appagent.rendered}")
   }
   network_interface {
@@ -67,7 +67,7 @@ resource "google_compute_instance" "aparavi_instance_monitoring" {
   machine_type = var.vm_type_monitoring
 
   metadata = {
-    ssh-keys       = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}" # Change Me
+    ssh-keys       = "${var.admin}:${file("${var.pub_ssh_key_path}")}"
     startup-script = ("${data.template_file.cloudsql_tmpl_monitoring.rendered}")
 
   }
@@ -115,7 +115,7 @@ resource "google_compute_instance" "aparavi_instance_bastion" {
   machine_type = var.vm_type
 
   metadata = {
-    ssh-keys = "${var.admin}:${file("~/.ssh/id_rsa_aparavi.pub")}" # Change Me
+    ssh-keys = "${var.admin}:${file("${var.pub_ssh_key_path}")}"
   }
   network_interface {
     network            = google_compute_network.aparavi-vpc.self_link

@@ -84,4 +84,3 @@ cp /root/monitoring/aparavi-monitoring.service /etc/systemd/system/aparavi-monit
 systemctl daemon-reload
 systemctl enable aparavi-monitoring
 systemctl start aparavi-monitoring
-

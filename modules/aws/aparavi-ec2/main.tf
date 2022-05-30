@@ -1,10 +1,3 @@
-/* ============================================
-
-  Please adjust VALUES.TF in order to
-  provide correct configuration for deployment
-
-=============================================== */
-
 module "network" {
   source         = "./modules/network"
   deployment_tag = var.DEPLOYMENT
