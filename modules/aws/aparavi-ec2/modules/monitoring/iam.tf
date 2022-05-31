@@ -1,5 +1,5 @@
 resource "aws_iam_role" "monitoring_role" {
-  name = "MonitoringRole_${var.deployment_tag}"
+  name = "MonitoringRole_${var.deployment_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -16,7 +16,7 @@ resource "aws_iam_role" "monitoring_role" {
 }
 
 resource "aws_iam_role_policy" "aggregator_policy" {
-  name = "Monitoring_Policy_${var.deployment_tag}"
+  name = "Monitoring_Policy_${var.deployment_name}"
   role = aws_iam_role.monitoring_role.id
 
   policy = jsonencode({
@@ -35,6 +35,6 @@ resource "aws_iam_role_policy" "aggregator_policy" {
 }
 
 resource "aws_iam_instance_profile" "monitoring_profile" {
-  name = "Monitoring_Profile_${var.deployment_tag}"
+  name = "Monitoring_Profile_${var.deployment_name}"
   role = aws_iam_role.monitoring_role.name
 }

@@ -17,3 +17,8 @@ output "monitoring_ssh_address" {
   value       = module.aparavi-ec2.monitoring_ssh_address
   description = "SSH address to connect to monitoring instance"
 }
+
+output "grafana_url" {
+  value       = module.aparavi-ec2.grafana_url
+  description = "Grafana URL"
+}

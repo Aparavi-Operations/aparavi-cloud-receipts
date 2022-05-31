@@ -31,7 +31,7 @@ module "monitoring" {
   source             = "./modules/monitoring"
   key_name           = var.KEY_NAME
   management_network = var.MANAGEMENT_NETWORK
-  deployment_tag     = var.DEPLOYMENT
+  deployment_name    = var.DEPLOYMENT
   network_vpc_id     = module.network.vpc_id
   vm_subnet_id       = module.network.public_subnet_id
 }

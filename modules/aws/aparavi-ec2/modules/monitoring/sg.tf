@@ -1,6 +1,6 @@
 resource "aws_security_group" "ec2" {
-  name        = "Monitoring_EC2_SG_${var.deployment_tag}"
-  description = "Set of rules for EC2 access (${var.deployment_tag})"
+  name        = "Monitoring_EC2_SG_${var.deployment_name}"
+  description = "Set of rules for EC2 access (${var.deployment_name})"
   vpc_id      = var.network_vpc_id
 
   ingress {

@@ -3,10 +3,10 @@ data "aws_ami" "monitoring_ami" {
 
   filter {
     name   = "name"
-    values = ["nonprod-monitoring_instance-2022-Mar-31 06-57"]
+    values = ["debian-11-amd64-*"]
   }
 
-  owners = ["814382576288"]
+  owners = ["136693071363"]
 }
 
 data "aws_region" "current" {}

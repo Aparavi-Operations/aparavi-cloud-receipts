@@ -14,7 +14,6 @@ variable "management_network" {
   type = string
 }
 
-variable "deployment_tag" {
-  type    = string
-  default = "1"
+variable "deployment_name" {
+  type = string
 }

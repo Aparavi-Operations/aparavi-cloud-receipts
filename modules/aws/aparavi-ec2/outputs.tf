@@ -17,3 +17,8 @@ output "monitoring_ssh_address" {
   value       = module.monitoring.ssh_address
   description = "SSH address to connecto to monitoring instance"
 }
+
+output "grafana_url" {
+  value       = module.monitoring.grafana_url
+  description = "Grafana URL"
+}
