@@ -1,3 +1,11 @@
+variable "aws_profile" {
+  description = <<-EOT
+    AWS profile name as set in the shared configuration and credentials files
+    EOT
+  type        = string
+  default     = null
+}
+
 variable "KEY_NAME" {
   description = "MANDATORY - SSH Key name to attach to ec2 instances"
   default     = ""
