@@ -5,8 +5,18 @@ public cloud services.
 
 ## Directory Structure
 
-[`aws/`](aws/): Amazon Web Service (AWS)
+***Aparavi Classic*** available in:   
+* [`aws/`](aws/): Amazon Web Service (AWS)   
+* [`gcp/`](gcp/): Google Cloud Platform (GCP)   
+* [`azure/`](azure/): Azure   
 
-[`gcp/`](gcp/): Google Cloud Platform (GCP)
+***Aparavi Connect*** available in:   
+* [`aparavi-connect/ec2/`](aparavi-connect/ec2/): Amazon Web Service (AWS) EC2   
+* [`aparavi-connect/gcp/`](aparavi-connect/gcp/): Google Cloud Platform (GCP)   
+* [`aparavi-connect/azure/`](aparavi-connect/azure/): Azure   
 
-[`azure/`](azure/): Azure
+Terraform modules which are used to deploy projects:
+* [`modules/`](modules/)
+
+Monitoring configuration templates (Docker Compose, Grafana, Victoria Metrics, Prometheus):
+* [`monitoring/`](monitoring/)
