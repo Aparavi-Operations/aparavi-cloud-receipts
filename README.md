@@ -5,7 +5,7 @@ public cloud services.
 
 ## Directory Structure
 
-***Aparavi Classic*** available in:   
+***Aparavi Aggragtor and Collector*** available in:   
 * [`aws/`](aws/): Amazon Web Service (AWS)   
 * [`gcp/`](gcp/): Google Cloud Platform (GCP)   
 * [`azure/`](azure/): Azure   

@@ -61,19 +61,16 @@ terraform init
 terraform apply -var-file=override.tfvars
 ```
 
-This will deploy Aparavi aggregator and collector on EKS, along with all
-required resources, such as VPC and RDS. Aggregator and collector will be
-visible shortly after in platform UI you pointed `platform_host` terraform
+This will deploy Aparavi AppAgent on AWS EC2, along with all
+required resources, such as VPC and RDS. AppAgent will be
+visible shortly after in platform UI you pointed `PLATFORM` terraform
 variable to.
 
-# Configure variables
-open variables.tf and fill default values for all mandatory variables
+### Destroy
 
-# Login to AWS
-Please follow the official documentation provided by AWS:
-https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config
+To destroy everything this module created run:   
 
-# Deploy Aparavi applications
 ```
-terraform init && terraform apply
+terraform destroy -var-file=override.tfvars
 ```
+
