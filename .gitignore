@@ -5,8 +5,6 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
-**/.terraform.lock.hcl
-*/.terraform.lock.hcl
 # Crash log files
 crash.log
 
@@ -38,3 +36,6 @@ terraform.rc
 
 .scannerwork
 .vscode
+
+# Generated Helm values file. Contains sensitive info.
+values.yaml
