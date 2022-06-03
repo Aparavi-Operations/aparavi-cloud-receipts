@@ -30,6 +30,7 @@ resource "local_file" "values" {
     "${path.module}/values.tftpl",
     {
       mysqlHostname      = var.mysql_hostname
+      mysqlPort          = var.mysql_port
       mysqlUsername      = var.mysql_username
       mysqlPassword      = var.mysql_password
       platformHost       = var.platform_host
@@ -118,4 +119,3 @@ resource "kubernetes_job" "data" {
   wait_for_completion = true
   depends_on          = [helm_release.aparavi]
 }
-

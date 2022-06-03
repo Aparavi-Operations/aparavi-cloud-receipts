@@ -15,6 +15,12 @@ variable "mysql_hostname" {
   type        = string
 }
 
+variable "mysql_port" {
+  description = "MySQL port"
+  type        = number
+  default     = 3306
+}
+
 variable "mysql_username" {
   description = "MySQL username for aggregator"
   type        = string
