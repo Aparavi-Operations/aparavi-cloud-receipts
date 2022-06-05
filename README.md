@@ -9,6 +9,7 @@ public cloud services.
 * [`aws/`](aws/): Amazon Web Service (AWS)   
 * [`gcp/`](gcp/): Google Cloud Platform (GCP)   
 * [`azure/`](azure/): Azure   
+* [`kvm/`](kvm/): KVM SareMetal
 
 ***Aparavi Connect*** available in:   
 * [`aparavi-connect/ec2/`](aparavi-connect/ec2/): Amazon Web Service (AWS) EC2   
