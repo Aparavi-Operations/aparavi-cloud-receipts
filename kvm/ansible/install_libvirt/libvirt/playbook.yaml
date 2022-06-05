@@ -29,6 +29,7 @@
           - libvirt-daemon
           - libvirt-clients
           - python3-libvirt
+          - python3-pip
         state: present
     - name: Install some with pip3
       pip:
@@ -39,3 +40,11 @@
   become: yes 
   roles:
     - libvirt_network
+  vars:
+    network_name: "br0"
+    network_bridge: "br0"
+
+    network_gateway_ip: "192.168.202.1"
+
+    network_dhcp_start: "192.168.202.2"
+    network_dhcp_end: "192.168.202.100"
