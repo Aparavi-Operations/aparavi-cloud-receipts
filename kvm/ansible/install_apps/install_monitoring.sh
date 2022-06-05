@@ -35,7 +35,7 @@ apt update
 apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
 DOCKER_COMPOSE_VERSION='2.3.0'
 NODE_EXPORTER_VERSION='1.3.1'
-MONITORING_BRANCH='main'
+MONITORING_BRANCH='OPS-1138_kvm_stuff'
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 add-apt-repository \
@@ -59,7 +59,6 @@ rm -f /root/monitoring/vmagent/scrape_gcp.yml
 sed -i 's/<<deployment>>/kvm_deployment/g' /root/monitoring/vmagent/scrape_kvm.yml
 sed -i 's/<<appagent_ip1>>/158.175.71.44/g' /root/monitoring/vmagent/scrape_kvm.yml
 sed -i 's/<<appagent_port1>>/9101/g' /root/monitoring/vmagent/scrape_kvm.yml
-#sed -i 's/<<collector_ip>>/${collector_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
 sed -i 's/<<monitoring_ip>>/192.168.202.6/g' /root/monitoring/vmagent/scrape_kvm.yml
 cp /root/monitoring/aparavi-monitoring.service /etc/systemd/system/aparavi-monitoring.service
 systemctl daemon-reload
