@@ -51,7 +51,7 @@ wget -q https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VE
 chmod 0750 /usr/local/bin/docker-compose
 
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
-cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
+cd /root/aparavi-cloud-receipts && git checkout ${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
 rm -f /root/monitoring/vmagent/scrape_azure.yml
 rm -f /root/monitoring/vmagent/scrape_ec2.yml
