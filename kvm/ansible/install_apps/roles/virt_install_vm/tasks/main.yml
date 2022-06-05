@@ -1,0 +1,87 @@
+---
+- name: display the virt_install_import vars
+  debug:
+    msg:
+      - "virt_install_import: {{ virt_install_import }}"
+  tags:
+    - debug
+    - never
+
+- name: Error if name is not defined
+  fail:
+    msg:
+      - "Sorry, I need a name to continue"
+  when:
+    - virt_install_import.name is not defined
+
+- name: install OS related packages
+  include_tasks: '{{ install }}'
+  with_first_found:
+    - 'install/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+    - 'install/{{ ansible_distribution }}.yml'
+    - 'install/{{ ansible_os_family }}.yml'
+    - 'install/{{ ansible_os_family | replace ("/","_") | replace(" ","_") }}.yml'
+    - install/defaults.yml
+  loop_control:
+    loop_var: install
+  tags:
+    - install
+  when:
+    - ansible_distribution is defined
+    - ansible_os_family is defined
+    - ansible_distribution_major_version is defined
+
+# Create the virt-install command
+
+- name: Set _virt_install_cmd
+  set_fact:
+    _virt_install_cmd:
+      "virt-install --import --wait {{ virt_install_import.wait | default(0) }} --name {{ virt_install_import.name }} --memory {{ virt_install_import.memory | default(1024) }} --vcpus {{ virt_install_import.vcpu | default(1) }} --virt-type {{ virt_install_import.virt_type | default('kvm') }} --graphics {{ virt_install.graphics | default('none') }} "
+
+- name: Add autostart to the cmd
+  set_fact:
+    _virt_install_cmd:
+      "{{ _virt_install_cmd }} --autostart"
+  when:
+    - virt_install_import.autostart|default(true)|bool
+
+- name: Add os_type to the cmd if defined
+  set_fact:
+    _virt_install_cmd:
+      "{{ _virt_install_cmd }} --os-type {{ virt_install_import.os_type }}"
+  when:
+    - virt_install_import.os_type is defined 
+
+- name: Add os_variant to the cmd if defined
+  set_fact:
+    _virt_install_cmd:
+      "{{ _virt_install_cmd }} --os-variant {{ virt_install_import.os_variant }}"
+  when:
+    - virt_install_import.os_variant is defined 
+
+- name: Add network to the cmd if defined
+  set_fact:
+    _virt_install_cmd:
+      "{{ _virt_install_cmd }} --network {{ virt_install_import.network }}"
+  when:
+    - virt_install_import.network is defined 
+
+- name: Add disks
+  set_fact:
+    _virt_install_cmd:
+      "{{ _virt_install_cmd }} --disk {{ virt_disk }}"
+  with_items: "{{ virt_install_import.disks | default([]) }}"
+  loop_control:
+    loop_var: virt_disk 
+
+- name: display _virt_install_cmd
+  debug:
+    msg:
+      - " _virt_install_cmd: {{ _virt_install_cmd }}"
+  tags:
+    - debug
+    - never
+
+- name: Run the  _virt_install_cmd
+  command:
+      "{{ _virt_install_cmd }}"
