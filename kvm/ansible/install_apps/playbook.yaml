@@ -21,7 +21,7 @@
     - qemu_img
     - cloud_localds
     - virt_install_vm
----
+
 - name: Install aparavi-monitoring
   hosts: aparavi-baremetal-monitoring
   become: true
