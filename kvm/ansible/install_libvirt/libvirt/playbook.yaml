@@ -27,6 +27,7 @@
         update_cache: yes
         name:
           - libvirt-daemon
+          - libvirt-daemon-system
           - libvirt-clients
           - python3-libvirt
           - python3-pip
@@ -34,6 +35,11 @@
     - name: Install some with pip3
       pip:
         name: lxml
+    - name: Make sure a libvirtd unit is running
+      ansible.builtin.systemd:
+        state: started
+        name: libvirtd
+        enabled: yes
 
 - name: Create network
   hosts: all
