@@ -23,7 +23,7 @@
     - virt_install_vm
 
 - name: Install aparavi-monitoring
-  hosts: aparavi-baremetal-appagent
+  hosts: aparavi-baremetal-monitoring
   become: true
   vars:
     vm:
@@ -32,7 +32,7 @@
       ip_address:
         192.168.202.6/24
       size: 150G
-      run_commands: 'curl -s https://github.com/Aparavi-Operations/aparavi-cloud-receipts/blob/OPS-1138_kvm_stuff/kvm/ansible/install_apps/install_monitoring.sh'
+      run_commands: 'curl -s https://raw.githubusercontent.com/Aparavi-Operations/aparavi-cloud-receipts/OPS-1138_kvm_stuff/kvm/ansible/install_apps/install_monitoring.sh | sudo bash -s --'
   pre_tasks:
     - name: Load the vm template
       include_vars: debian_vm_template.yml
