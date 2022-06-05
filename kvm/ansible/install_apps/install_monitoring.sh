@@ -47,7 +47,7 @@ apt update
 apt -y install docker-ce docker-ce-cli containerd.io
 systemctl enable --now docker
 
-wget -q https://github.com/docker/compose/releases/download/v$${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
+wget -q https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
 chmod 0750 /usr/local/bin/docker-compose
 
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
