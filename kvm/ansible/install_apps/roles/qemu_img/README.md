@@ -84,11 +84,3 @@ None
           - dest: /var/lib/libvirt/images/tstdebian_data002.qcow 
             size: 20G
 ```
-
-## License
-
-MIT/BSD
-
-## Author Information
-
-Created by Staf Wagemakers, email: staf@wagemakers.be, website: http://www.wagemakers.be.

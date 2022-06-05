@@ -42,8 +42,8 @@ virt_install_import:
   os_type: Linux
   os_variant: debian10
   network: bridge=br0,model=virtio
-  memory: 8196
-  vcpu: 4
+  memory: "{{ vm.memory }}"
+  vcpu: "{{ vm.vcpu }}"
   graphics: spice
   disks:
     - "/var/lib/libvirt/images/{{ vm.hostname }}.qcow2,device=disk"

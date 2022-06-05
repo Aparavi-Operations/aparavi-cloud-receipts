@@ -1,61 +1,9 @@
 # Ansible Role: virt_install_vm
 
 An Ansible role to install a libvirt virtual machine with ```virt-install```
-and ```cloud-init```. It is "designed" to be flexible.
-
-An example template is provided to set up a Debian system.
-
-## Requirements
-
-The role is a wrapper around the following roles:
-
-  * **stafwag.libvirt**:
-    [https://github.com/stafwag/ansible-role-libvirt](https://github.com/stafwag/ansible-role-libvirt)
-  * **stafwag.qemu_img**:
-    [https://github.com/stafwag/ansible-role-qemu_img](https://github.com/stafwag/ansible-role-qemu_img)
-  * **stafwag.cloud_localds**:
-    [https://github.com/stafwag/ansible-role-cloud_localds](https://github.com/stafwag/ansible-role-cloud_localds)
-  * **stafwag.virt_install_import**:
-    [https://github.com/stafwag/ansible-role-virt_install_import](https://github.com/stafwag/ansible-role-virt_install_import)
-
-Install the required roles with
-
-```bash
-$ ansible-galaxy install -r requirements.yml
-```
-
-this will install the latest default branch releases.
-
-Or follow the installation instruction for each role on Ansible Galaxy.
-
-[https://galaxy.ansible.com/stafwag](https://galaxy.ansible.com/stafwag)
-
+and ```cloud-init```.
 # Installation
 
-## Ansible galaxy
-
-The role is available on [Ansible Galaxy](https://galaxy.ansible.com/stafwag/virt_install_import).
-
-To install the role from Ansible Galaxy execute the command below. 
-This will install the role with the dependencies.
-
-```bash
-$ ansible-galaxy install stafwag.virt_install_import
-```
-
-## Source Code
-
-If you want to use the source code directly.
-
-Clone the role source code.
-
-```bash
-$ git clone https://github.com/stafwag/ansible-role-virt_install_vm
-```
-
-and put into the [role search path](https://docs.ansible.com/ansible/2.4/playbooks_reuse_roles.html#role-search-path)
-
-### Supported GNU/Linux Distributions
 
 It should work on most GNU/Linux distributions.
 ```cloud-localds``` is required. ```cloud-localds``` was available on

@@ -53,12 +53,3 @@ None
             - /var/lib/libvirt/images/tstdebian2.qcow2,device=disk
             - /var/lib/libvirt/images/tstdebian2_cloudinit.iso,device=cdrom
 ```
-
-
-## License
-
-MIT/BSD
-
-## Author Information
-
-Created by Staf Wagemakers, email: staf@wagemakers.be, website: http://www.wagemakers.be.
