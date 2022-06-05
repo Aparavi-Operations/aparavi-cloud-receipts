@@ -1,0 +1,13 @@
+---
+
+network_name: "br0"
+network_bridge: "br0"
+#
+# The IP of the bridge
+#
+network_gateway_ip: "192.168.202.1"
+#
+# The DHCP range that is available for virtual machines on the network
+#
+network_dhcp_start: "192.168.202.2"
+network_dhcp_end: "192.168.202.100"
