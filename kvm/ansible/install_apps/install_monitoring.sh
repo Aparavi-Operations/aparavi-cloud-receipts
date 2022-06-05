@@ -1,5 +1,4 @@
 #!/bin/bash
-#!/bin/sh
 set -ex
 sudo echo Script started > /tmp/script.log
 sudo apt update
