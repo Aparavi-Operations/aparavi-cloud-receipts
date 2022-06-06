@@ -1,0 +1,24 @@
+---
+- name: iptables save existing
+  ansible.builtin.shell: iptables-save > /root/iptables-save-existing.txt
+  become: yes
+
+- name: Set portfw
+  ansible.builtin.shell: iptables -t nat -A PREROUTING -p tcp --dport {{ext_port}} -j DNAT --to {{int_ip}}:{{int_port}}
+  become: yes
+
+- name: allow forward
+  ansible.builtin.shell: iptables -A FORWARD -p tcp -d {{int_ip}} --dport {{int_port}} -j ACCEPT
+  become: yes
+
+- name: states fix1
+  ansible.builtin.shell: iptables -D FORWARD -d {{ int_net }} -o {{ bridge_name }} -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+  become: yes
+
+- name: states fix2
+  ansible.builtin.shell: iptables -A FORWARD -d {{ int_net }} -o {{ bridge_name }} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+  become: yes
+
+- name: iptables save new
+  ansible.builtin.shell: iptables-save > /root/iptables-save-new.txt
+  become: yes

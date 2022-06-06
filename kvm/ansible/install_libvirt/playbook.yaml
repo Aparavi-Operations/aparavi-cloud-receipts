@@ -1,23 +1,4 @@
-#
-# Create a volume and a network and bring up a virtual machine
-# using KVM and libvirt
-#
-# To run this, you need the following installed on your machine:
-# libvirt 
-# python3-libvirt 
-# lxml
-# You can install all this on an Ubuntu system with 
-# sudo apt-get install \
-#  libvirt-daemon \
-#  libvirt-clients \
-#  virt-manager \
-#  python3-libvirt
-# pip3 install lxml
-#
-# Note that this creates a storage pool in the state subdirectory of the
-# playbook dir, so make sure that you remove this storage pool before deleting
-# the state directory to avoid dangling references
-#
+---
 - name: Preparations
   hosts: all
   become: yes
