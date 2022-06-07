@@ -18,7 +18,7 @@ provider "azurerm" {
 }
 
 module "aparavi" {
-  source               = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/azure/aparavi-aks"
+  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/azure/aparavi-aks"
 
   name                 = "aparavi"
   location             = "eastus"

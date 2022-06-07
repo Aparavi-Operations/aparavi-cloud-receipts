@@ -21,7 +21,7 @@ provider "aws" {
 }
 
 module "aparavi" {
-  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/aws/eks"
+  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/aws/aparavi-eks"
 
   name                      = "aparavi"
   tags                      = { service = "aparavi" }

@@ -20,7 +20,7 @@ provider "aws" {
 }
 
 module "aparavi" {
-  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/aws/ec2"
+  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/aws/aparavi-ec2"
 
   KEY_NAME                 = "my-ec2-key-pair"
   MANAGEMENT_NETWORK       = "0.0.0.0/0"

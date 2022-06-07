@@ -23,7 +23,8 @@ provider "google-beta" {
 }
 
 module "aparavi" {
-  source               = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//k8s-deployment/modules/gcp/gke"
+  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/gcp/aparavi-gke"
+
   name                 = "aparavi"
   region               = "us-west1"
   zone                 = "us-west1-b"

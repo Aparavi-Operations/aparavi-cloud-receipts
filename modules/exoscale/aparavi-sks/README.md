@@ -19,7 +19,7 @@ provider "exoscale" {
 }
 
 module "aparavi" {
-  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/exoscale/sks"
+  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/exoscale/aparavi-sks"
 
   zone                 = "de-muc-1"
   name                 = "aparavi"
