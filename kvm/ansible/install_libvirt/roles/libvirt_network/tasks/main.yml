@@ -8,3 +8,7 @@
   virt_net:
     state: active
     name: "{{network_name}}"
+
+- name: Set network to autostart
+  ansible.builtin.shell: |
+     virsh net-autostart "{{network_name}}"

@@ -26,11 +26,11 @@
         state: stopped
         name: apache2
         enabled: no
-    - name: Make sure a bind9 unit is not running
-      ansible.builtin.systemd:
-        state: stopped
-        name: bind9
-        enabled: no
+    # - name: Make sure a bind9 unit is not running
+    #   ansible.builtin.systemd:
+    #     state: stopped
+    #     name: bind9
+    #     enabled: no
 - name: Create network
   hosts: all
   become: yes 
