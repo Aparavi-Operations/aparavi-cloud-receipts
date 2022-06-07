@@ -12,35 +12,11 @@ resource "aws_security_group" "ec2" {
   }
 
   ingress {
-    description = "Allow ssh access from the Internet"
-    from_port   = local.ssh_port
-    to_port     = local.ssh_port
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     description = "Allow access to Grafana from the management network"
     from_port   = local.grafana_port
     to_port     = local.grafana_port
     protocol    = "tcp"
     cidr_blocks = ["${var.management_network}"]
-  }
-
-  ingress {
-    description = "Allow access to Grafana from Internet"
-    from_port   = local.grafana_port
-    to_port     = local.grafana_port
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "Allow access to Grafana from Internet"
-    from_port   = local.vmagent_http_port
-    to_port     = local.vmagent_http_port
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
