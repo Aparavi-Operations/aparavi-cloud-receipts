@@ -23,8 +23,8 @@ system_info:
 {% if  cloud_config.swapfile_size is defined %}
 swap:
   filename: /mnt/swapfile
-  size: {{ swapfile_size }}
-  max_size: {{ swapfile_size }} # 16GB
+  size: {{ cloud_config.swapfile_size }}
+  max_size: {{ cloud_config.swapfile_size }} # 16GB
 {% endif %}
 write_files:
 {% if cloud_config.disable_cloud_init is defined and cloud_config.disable_cloud_init is sameas true %}

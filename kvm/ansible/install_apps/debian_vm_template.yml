@@ -17,6 +17,7 @@ cloud_localds:
     commands: "{{ vm.run_commands }}"
     swapfile_size: "{{ vm.swapfile_size }}"
     system_info:
+
       default_user:
         name: "ansible"
         passwd: "secret"
