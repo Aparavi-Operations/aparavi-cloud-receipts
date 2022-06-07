@@ -1,35 +1,30 @@
-# Aparavi on Google Kubernetes Engine (GKE) Terraform Module
+# Aparavi on Azure Kubernetes Service (AKS) Terraform Module
 
-This module deploys Aparavi aggregator and collector on Google Kubernetes
-Engine (GKE). Resources this module will create are:
+This module deploys Aparavi aggregator and collector on Azure Kubernetes
+Service (AKS). Resources this module will create are:
 
-- VPC Network and a private subnetwork.
-- Cloud NAT
-- GKE cluster and GKE Node Pool
-- Cloud SQL instance
+- Virtual Network.
+- AKS cluster
+- Azure Database for MySQL
 - Aparavi Helm release
 
 ## Usage
 
-An example usage of this module is also in [../../../gcp/gke/](../../../gcp/gke/).
+An example usage of this module is also in [../../../azure/aks/](../../../azure/aks/).
 
 ```hcl
-provider "google" {
-  project = "my-project-id"
-}
-
-provider "google-beta" {
-  project = "my-project-id"
+provider "azurerm" {
+  features {}
 }
 
 module "aparavi" {
-  source               = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//k8s-deployment/modules/gcp/gke"
+  source               = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/azure/aparavi-aks"
+
   name                 = "aparavi"
-  region               = "us-west1"
-  zone                 = "us-west1-b"
-  labels               = { service : "aparavi" }
-  gke_machine_type     = "custom-8-16384"
-  cloudsql_tier        = "db-f1-micro"
+  location             = "eastus"
+  tags                 = { service : "aparavi" }
+  aks_agents_size      = "Standard_B4ms"
+  mysql_sku_name       = "GP_Gen5_2"
   platform_host        = "preview.aparavi.com"
   platform_node_id     = "11111111-aaaa-2222-bbbb-333333333333"
   aggregator_node_name = "aggregator"
@@ -45,34 +40,24 @@ Then perform the following commands on the root folder:
 - `terraform apply` to apply the infrastructure build
 - `terraform destroy` to destroy the built infrastructure
 
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.7 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.20.0 |
-| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | >= 4.20.0 |
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.5.1 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.11.0 |
-
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 4.20.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 2.46 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aggregator_node_name"></a> [aggregator\_node\_name](#input\_aggregator\_node\_name) | Aggregator node name | `string` | `"aggregator"` | no |
-| <a name="input_cloudsql_tier"></a> [cloudsql\_tier](#input\_cloudsql\_tier) | The machine type to use in Cloud SQL instance | `string` | `"db-f1-micro"` | no |
-| <a name="input_collector_node_name"></a> [collector\_node\_name](#input\_collector\_node\_name) | Collector node name | `string` | `"collector"` | no |
-| <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data for collector | `bool` | `false` | no |
-| <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | GCE machine type name to use in default node group | `string` | `"custom-8-16384"` | no |
-| <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources that support it | `map(string)` | <pre>{"service": "aparavi"}</pre> | no |
-| <a name="input_name"></a> [name](#input\_name) | Main name of resources, such as network, GKE cluster, Cloud SQl... | `string` | `"aparavi"` | no |
-| <a name="input_platform_host"></a> [platform\_host](#input\_platform\_host) | Aparavi platform host to connect aggregator to | `string` | n/a | yes |
+| <a name="input_aggregator_node_name"></a> [aggregator\_node\_name](#input\_aggregator\_node\_name) | Aggregator node name. Default: "${var.name}-aggregator" | `string` | `""` | no |
+| <a name="input_aks_agents_size"></a> [aks\_agents\_size](#input\_aks\_agents\_size) | Virtual machine size for the Kubernetes agents | `string` | `"Standard_B4ms"` | no |
+| <a name="input_aparavi_chart_version"></a> [aparavi\_chart\_version](#input\_aparavi\_chart\_version) | Aparavi Helm chart version. Default: latest | `string` | `""` | no |
+| <a name="input_collector_node_name"></a> [collector\_node\_name](#input\_collector\_node\_name) | Collector node name. Default: "${var.name}-collector" | `string` | `""` | no |
+| <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data in collector | `bool` | `false` | no |
+| <a name="input_location"></a> [location](#input\_location) | Azure location where resources reside | `string` | `"eastus"` | no |
+| <a name="input_mysql_sku_name"></a> [mysql\_sku\_name](#input\_mysql\_sku\_name) | The SKU Name for MySQL Server. The name of the SKU follows the<br>tier + family + cores pattern (e.g. B\_Gen4\_1, GP\_Gen5\_8) | `string` | `"GP_Gen5_2"` | no |
+| <a name="input_name"></a> [name](#input\_name) | Main name of resources, such as Resource Groups, AKS Cluster,<br>SQL Database... | `string` | `"aparavi"` | no |
+| <a name="input_platform_host"></a> [platform\_host](#input\_platform\_host) | Aparavi platform hostname[:port] to connect aggregator to | `string` | n/a | yes |
 | <a name="input_platform_node_id"></a> [platform\_node\_id](#input\_platform\_node\_id) | Aparavi platform node ID to connect aggregator to | `string` | n/a | yes |
-| <a name="input_region"></a> [region](#input\_region) | GCP region where resources reside | `string` | `"us-west1"` | no |
-| <a name="input_zone"></a> [zone](#input\_zone) | GCP zone to deploy GKE cluster in | `string` | `"us-west1-a"` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags to apply to resources | `map(string)` | <pre>{<br>  "service": "aparavi"<br>}</pre> | no |
