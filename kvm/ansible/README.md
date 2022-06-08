@@ -8,10 +8,11 @@ download cloud template from debian (we have used https://cloud.debian.org/image
 install requirements.txt
 run
 ```pip install requirements.txt```
-You can configure vm settings and vm number in inventory.yaml file  
+You can configure vm settings(disk size, swap size, cpu cores number, memory size, hostname) and vm number in inventory.yaml file  
 to set up vms run 
 ```ansible-playbook playbook.yaml -i inventory.yaml```
 this will install virtual machines
+By default this will install Aparavi AppAgent instance and Aparavi monitoring setup
 3. set_portforward folder
 this will set porforwarding as vm instances are placed behuind NAT
 define addresses and ports in inventory.yaml and run 
