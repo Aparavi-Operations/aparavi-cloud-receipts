@@ -146,5 +146,5 @@ Playbook to setup a virtual machine:
         msg: 
           - "qemu_img: {{ qemu_img }}"
   roles:
-    - stafwag.virt_install_vm
+    - virt_install_vm
 ```

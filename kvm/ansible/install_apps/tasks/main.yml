@@ -49,10 +49,10 @@
       include_role:
         name: "{{ myrole }}"
       loop:
-        - stafwag.libvirt
-        - stafwag.qemu_img
-        - stafwag.cloud_localds
-        - stafwag.virt_install_import
+        - libvirt
+        - qemu_img
+        - cloud_localds
+        - virt_install_import
       loop_control:
         loop_var: myrole
 

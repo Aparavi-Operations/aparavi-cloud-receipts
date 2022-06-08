@@ -1,27 +1,11 @@
 - name: Create firewall rules for appagent-1
-  hosts: aparavi-baremetal-appagent
+  hosts: aparavi-baremetal-appagent-1
   become: yes 
   roles:
     - set_iptables
-  vars:
-   # ext_ip: "158.175.71.34"
-    int_ip: "192.168.202.5"
-    #ext_interface: bond1
-    ext_port: "9101"
-    int_port: "9100"
-    bridge_name: br0
-    int_net: "192.168.202.0/24"
 
 - name: Create firewall rules for monitoring
   hosts: aparavi-baremetal-monitoring
   become: yes 
   roles:
     - set_iptables
-  vars:
-    #ext_ip: "158.175.71.44"
-    int_ip: "192.168.202.6"
-    #ext_interface: bond1
-    ext_port: "80"
-    int_port: "80"
-    bridge_name: br0
-    int_net: "192.168.202.0/24"

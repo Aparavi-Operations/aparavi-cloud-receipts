@@ -1,46 +1,22 @@
 ---
-# - name: Install aparavi-appagent-1
-#   hosts: aparavi-baremetal-appagent
-#   become: true
-#   vars:
-#     vm:
-#       hostname:
-#         aparavi-appagent-1
-#       ip_address:
-#         192.168.202.5/24
-#       size: 50G
-#       memory: 8196
-#       ext_port: 9101
-#       vcpu: 4
-#       run_commands: 'curl -s https://raw.githubusercontent.com/Aparavi-Operations/aparavi-infrastructure/main/install.sh | sudo bash -s -- -c "client_name" -o "parent_object_id"'
-#   pre_tasks:
-#     - name: Load the vm template
-#       include_vars: debian_vm_template.yml
-#     - name: display qemu_img
-#       debug:
-#         msg: 
-#           - "qemu_img: {{ qemu_img }}"
-#   roles:
-#     - qemu_img
-#     - cloud_localds
-#     - virt_install_vm
+- name: Install aparavi-appagent-1
+  hosts: aparavi-baremetal-appagent-1
+  become: true
+  pre_tasks:
+    - name: Load the vm template
+      include_vars: debian_vm_template.yml
+    - name: display qemu_img
+      debug:
+        msg: 
+          - "qemu_img: {{ qemu_img }}"
+  roles:
+    - qemu_img
+    - cloud_localds
+    - virt_install_vm
 
 - name: Install aparavi-monitoring
   hosts: aparavi-baremetal-monitoring
   become: true
-  vars:
-    vm:
-      hostname:
-        aparavi-monitoring
-      ip_address:
-        192.168.202.6/24
-      size: 150G
-      memory: 8196
-      ext_port: 80
-      vcpu: 4
-      #swapfile size in bytes
-      swapfile_size: 17179869184 # 16GB
-      run_commands: 'curl -s https://raw.githubusercontent.com/Aparavi-Operations/aparavi-cloud-receipts/OPS-1138_kvm_stuff/kvm/ansible/install_apps/install_monitoring.sh | sudo bash -s --'
   pre_tasks:
     - name: Load the vm template
       include_vars: debian_vm_template.yml

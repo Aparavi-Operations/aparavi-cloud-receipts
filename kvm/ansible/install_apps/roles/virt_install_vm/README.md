@@ -40,7 +40,7 @@ None
   become: true
   hosts: localhost
   roles:
-    - role: stafwag.virt_install_import
+    - role: .virt_install_import
       vars:
         virt_install_import:
           wait: -1

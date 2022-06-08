@@ -39,7 +39,7 @@ None
   become: true
   hosts: localhost
   roles:
-    - role: stafwag.qemu_img
+    - role: qemu_img
       vars:
         qemu_img:
           dest: datadisk.qcow2 
@@ -56,7 +56,7 @@ None
   become: true
   hosts: localhost
   roles:
-    - role: stafwag.qemu_img
+    - role: qemu_img
       vars:
         qemu_img:
           dest: /var/lib/libvirt/images/tstdebian.qcow2 
@@ -74,7 +74,7 @@ None
   become: true
   hosts: localhost
   roles:
-    - role: stafwag.qemu_img
+    - role: qemu_img
       vars:
         qemu_img:
           - dest: /var/lib/libvirt/images/tstdebian.qcow2 

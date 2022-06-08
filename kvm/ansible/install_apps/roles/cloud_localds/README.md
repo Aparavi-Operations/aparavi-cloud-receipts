@@ -52,7 +52,7 @@ None
   become: true
   hosts: localhost
   roles:
-    - role: stafwag.cloud_localds
+    - role: .cloud_localds
       vars:
         cloud_localds:
           dest: /var/lib/libvirt/images/tstdebian_cloudinit.iso
@@ -69,7 +69,7 @@ None
   become: true
   hosts: localhost
   roles:
-    - role: stafwag.cloud_localds
+    - role: .cloud_localds
       vars:
         cloud_localds:
           hostname: tstdebian 
@@ -86,7 +86,7 @@ None
   become: true
   hosts: localhost
   roles:
-    - role: stafwag.cloud_localds
+    - role: .cloud_localds
       vars:
         cloud_localds:
           hostname: tstdebian 
