@@ -53,7 +53,7 @@ locals {
 }
 
 module "aparavi" {
-  source = "../../helm"
+  source = "../../aparavi-helm"
 
   name                 = "aparavi"
   chart_version        = var.aparavi_chart_version
