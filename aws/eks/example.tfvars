@@ -27,3 +27,5 @@ collector_node_name = ""
 # Set this to true to have some initial data in /opt/data on collector. This
 # might be useful for quick demonstration.
 generate_sample_data = true
+# EBS volume ID of the form aws://<az>/<ebs_volume_id> to attach to collector.
+data_ebs_volume_id = "aws://<az>/vol-<ebs-volume-id>"

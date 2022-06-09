@@ -53,6 +53,24 @@ variable "collector_node_name" {
   default     = ""
 }
 
+variable "collector_node_selector" {
+  description = "Collector pod's nodeSelector"
+  type        = map(string)
+  default     = {}
+}
+
+variable "data_pv_name" {
+  description = "If not empty, a PVC will be created using this as volumeName"
+  type        = string
+  default     = null
+}
+
+variable "data_pvc_storage_class_name" {
+  description = "PVC storageClassName"
+  type        = string
+  default     = null
+}
+
 variable "generate_sample_data" {
   description = "Generate sample data in collector"
   type        = bool

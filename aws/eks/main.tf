@@ -13,4 +13,5 @@ module "aparavi-eks" {
   aggregator_node_name      = var.aggregator_node_name
   collector_node_name       = var.collector_node_name
   generate_sample_data      = var.generate_sample_data
+  data_ebs_volume_id        = var.data_ebs_volume_id
 }

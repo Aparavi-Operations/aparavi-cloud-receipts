@@ -3,45 +3,42 @@ locals {
 }
 
 resource "kubernetes_persistent_volume_claim" "data" {
-  count = var.generate_sample_data ? 1 : 0
+  count = var.data_pv_name != null || var.generate_sample_data ? 1 : 0
+
   metadata {
     name      = "${var.name}-data"
     namespace = local.namespace
-    labels = {
-      "app.kubernetes.io/name" : var.name
-      "app.kubernetes.io/instance" : var.name
-      "app.kubernetes.io/component" : "collector"
-    }
   }
   spec {
-    access_modes = ["ReadWriteOnce"]
+    storage_class_name = var.data_pvc_storage_class_name
+    access_modes       = ["ReadWriteOnce"]
     resources {
       requests = {
         storage = "2Gi"
       }
     }
+    volume_name = var.data_pv_name
   }
-  wait_until_bound = false
+  wait_until_bound = var.data_pv_name != null ? true : false
 }
 
 resource "local_file" "values" {
   filename = "${path.cwd}/values.yaml"
   content = templatefile(
-    "${path.module}/values.tftpl",
+    "${path.module}/values.yaml.tftpl",
     {
-      mysqlHostname      = var.mysql_hostname
-      mysqlPort          = var.mysql_port
-      mysqlUsername      = var.mysql_username
-      mysqlPassword      = var.mysql_password
-      platformHost       = var.platform_host
-      platformNodeId     = var.platform_node_id
-      aggregatorNodeName = var.aggregator_node_name
-      collectorNodeName  = var.collector_node_name
-      generateSampleData = var.generate_sample_data
-      claimName = (
-        var.generate_sample_data ?
-        kubernetes_persistent_volume_claim.data.0.metadata.0.name :
-        ""
+      mysqlHostname         = var.mysql_hostname
+      mysqlPort             = var.mysql_port
+      mysqlUsername         = var.mysql_username
+      mysqlPassword         = var.mysql_password
+      platformHost          = var.platform_host
+      platformNodeId        = var.platform_node_id
+      aggregatorNodeName    = var.aggregator_node_name
+      collectorNodeName     = var.collector_node_name
+      collectorNodeSelector = yamlencode(var.collector_node_selector)
+      claimName = try(
+        kubernetes_persistent_volume_claim.data[0].metadata[0].name,
+        null
       )
     }
   )
@@ -60,6 +57,7 @@ resource "helm_release" "aparavi" {
 
 resource "kubernetes_job" "data" {
   count = var.generate_sample_data ? 1 : 0
+
   metadata {
     name      = "${var.name}-populate-data"
     namespace = local.namespace
@@ -108,7 +106,7 @@ resource "kubernetes_job" "data" {
         volume {
           name = "data"
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.data.0.metadata.0.name
+            claim_name = kubernetes_persistent_volume_claim.data[0].metadata[0].name
           }
         }
         restart_policy = "Never"

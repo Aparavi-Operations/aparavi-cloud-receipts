@@ -15,7 +15,9 @@ aggregator:
 collector:
   config:
     nodeName: ${collectorNodeName}
-  %{~ if generateSampleData ~}
+  %{~ if claimName != null ~}
+  nodeSelector:
+    ${collectorNodeSelector}
   extraVolumes:
     - name: data
       persistentVolumeClaim:
