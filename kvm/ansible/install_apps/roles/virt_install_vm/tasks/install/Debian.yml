@@ -1,0 +1,5 @@
+---
+- name: Install the virtinst package
+  apt:
+    name: virtinst
+    state: present

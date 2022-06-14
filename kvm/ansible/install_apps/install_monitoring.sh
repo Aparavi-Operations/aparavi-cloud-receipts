@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -ex
 sudo echo Script started > /tmp/script.log
 sudo apt update
@@ -35,7 +35,7 @@ apt update
 apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
 DOCKER_COMPOSE_VERSION='2.3.0'
 NODE_EXPORTER_VERSION='1.3.1'
-MONITORING_BRANCH='main'
+MONITORING_BRANCH='OPS-1138_kvm_stuff'
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 add-apt-repository \
@@ -47,21 +47,20 @@ apt update
 apt -y install docker-ce docker-ce-cli containerd.io
 systemctl enable --now docker
 
-wget -q https://github.com/docker/compose/releases/download/v$${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
+wget -q https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
 chmod 0750 /usr/local/bin/docker-compose
 
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
-cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
+cd /root/aparavi-cloud-receipts && git checkout ${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
 rm -f /root/monitoring/vmagent/scrape_azure.yml
 rm -f /root/monitoring/vmagent/scrape_ec2.yml
-rm -f /root/monitoring/vmagent/scrape_kvm.yml
-sed -i 's/<<deployment>>/${deployment_name}/g' /root/monitoring/vmagent/scrape_gcp.yml
-sed -i 's/<<aggregator_ip>>/${aggregator_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
-sed -i 's/<<collector_ip>>/${collector_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
-sed -i 's/<<monitoring_ip>>/${monitoring_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
+rm -f /root/monitoring/vmagent/scrape_gcp.yml
+sed -i 's/<<deployment>>/kvm_deployment/g' /root/monitoring/vmagent/scrape_kvm.yml
+sed -i 's/<<appagent_ip1>>/158.175.71.44/g' /root/monitoring/vmagent/scrape_kvm.yml
+sed -i 's/<<appagent_port1>>/9101/g' /root/monitoring/vmagent/scrape_kvm.yml
+sed -i 's/<<monitoring_ip>>/192.168.202.6/g' /root/monitoring/vmagent/scrape_kvm.yml
 cp /root/monitoring/aparavi-monitoring.service /etc/systemd/system/aparavi-monitoring.service
 systemctl daemon-reload
 systemctl enable aparavi-monitoring
 systemctl start aparavi-monitoring
-

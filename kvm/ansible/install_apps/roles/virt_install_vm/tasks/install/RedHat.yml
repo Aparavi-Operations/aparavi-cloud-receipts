@@ -1,0 +1,5 @@
+---
+- name: Install the virt-install package
+  package:
+    name: virt-install
+    state: present
