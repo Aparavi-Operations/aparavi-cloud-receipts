@@ -11,7 +11,7 @@ variable "chart_version" {
 }
 
 variable "mysql_hostname" {
-  description = "MySQL hostname for aggregator"
+  description = "MySQL hostname"
   type        = string
 }
 
@@ -22,39 +22,33 @@ variable "mysql_port" {
 }
 
 variable "mysql_username" {
-  description = "MySQL username for aggregator"
+  description = "MySQL username"
   type        = string
 }
 
 variable "mysql_password" {
-  description = "MySQL password for aggregator"
+  description = "MySQL password"
   type        = string
 }
 
 variable "platform_host" {
-  description = "Aparavi platform host[:port] to connect aggregator to"
+  description = "Aparavi platform host[:port]"
   type        = string
 }
 
 variable "platform_node_id" {
-  description = "Aparavi platform node ID to connect aggregator to"
+  description = "Aparavi platform node ID"
   type        = string
 }
 
-variable "aggregator_node_name" {
-  description = "Aggregator node name. Default: chart default"
-  type        = string
-  default     = ""
-}
-
-variable "collector_node_name" {
-  description = "Collector node name. Default: chart default"
+variable "appagent_node_name" {
+  description = "Appagent node name. Default: chart default"
   type        = string
   default     = ""
 }
 
-variable "collector_node_selector" {
-  description = "Collector pod's nodeSelector"
+variable "appagent_node_selector" {
+  description = "Appagent pod's nodeSelector"
   type        = map(string)
   default     = {}
 }
@@ -72,7 +66,7 @@ variable "data_pvc_storage_class_name" {
 }
 
 variable "generate_sample_data" {
-  description = "Generate sample data in collector"
+  description = "Generate sample data in appagent"
   type        = bool
   default     = false
 }

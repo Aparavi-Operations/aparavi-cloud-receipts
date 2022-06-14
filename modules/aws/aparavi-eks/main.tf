@@ -46,7 +46,7 @@ module "rds" {
   allocated_storage         = var.rds_allocated_storage
   max_allocated_storage     = var.rds_max_allocated_storage
   instance_class            = var.rds_instance_class
-  username                  = "aggregator"
+  username                  = "aparavi"
   vpc_security_group_ids    = [aws_security_group.allow_mysql.id]
   subnet_ids                = module.vpc.private_subnets
   create_db_subnet_group    = true
@@ -130,21 +130,17 @@ module "aparavi" {
   source = "../../aparavi-helm"
 
   name             = "aparavi"
-  chart_version    = var.aparavi_chart_version
+  chart_version    = "0.16.0"
   mysql_hostname   = module.rds.db_instance_address
   mysql_username   = module.rds.db_instance_username
   mysql_password   = module.rds.db_instance_password
   platform_host    = var.platform_host
   platform_node_id = var.platform_node_id
-  aggregator_node_name = coalesce(
-    var.aggregator_node_name,
-    "${var.name}-aggregator"
+  appagent_node_name = coalesce(
+    var.appagent_node_name,
+    "${var.name}-appagent"
   )
-  collector_node_name = coalesce(
-    var.collector_node_name,
-    "${var.name}-collector"
-  )
-  collector_node_selector = try(
+  appagent_node_selector = try(
     {
       "topology.kubernetes.io/zone" = regex(
         "^aws://(.*)/.*",

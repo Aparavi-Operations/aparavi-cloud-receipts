@@ -99,7 +99,7 @@ module "aparavi" {
   source = "../../aparavi-helm"
 
   name                 = "aparavi"
-  chart_version        = var.aparavi_chart_version
+  chart_version        = "0.15.0"
   mysql_hostname       = module.mysql.address
   mysql_username       = module.mysql.username
   mysql_password       = module.mysql.password

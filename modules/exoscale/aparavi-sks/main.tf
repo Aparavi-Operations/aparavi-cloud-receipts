@@ -191,7 +191,7 @@ module "aparavi" {
   source = "../../aparavi-helm"
 
   name                 = "aparavi"
-  chart_version        = var.aparavi_chart_version
+  chart_version        = "0.15.0"
   mysql_hostname       = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
   mysql_port           = 21699
   mysql_username       = local.admin_username

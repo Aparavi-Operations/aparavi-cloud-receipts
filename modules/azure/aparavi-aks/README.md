@@ -46,7 +46,6 @@ Then perform the following commands on the root folder:
 |------|-------------|------|---------|:--------:|
 | <a name="input_aggregator_node_name"></a> [aggregator\_node\_name](#input\_aggregator\_node\_name) | Aggregator node name. Default: "${var.name}-aggregator" | `string` | `""` | no |
 | <a name="input_aks_agents_size"></a> [aks\_agents\_size](#input\_aks\_agents\_size) | Virtual machine size for the Kubernetes agents | `string` | `"Standard_B4ms"` | no |
-| <a name="input_aparavi_chart_version"></a> [aparavi\_chart\_version](#input\_aparavi\_chart\_version) | Aparavi Helm chart version. Default: latest | `string` | `""` | no |
 | <a name="input_collector_node_name"></a> [collector\_node\_name](#input\_collector\_node\_name) | Collector node name. Default: "${var.name}-collector" | `string` | `""` | no |
 | <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data in collector | `bool` | `false` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure location where resources reside | `string` | `"eastus"` | no |

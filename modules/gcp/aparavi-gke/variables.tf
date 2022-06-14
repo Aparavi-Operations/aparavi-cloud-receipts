@@ -36,12 +36,6 @@ variable "cloudsql_tier" {
   default     = "db-f1-micro"
 }
 
-variable "aparavi_chart_version" {
-  description = "Aparavi Helm chart version. Default: latest"
-  type        = string
-  default     = ""
-}
-
 variable "platform_host" {
   description = "Aparavi platform hostname[:port] to connect aggregator to"
   type        = string

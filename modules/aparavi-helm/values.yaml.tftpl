@@ -3,7 +3,7 @@ mysql:
 externalMysql:
   hostname: ${mysqlHostname}
   port: ${mysqlPort}
-aggregator:
+appagent:
   config:
     mysql:
       username: ${mysqlUsername}
@@ -11,13 +11,10 @@ aggregator:
     platform:
       host: ${platformHost}
       nodeId: ${platformNodeId}
-    nodeName: ${aggregatorNodeName}
-collector:
-  config:
-    nodeName: ${collectorNodeName}
+    nodeName: ${appagentNodeName}
   %{~ if claimName != null ~}
   nodeSelector:
-    ${collectorNodeSelector}
+    ${appagentNodeSelector}
   extraVolumes:
     - name: data
       persistentVolumeClaim:

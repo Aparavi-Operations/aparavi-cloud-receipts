@@ -27,15 +27,14 @@ resource "local_file" "values" {
   content = templatefile(
     "${path.module}/values.yaml.tftpl",
     {
-      mysqlHostname         = var.mysql_hostname
-      mysqlPort             = var.mysql_port
-      mysqlUsername         = var.mysql_username
-      mysqlPassword         = var.mysql_password
-      platformHost          = var.platform_host
-      platformNodeId        = var.platform_node_id
-      aggregatorNodeName    = var.aggregator_node_name
-      collectorNodeName     = var.collector_node_name
-      collectorNodeSelector = yamlencode(var.collector_node_selector)
+      mysqlHostname        = var.mysql_hostname
+      mysqlPort            = var.mysql_port
+      mysqlUsername        = var.mysql_username
+      mysqlPassword        = var.mysql_password
+      platformHost         = var.platform_host
+      platformNodeId       = var.platform_node_id
+      appagentNodeName     = var.appagent_node_name
+      appagentNodeSelector = yamlencode(var.appagent_node_selector)
       claimName = try(
         kubernetes_persistent_volume_claim.data[0].metadata[0].name,
         null
@@ -64,7 +63,7 @@ resource "kubernetes_job" "data" {
     labels = {
       "app.kubernetes.io/name" : var.name
       "app.kubernetes.io/instance" : var.name
-      "app.kubernetes.io/component" : "collector"
+      "app.kubernetes.io/component" : "appagent"
     }
   }
   spec {
@@ -78,7 +77,7 @@ resource "kubernetes_job" "data" {
                 match_expressions {
                   key      = "app.kubernetes.io/component"
                   operator = "In"
-                  values   = ["collector"]
+                  values   = ["appagent"]
                 }
               }
               topology_key = "kubernetes.io/hostname"
