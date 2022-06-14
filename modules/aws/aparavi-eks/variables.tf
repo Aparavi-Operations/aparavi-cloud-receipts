@@ -106,3 +106,17 @@ variable "generate_sample_data" {
   type        = bool
   default     = false
 }
+
+variable "data_ebs_volume_id" {
+  description = "EBS volume ID to attach to collector"
+  type        = string
+  default     = ""
+
+  validation {
+    condition = (
+      var.data_ebs_volume_id == "" ||
+      can(regex("^aws://.*/vol-.*", var.data_ebs_volume_id))
+    )
+    error_message = "The data_ebs_volume_id value must be of the form aws://<az>/<ebs_volume_id>."
+  }
+}

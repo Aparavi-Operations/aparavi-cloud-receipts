@@ -15,6 +15,12 @@ variable "mysql_hostname" {
   type        = string
 }
 
+variable "mysql_port" {
+  description = "MySQL port"
+  type        = number
+  default     = 3306
+}
+
 variable "mysql_username" {
   description = "MySQL username for aggregator"
   type        = string
@@ -45,6 +51,24 @@ variable "collector_node_name" {
   description = "Collector node name. Default: chart default"
   type        = string
   default     = ""
+}
+
+variable "collector_node_selector" {
+  description = "Collector pod's nodeSelector"
+  type        = map(string)
+  default     = {}
+}
+
+variable "data_pv_name" {
+  description = "If not empty, a PVC will be created using this as volumeName"
+  type        = string
+  default     = null
+}
+
+variable "data_pvc_storage_class_name" {
+  description = "PVC storageClassName"
+  type        = string
+  default     = null
 }
 
 variable "generate_sample_data" {

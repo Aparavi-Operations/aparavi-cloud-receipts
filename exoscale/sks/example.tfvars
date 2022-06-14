@@ -1,16 +1,12 @@
-# Name of AWS CLI profile you want to use. This can be omitted if the [default]
-# profile points to the account you want to deploy in.
-aws_profile = "my-profile"
-# AWS region to deploy resources in. If left blank or unspecified, CLI
-# configuration value will be used.
-region = "us-west-1"
+# Exoscale API key and secret
+# https://community.exoscale.com/documentation/iam/quick-start/
+api_key = "EXOxxxxxxxxxxxxxxxxxxxxxxxx"
+api_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+# Exoscale zone you want to deploy resources in.
+zone = "de-muc-1"
 
-# Main name of most of resources, such as VPC, EKS, RDS...
+# Main name of most of resources, such as VNet, AKS, MySQL...
 name = "aparavi"
-# Tags to add to resources
-tags = {
-  service = "aparavi",
-}
 
 # Aparavi platform host in HOSTNAME[:PORT] format
 platform_host = "preview.aparavi.com"
@@ -27,5 +23,3 @@ collector_node_name = ""
 # Set this to true to have some initial data in /opt/data on collector. This
 # might be useful for quick demonstration.
 generate_sample_data = true
-# EBS volume ID of the form aws://<az>/<ebs_volume_id> to attach to collector.
-data_ebs_volume_id = "aws://<az>/vol-<ebs-volume-id>"

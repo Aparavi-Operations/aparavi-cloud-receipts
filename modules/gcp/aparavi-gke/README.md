@@ -23,7 +23,8 @@ provider "google-beta" {
 }
 
 module "aparavi" {
-  source               = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//k8s-deployment/modules/gcp/gke"
+  source = "github.com/Aparavi-Operations/aparavi-cloud-receipts.git//modules/gcp/aparavi-gke"
+
   name                 = "aparavi"
   region               = "us-west1"
   zone                 = "us-west1-b"
@@ -44,22 +45,6 @@ Then perform the following commands on the root folder:
 - `terraform plan` to see the infrastructure plan
 - `terraform apply` to apply the infrastructure build
 - `terraform destroy` to destroy the built infrastructure
-
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.7 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.20.0 |
-| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | >= 4.20.0 |
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.5.1 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.11.0 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 4.20.0 |
 
 ## Inputs
 

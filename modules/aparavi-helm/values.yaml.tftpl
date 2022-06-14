@@ -2,6 +2,7 @@ mysql:
   enabled: false
 externalMysql:
   hostname: ${mysqlHostname}
+  port: ${mysqlPort}
 aggregator:
   config:
     mysql:
@@ -14,7 +15,9 @@ aggregator:
 collector:
   config:
     nodeName: ${collectorNodeName}
-  %{~ if generateSampleData ~}
+  %{~ if claimName != null ~}
+  nodeSelector:
+    ${collectorNodeSelector}
   extraVolumes:
     - name: data
       persistentVolumeClaim:

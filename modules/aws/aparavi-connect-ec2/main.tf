@@ -24,7 +24,7 @@ module "appagent" {
 }
 
 module "monitoring" {
-  source             = "../../../modules/monitoring"
+  source             = "../monitoring"
   key_name           = var.KEY_NAME
   management_network = var.MANAGEMENT_NETWORK
   deployment_name    = var.DEPLOYMENT
