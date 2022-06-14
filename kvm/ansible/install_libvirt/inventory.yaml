@@ -1,7 +1,7 @@
 aparavi-baremetal-hosts:
   hosts:
-    158.175.71.44:
-    158.175.71.34:
+    1.2.3.4:
+    1.2.3.5:
   vars:
     network_name: "br0"
     network_bridge: "br0"

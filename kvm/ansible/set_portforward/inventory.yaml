@@ -1,6 +1,6 @@
 aparavi-baremetal-appagent-1:
   hosts:
-    158.175.71.44:
+    1.2.3.4:
       int_ip: "192.168.202.5"
       ext_port: "9101"
       int_port: "9100"
@@ -9,7 +9,7 @@ aparavi-baremetal-appagent-1:
 
 aparavi-baremetal-monitoring:
   hosts:
-    158.175.71.34:
+    1.2.3.5:
       int_ip: "192.168.202.6"
       ext_port: "80"
       int_port: "80"

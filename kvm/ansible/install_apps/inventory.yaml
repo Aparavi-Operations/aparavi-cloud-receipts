@@ -1,6 +1,6 @@
 aparavi-baremetal-appagent-1:
   hosts:
-    158.175.71.44:
+    1.2.3.4:
       vm:
         hostname:
           aparavi-appagent-1
@@ -15,7 +15,7 @@ aparavi-baremetal-appagent-1:
 
 aparavi-baremetal-monitoring:
   hosts:
-    158.175.71.34:
+    1.2.3.5:
       vm:
         hostname:
           aparavi-monitoring
