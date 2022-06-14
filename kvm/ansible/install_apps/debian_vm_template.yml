@@ -1,0 +1,52 @@
+qemu_img:
+  dest: "/var/lib/libvirt/images/{{ vm.hostname }}.qcow2"
+  format: qcow2
+  src: debian-11-generic-amd64-20220503-998.qcow2
+  size: "{{ vm.size }}"
+  owner: root
+  group: kvm
+  mode: 660
+  overwrite: true
+cloud_localds:
+  overwrite: true
+  dest: "/var/lib/libvirt/images/{{ vm.hostname }}_cloudinit.iso"
+  config_template: "templates/simple_debian/debian.j2"
+  network_config_template: "templates/simple_debian/debian_netconfig.j2"
+  cloud_config:
+    hostname: "{{ vm.hostname }}"
+    commands: "{{ vm.run_commands }}"
+    swapfile_size: "{{ vm.swapfile_size }}"
+    system_info:
+
+      default_user:
+        name: "ansible"
+        passwd: "secret"
+        ssh_authorized_keys:
+          - "{{lookup('file', '~/.ssh/id_rsa.pub') }}"
+    network:
+      dns_nameservers:
+        9.9.9.9
+      dns_search:
+        intern.local
+      interface:
+        name:
+          enp1s0
+        address:
+          "{{ vm.ip_address }}"
+        gateway:
+          192.168.202.1
+    disable_cloud_init: true
+    reboot:
+      true
+virt_install_import:
+  wait: 0
+  name: "{{ vm.hostname }}"
+  os_type: Linux
+  os_variant: debian10
+  network: bridge=br0,model=virtio
+  memory: "{{ vm.memory }}"
+  vcpu: "{{ vm.vcpu }}"
+  graphics: spice
+  disks:
+    - "/var/lib/libvirt/images/{{ vm.hostname }}.qcow2,device=disk"
+    - "/var/lib/libvirt/images/{{ vm.hostname }}_cloudinit.iso,device=cdrom"
