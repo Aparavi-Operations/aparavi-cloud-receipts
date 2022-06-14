@@ -1,7 +1,7 @@
 ---
 - name: Preparations
   hosts: all
-  become: yes
+  become: true
   tasks:
     - name: Install all the things with apt
       apt:
@@ -33,7 +33,7 @@
     #     enabled: no
 - name: Create network
   hosts: all
-  become: yes 
+  become: true
   roles:
     - libvirt_network
 
