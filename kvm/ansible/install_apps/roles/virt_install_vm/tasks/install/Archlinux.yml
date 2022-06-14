@@ -1,5 +1,0 @@
----
-- name: Install the virt-install package
-  pacman:
-    name: virt-install
-    state: present

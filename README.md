@@ -10,7 +10,6 @@ public cloud services.
 * [`gcp/`](gcp/): Google Cloud Platform (GCP)
 * [`azure/`](azure/): Azure
 * [`exoscale/`](exoscale/): Exoscale
-* [`kvm/`](kvm/): Baremetal KVM
 
 ***Aparavi Connect*** available in:
 * [`aparavi-connect/ec2/`](aparavi-connect/ec2/): Amazon Web Service (AWS) EC2

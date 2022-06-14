@@ -55,7 +55,6 @@ cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
 rm -f /root/monitoring/vmagent/scrape_azure.yml
 rm -f /root/monitoring/vmagent/scrape_ec2.yml
-rm -f /root/monitoring/vmagent/scrape_kvm.yml
 sed -i 's/<<deployment>>/${deployment_name}/g' /root/monitoring/vmagent/scrape_gcp.yml
 sed -i 's/<<aggregator_ip>>/${aggregator_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
 sed -i 's/<<collector_ip>>/${collector_private_ip}/g' /root/monitoring/vmagent/scrape_gcp.yml
