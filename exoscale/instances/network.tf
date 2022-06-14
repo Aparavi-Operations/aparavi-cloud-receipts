@@ -11,7 +11,12 @@ resource "exoscale_private_network" "aparavi-managed" {
 #  zone = "de-fra-1"
 #}
 
-resource "exoscale_ipaddress" "ingress" {
+resource "exoscale_ipaddress" "appagent-ingress" {
+  zone = "de-fra-1"
+  description = "my elastic IP"
+}
+
+resource "exoscale_ipaddress" "monitoring-ingress" {
   zone = "de-fra-1"
   description = "my elastic IP"
 }
