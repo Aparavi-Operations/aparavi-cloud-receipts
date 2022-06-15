@@ -99,7 +99,7 @@ resource "exoscale_security_group_rule" "bastion-ssh" {
 }
 
 resource "exoscale_security_group_rule" "appagent-ssh" {
-    security_group_id = exoscale_security_group.sg-monitoring.id
+    security_group_id = exoscale_security_group.sg-appagent.id
     type = "INGRESS"
     protocol = "tcp"
     cidr = "0.0.0.0/0"
