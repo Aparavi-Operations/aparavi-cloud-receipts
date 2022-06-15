@@ -33,7 +33,7 @@ while fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/l
 sleep 10
 apt update
 apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
-DOCKER_COMPOSE_VERSION='2.3.0'
+DOCKER_COMPOSE_VERSION='2.6.0'
 NODE_EXPORTER_VERSION='1.3.1'
 MONITORING_BRANCH='OPS-1261_create_exoscale_vm'
 
@@ -51,7 +51,7 @@ wget -q https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VER
 chmod 0750 /usr/local/bin/docker-compose
 
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
-cd /root/aparavi-cloud-receipts && git checkout ${MONITORING_BRANCH}
+cd /root/aparavi-cloud-receipts && git checkout OPS-1261_create_exoscale_vm
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
 rm -f /root/monitoring/vmagent/scrape_azure.yml
 rm -f /root/monitoring/vmagent/scrape_ec2.yml
