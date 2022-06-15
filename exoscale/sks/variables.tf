@@ -33,23 +33,17 @@ variable "dbaas_plan" {
 }
 
 variable "platform_host" {
-  description = "Aparavi platform host to connect aggregator to"
+  description = "Aparavi platform host"
   type        = string
 }
 
 variable "platform_node_id" {
-  description = "Aparavi platform node ID to connect aggregator to"
+  description = "Aparavi platform node ID"
   type        = string
 }
 
-variable "aggregator_node_name" {
-  description = "Aggregator node name. Default: \"$${var.name}-aggregator\""
-  type        = string
-  default     = ""
-}
-
-variable "collector_node_name" {
-  description = "Collector node name. Default: \"$${var.name}-collector\""
+variable "appagent_node_name" {
+  description = "Appagent node name. Default: \"$${var.name}-appagent\""
   type        = string
   default     = ""
 }

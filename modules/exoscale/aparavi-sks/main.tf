@@ -28,7 +28,7 @@ resource "random_password" "db_password" {
 }
 
 locals {
-  admin_username = "aggregator"
+  admin_username = "aparavi"
 }
 
 resource "exoscale_database" "db" {
@@ -176,30 +176,21 @@ resource "helm_release" "longhorn" {
   depends_on = [exoscale_sks_nodepool.default]
 }
 
-locals {
-  aggregator_node_name = coalesce(
-    var.aggregator_node_name,
-    "${var.name}-aggregator"
-  )
-  collector_node_name = coalesce(
-    var.collector_node_name,
-    "${var.name}-collector"
-  )
-}
-
 module "aparavi" {
   source = "../../aparavi-helm"
 
-  name                 = "aparavi"
-  chart_version        = "0.15.0"
-  mysql_hostname       = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
-  mysql_port           = 21699
-  mysql_username       = local.admin_username
-  mysql_password       = random_password.db_password.result
-  platform_host        = var.platform_host
-  platform_node_id     = var.platform_node_id
-  aggregator_node_name = local.aggregator_node_name
-  collector_node_name  = local.collector_node_name
+  name             = "aparavi"
+  chart_version    = "0.16.0"
+  mysql_hostname   = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
+  mysql_port       = 21699
+  mysql_username   = local.admin_username
+  mysql_password   = random_password.db_password.result
+  platform_host    = var.platform_host
+  platform_node_id = var.platform_node_id
+  appagent_node_name = coalesce(
+    var.appagent_node_name,
+    "${var.name}-appagent"
+  )
   generate_sample_data = var.generate_sample_data
 
   depends_on = [

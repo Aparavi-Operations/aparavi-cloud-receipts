@@ -27,8 +27,7 @@ module "aparavi" {
   dbaas_plan           = "hobbyist-2"
   platform_host        = "preview.aparavi.com"
   platform_node_id     = "11111111-aaaa-2222-bbbb-333333333333"
-  aggregator_node_name = "aggregator"
-  collector_node_name  = "collector"
+  appagent_node_name   = "appagent"
   generate_sample_data = true
 }
 ```
@@ -44,8 +43,7 @@ Then perform the following commands on the root folder:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aggregator_node_name"></a> [aggregator\_node\_name](#input\_aggregator\_node\_name) | Aggregator node name. Default: "${var.name}-aggregator" | `string` | `""` | no |
-| <a name="input_collector_node_name"></a> [collector\_node\_name](#input\_collector\_node\_name) | Collector node name. Default: "${var.name}-collector" | `string` | `""` | no |
+| <a name="input_appagent_node_name"></a> [appagent\_node\_name](#input\_appagent\_node\_name) | Appagent node name. Default: "${var.name}-appagent" | `string` | `""` | no |
 | <a name="input_dbaas_plan"></a> [dbaas\_plan](#input\_dbaas\_plan) | The plan of the database service | `string` | `"hobbyist-2"` | no |
 | <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data in collector | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | Main name of resources, such as SKS, DBAAS, etc | `string` | `"aparavi"` | no |

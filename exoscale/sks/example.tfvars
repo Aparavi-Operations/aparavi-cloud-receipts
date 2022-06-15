@@ -10,12 +10,12 @@ name = "aparavi"
 
 # Aparavi platform host in HOSTNAME[:PORT] format
 platform_host = "preview.aparavi.com"
-# Aparavi platform node ID to connect aggregator to
+# Aparavi platform node ID
 platform_node_id = "11111111-aaaa-1111-aaaa-111111111111"
-# Aggregator node name. This will be the name shown in platform UI. If left
-# empty, will default to "${var.name}-aggregator", where ${var.name} is the
+# Appagent node name. This will be the name shown in platform UI. If left
+# empty, will default to "${var.name}-appagent", where ${var.name} is the
 # value given above to variable 'name'.
-aggregator_node_name = ""
+appagent_node_name = ""
 # Collector node name. This will be the name shown in platform UI. If left
 # empty, will default to "${var.name}-collector", where ${var.name} is the
 # value given above to variable 'name'.
