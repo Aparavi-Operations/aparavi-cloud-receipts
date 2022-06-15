@@ -33,7 +33,7 @@ while fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/l
 sleep 10
 apt update
 apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
-DOCKER_COMPOSE_VERSION='2.6.0'
+DOCKER_COMPOSE_VERSION='2.3.0'
 NODE_EXPORTER_VERSION='1.3.1'
 MONITORING_BRANCH='OPS-1261_create_exoscale_vm'
 
@@ -47,7 +47,7 @@ apt update
 apt -y install docker-ce docker-ce-cli containerd.io
 systemctl enable --now docker
 
-wget -q https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
+wget -q https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
 chmod 0750 /usr/local/bin/docker-compose
 
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
