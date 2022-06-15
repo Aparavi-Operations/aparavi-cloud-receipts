@@ -35,3 +35,26 @@ variable "appagent_node_name" {
   type        = string
   default     = ""
 }
+
+variable "appagent_vm_instance_type" {
+  description = "AppAgent instance type"
+  type        = string
+  default     = "Tiny"
+}
+
+variable "monitoring_vm_instance_type" {
+  description = "monitoring instance type"
+  type        = string
+  default     = "Tiny"
+}
+variable "bastion_vm_instance_type" {
+  description = "bastion instance type"
+  type        = string
+  default     = "Tiny"
+}
+
+variable "dbaas_plan" {
+  description = "The plan of the database service"
+  type        = string
+  default     = "hobbyist-2"
+}

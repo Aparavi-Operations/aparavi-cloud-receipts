@@ -23,7 +23,10 @@ data "exoscale_compute_template" "ubuntu" {
     name = "Linux Ubuntu 20.04 LTS 64-bit"
 }
 ################################################################################
-
+resource "exoscale_ssh_key" "instance-key" {
+  name       = "admin"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFypoAJKpC/PhqV6LnYYaSjQ1Q9yFXLN3cqPfMqnvDY2E2sApIKgQse1P13Vrv8bKcNheR6f4wXtpG+lBvFGpUyH2/D8bhBH3H5ClehQDRALr9nwDPjGT32BZQ1md++ez6/F1qpFqDRGlJjPjMJTaXKtFlkahG2qYrrASRXbOFMHbqaUYTlMTEBz+YhqZV4EKMA24xw2qQh87Xr2N+FP6ysQ8BCpuPIWg6ha68oo694Pgfllr3RrICRvtlUdA9PpwOKPA7TSZXgsJqVU3WjY51CAkHiVkzORbIJnjDLVRzlvbMhUgeHvnZOGqKCWiMe7jtFU2p78c76A9tf4M/iZS+4h7NPOHdPstehgRWhQaBGKQDWyqryXoSlyNfYcgmdhwyWmdDhYAr45ZRXuYHxi70GPKzdkzS7yiwj3acwSQeqtgYvfoqa2U/4vn4d6jLJkc/VPyjQBhSEEac8OSKhlWcYl17WJm8mKaXrRk3a2SyIh/XDbOxPCWAeg8g4rUwDVs="
+}
 ################################### Database ###################################
 
 resource "random_password" "db_password" {
@@ -131,13 +134,9 @@ resource "exoscale_security_group_rule" "monitoring-http" {
     end_port = 80
 }
 
-data "exoscale_compute_template" "ubuntu" {
-    zone = var.zone
-    name = "Linux Ubuntu 20.04 LTS 64-bit"
-}
 
 data "template_file" "cloudinit-appagent" {
-  template = file("init-appagent.tpl")
+  template = file("../../modules/exoscale/aparavi-instances/init-appagent.tpl")
 
   vars = {
     eip = exoscale_ipaddress.appagent-ingress.ip_address
@@ -145,7 +144,7 @@ data "template_file" "cloudinit-appagent" {
 }
 
 data "template_file" "cloudinit-monitoring" {
-  template = file("init-monitoring.tpl")
+  template = file("../../modules/exoscale/aparavi-instances/init-monitoring.tpl")
 
   vars = {
     eip = exoscale_ipaddress.monitoring-ingress.ip_address
@@ -153,7 +152,7 @@ data "template_file" "cloudinit-monitoring" {
 }
 
 data "template_file" "cloudinit-bastion" {
-  template = file("init-bastion.tpl")
+  template = file("../../modules/exoscale/aparavi-instances/init-bastion.tpl")
 
   vars = {
     eip = exoscale_ipaddress.bastion-ingress.ip_address
@@ -167,7 +166,7 @@ resource "exoscale_compute" "aparavi-appagent" {
     #display_name = "test"
     template_id = data.exoscale_compute_template.ubuntu.id
     #type               = "standard.medium"
-    size = var.vm_instance_type
+    size = var.appagent_vm_instance_type
     disk_size = 50
     #elastic_ip_ids = [exoscale_elastic_ip.aparavi-1.id]
     #public_ip_address = exoscale_elastic_ip.aparavi-1.id

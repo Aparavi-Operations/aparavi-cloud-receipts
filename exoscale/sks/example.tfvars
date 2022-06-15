@@ -1,7 +1,7 @@
 # Exoscale API key and secret
 # https://community.exoscale.com/documentation/iam/quick-start/
-api_key = "EXOxxxxxxxxxxxxxxxxxxxxxxxx"
-api_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+api_key = "EXOd146c7639b6f274b1498d083"
+api_secret = "AKuS9mPrQb6ajCq3Q3NFogS3zvuww8-vDN_4CEDIrd0"
 # Exoscale zone you want to deploy resources in.
 zone = "de-muc-1"
 
