@@ -10,7 +10,7 @@ resource "azurerm_mysql_server" "this" {
   tags                         = var.tags
   sku_name                     = var.sku_name
   version                      = "8.0"
-  administrator_login          = "aggregator"
+  administrator_login          = "aparavi"
   administrator_login_password = random_password.this.result
   storage_mb                   = 5120
   auto_grow_enabled            = true
