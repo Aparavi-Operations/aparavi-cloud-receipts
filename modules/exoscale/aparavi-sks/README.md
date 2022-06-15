@@ -1,6 +1,6 @@
 # Aparavi on Exoscale Scalable Kubernetes Service (SKS) Terraform Module
 
-This module deploys Aparavi aggregator and collector on Exoscale Scalable
+This module deploys Aparavi appagent on Exoscale Scalable
 Kubernetes Service (SKS). Resources this module will create are:
 
 - Private Network
@@ -47,7 +47,7 @@ Then perform the following commands on the root folder:
 | <a name="input_dbaas_plan"></a> [dbaas\_plan](#input\_dbaas\_plan) | The plan of the database service | `string` | `"hobbyist-2"` | no |
 | <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data in collector | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | Main name of resources, such as SKS, DBAAS, etc | `string` | `"aparavi"` | no |
-| <a name="input_platform_host"></a> [platform\_host](#input\_platform\_host) | Aparavi platform hostname[:port] to connect aggregator to | `string` | n/a | yes |
-| <a name="input_platform_node_id"></a> [platform\_node\_id](#input\_platform\_node\_id) | Aparavi platform node ID to connect aggregator to | `string` | n/a | yes |
+| <a name="input_platform_host"></a> [platform\_host](#input\_platform\_host) | Aparavi platform hostname[:port] | `string` | n/a | yes |
+| <a name="input_platform_node_id"></a> [platform\_node\_id](#input\_platform\_node\_id) | Aparavi platform node ID | `string` | n/a | yes |
 | <a name="input_sks_instance_type"></a> [sks\_instance\_type](#input\_sks\_instance\_type) | Type of Compute instances managed by the SKS default Nodepool | `string` | `"standard.extra-large"` | no |
 | <a name="input_zone"></a> [zone](#input\_zone) | Exoscale zone name | `string` | `"de-muc-1"` | no |
