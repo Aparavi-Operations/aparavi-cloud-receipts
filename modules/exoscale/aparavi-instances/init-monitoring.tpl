@@ -12,3 +12,4 @@ write_files:
           
 runcmd:
 - [ sh, -c, "sudo systemctl restart networking" ]
+- [ sh, -c, "curl -s https://raw.githubusercontent.com/Aparavi-Operations/aparavi-cloud-receipts/main/kvm/ansible/install_apps/install_monitoring.sh | sudo bash -s --" ]
