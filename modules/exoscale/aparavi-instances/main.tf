@@ -141,6 +141,11 @@ data "template_file" "cloudinit-appagent" {
   vars = {
     ext_ip_address = exoscale_ipaddress.appagent-ingress.ip_address
     int_ip_address = "192.168.100.5"
+    platform_bind_addr = var.platform_host
+    db_addr = exoscale_database.db.uri
+    db_port = 21699
+    db_user = local.admin_username
+    db_passwd = random_password.db_password.result
   }
 }
 
@@ -162,12 +167,12 @@ data "template_file" "cloudinit-bastion" {
   }
 }
 
-# resource "exoscale_nic" "eth_intra_appagent" {
-#  # count = length(exoscale_compute.machine)
+resource "exoscale_nic" "eth_intra_appagent" {
+ # count = length(exoscale_compute.machine)
 
-#   compute_id = exoscale_compute.aparavi-appagent.id
-#   network_id = exoscale_private_network.network.id
-# }
+  compute_id = exoscale_compute.aparavi-appagent.id
+  network_id = exoscale_private_network.network.id
+}
 
 
 # resource "exoscale_nic" "eth_intra_bastion" {
@@ -184,21 +189,21 @@ resource "exoscale_nic" "eth_intra_monitoring" {
   network_id = exoscale_private_network.network.id
 }
 
-# resource "exoscale_compute" "aparavi-appagent" {
-#     display_name               = "aparavi-appagent"
-#     zone                = var.zone
-#     template_id = data.exoscale_compute_template.debian.id
-#     size = var.appagent_vm_instance_type
-#     disk_size = 50
-#     key_pair = exoscale_ssh_key.instance-key.id
-#     security_group_ids = [ exoscale_security_group.sg-appagent.id, ]
-#     user_data = data.template_file.cloudinit-appagent.rendered
+resource "exoscale_compute" "aparavi-appagent" {
+    display_name               = "aparavi-appagent"
+    zone                = var.zone
+    template_id = data.exoscale_compute_template.debian.id
+    size = var.appagent_vm_instance_type
+    disk_size = 50
+    key_pair = exoscale_ssh_key.instance-key.id
+    security_group_ids = [ exoscale_security_group.sg-appagent.id, ]
+    user_data = data.template_file.cloudinit-appagent.rendered
 
-#     tags = {
-#         managedby = "terraform"
-#         app = "aparavi-agent"
-#     }
-# }
+    tags = {
+        managedby = "terraform"
+        app = "aparavi-agent"
+    }
+}
 
 
 resource "exoscale_compute" "aparavi-monitoring" {
