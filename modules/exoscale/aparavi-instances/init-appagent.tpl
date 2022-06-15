@@ -18,8 +18,8 @@ write_files:
       wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run 
       chmod +x linux-installer-latest.run
       ./linux-installer-latest.run -- /APPTYPE=aggregator-collector /BINDTO="${platform_bind_addr}" /DBTYPE="mysql" /DBHOST="${db_addr}" /DBPORT="${db_port}" /DBUSER="${db_user}" /DBPSWD="${db_passwd}" /SILENT /NOSTART
-      sed -i s/'ModuleArg="--moduleType=$AppType"'/'ModuleArg="--moduleType=$AppType --config.node.parentObjectId=${parentId}"'/g /opt/aparavi-data-ia/aggregator/app/support/linux/startapp.sh
-      /opt/aparavi-data-ia/aggregator/app/startapp
+      sed -i s/'ModuleArg="--moduleType=$AppType"'/'ModuleArg="--moduleType=$AppType --config.node.parentObjectId=${parentId}"'/g /opt/aparavi-data-ia/aggregator-collector/app/support/linux/startapp.sh
+      /opt/aparavi-data-ia/aggregator-collector/app/startapp
 
       #install node_exporter
       cd /tmp

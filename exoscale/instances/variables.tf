@@ -56,5 +56,5 @@ variable "bastion_vm_instance_type" {
 variable "dbaas_plan" {
   description = "The plan of the database service"
   type        = string
-  default     = "hobbyist-2"
+  default     = "startup-8"
 }

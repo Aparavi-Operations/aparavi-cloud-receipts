@@ -142,10 +142,11 @@ data "template_file" "cloudinit-appagent" {
     ext_ip_address = exoscale_ipaddress.appagent-ingress.ip_address
     int_ip_address = "192.168.100.5"
     platform_bind_addr = var.platform_host
-    db_addr = exoscale_database.db.uri
+    db_addr = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
     db_port = 21699
     db_user = local.admin_username
     db_passwd = random_password.db_password.result
+    parentId = var.platform_node_id
   }
 }
 
