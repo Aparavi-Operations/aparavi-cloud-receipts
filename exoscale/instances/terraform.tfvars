@@ -15,6 +15,6 @@ platform_node_id = "11111111-aaaa-1111-aaaa-111111111111"
 # Aggregator node name. This will be the name shown in platform UI. If left
 # empty, will default to "${var.name}-aggregator", where ${var.name} is the
 # value given above to variable 'name'.
-appagent_node_name = "exoscale-appagent1"
+appagent_node_name = "exoscale"
 
 #vm_instance_type = "Tiny"

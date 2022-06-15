@@ -191,7 +191,7 @@ resource "exoscale_nic" "eth_intra_monitoring" {
 }
 
 resource "exoscale_compute" "aparavi-appagent" {
-    display_name               = "aparavi-appagent"
+    display_name               = var.appagent_node_name
     zone                = var.zone
     template_id = data.exoscale_compute_template.debian.id
     size = var.appagent_vm_instance_type
