@@ -11,7 +11,7 @@ name = "aparavi"
 # Aparavi platform host in HOSTNAME[:PORT] format
 platform_host = "preview.aparavi.com"
 # Aparavi platform node ID to connect aggregator to
-platform_node_id = "11111111-aaaa-1111-aaaa-111111111111"
+platform_node_id = "bbbbbbbb-bbbb-bbbb-bbbb-brdimitrenko"
 # Appagent node name. This will be the name shown in platform UI. If left
 # empty, will default to "${var.name}-appagent", where ${var.name} is the
 # value given above to variable 'name'.

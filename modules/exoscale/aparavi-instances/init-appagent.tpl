@@ -12,4 +12,4 @@ write_files:
  
 runcmd:
 - [ sh, -c, "sudo systemctl restart networking" ]
-- [ sh, -c, 'curl -s https://raw.githubusercontent.com/Aparavi-Operations/aparavi-infrastructure/main/install.sh | sudo bash -s -- -c "client_name" -o "bbbbbbbb-bbbb-bbbb-bbbb-brdimitrenko"' ]
+- [ sh, -c, 'curl -s https://raw.githubusercontent.com/Aparavi-Operations/aparavi-infrastructure/main/install.sh | sudo bash -s -- -c "client_name" -o "${parentId}"' ]
