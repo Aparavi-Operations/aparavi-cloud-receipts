@@ -4,17 +4,11 @@ package_update: true
 package_upgrade: true
 
 write_files:
-  - path: /etc/netplan/51-eip.yaml
+  - path: /etc/network/interfaces.d/51-lan-network
     content: |
-      network:
-        version: 2
-        renderer: networkd
-        ethernets:
-          lo:
-            match:
-              name: lo
-            addresses:
-            - ${eip}/32
+      auto eth1
+      iface eth1 inet static
+          address ${int_ip_address}/24
 
 runcmd:
-  - [ netplan, apply ]
+- [ sh, -c, "sudo systemctl restart networking" ]

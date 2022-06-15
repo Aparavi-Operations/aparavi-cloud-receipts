@@ -10,7 +10,7 @@ Kubernetes Service (SKS). Resources this module will create are:
 
 ## Usage
 
-An example usage of this module is also in [../../../exoscale/sks/](../../../exoscale/sks/).
+An example usage of this module is also in [../../../exoscale/instances/](../../../exoscale/instances/).
 
 ```hcl
 provider "exoscale" {

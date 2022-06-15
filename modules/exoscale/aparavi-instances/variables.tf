@@ -10,11 +10,11 @@ variable "name" {
   default     = "aparavi-exoscale"
 }
 
-variable "vm_instance_type" {
-  description = "Type of Compute instances managed by the SKS default Nodepool"
-  type        = string
-  default     = "Tiny"
-}
+#variable "vm_instance_type" {
+#  description = "Type of Compute instances managed by the SKS default Nodepool"
+#  type        = string
+#  default     = "Tiny"
+#}
 
 variable "dbaas_plan" {
   description = "The plan of the database service"
@@ -23,16 +23,16 @@ variable "dbaas_plan" {
 }
 
 variable "platform_host" {
-  description = "Aparavi platform hostname[:port] to connect aggregator to"
+  description = "Aparavi platform hostname[:port] to connect appagent to"
   type        = string
 }
 
 variable "platform_node_id" {
-  description = "Aparavi platform node ID to connect aggregator to"
+  description = "Aparavi platform node ID to connect appagent to"
   type        = string
 }
 
-variable "aggregator_node_name" {
+variable "appagent_node_name" {
   description = "AppAgent node name. Default: \"$${var.name}-appagent\""
   type        = string
   default     = ""
@@ -41,13 +41,13 @@ variable "aggregator_node_name" {
 variable "appagent_vm_instance_type" {
   description = "AppAgent instance type"
   type        = string
-  default     = "Tiny"
+  default     = "Large"
 }
 
 variable "monitoring_vm_instance_type" {
   description = "monitoring instance type"
   type        = string
-  default     = "Tiny"
+  default     = "Small"
 }
 variable "bastion_vm_instance_type" {
   description = "bastion instance type"

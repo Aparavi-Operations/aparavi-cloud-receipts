@@ -18,13 +18,13 @@ resource "exoscale_private_network" "network" {
   netmask     = local.network.netmask
 }
 
-data "exoscale_compute_template" "ubuntu" {
+data "exoscale_compute_template" "debian" {
     zone = var.zone
-    name = "Linux Ubuntu 20.04 LTS 64-bit"
+    name = "Linux Debian 11 (Bullseye) 64-bit"
 }
 ################################################################################
 resource "exoscale_ssh_key" "instance-key" {
-  name       = "admin"
+  name       = "debian"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFypoAJKpC/PhqV6LnYYaSjQ1Q9yFXLN3cqPfMqnvDY2E2sApIKgQse1P13Vrv8bKcNheR6f4wXtpG+lBvFGpUyH2/D8bhBH3H5ClehQDRALr9nwDPjGT32BZQ1md++ez6/F1qpFqDRGlJjPjMJTaXKtFlkahG2qYrrASRXbOFMHbqaUYTlMTEBz+YhqZV4EKMA24xw2qQh87Xr2N+FP6ysQ8BCpuPIWg6ha68oo694Pgfllr3RrICRvtlUdA9PpwOKPA7TSZXgsJqVU3WjY51CAkHiVkzORbIJnjDLVRzlvbMhUgeHvnZOGqKCWiMe7jtFU2p78c76A9tf4M/iZS+4h7NPOHdPstehgRWhQaBGKQDWyqryXoSlyNfYcgmdhwyWmdDhYAr45ZRXuYHxi70GPKzdkzS7yiwj3acwSQeqtgYvfoqa2U/4vn4d6jLJkc/VPyjQBhSEEac8OSKhlWcYl17WJm8mKaXrRk3a2SyIh/XDbOxPCWAeg8g4rUwDVs="
 }
 ################################### Database ###################################
@@ -139,7 +139,8 @@ data "template_file" "cloudinit-appagent" {
   template = file("../../modules/exoscale/aparavi-instances/init-appagent.tpl")
 
   vars = {
-    eip = exoscale_ipaddress.appagent-ingress.ip_address
+    ext_ip_address = exoscale_ipaddress.appagent-ingress.ip_address
+    int_ip_address = "192.168.100.5"
   }
 }
 
@@ -147,7 +148,8 @@ data "template_file" "cloudinit-monitoring" {
   template = file("../../modules/exoscale/aparavi-instances/init-monitoring.tpl")
 
   vars = {
-    eip = exoscale_ipaddress.monitoring-ingress.ip_address
+    ext_ip_address = exoscale_ipaddress.appagent-ingress.ip_address
+    int_ip_address = "192.168.100.6"
   }
 }
 
@@ -155,21 +157,39 @@ data "template_file" "cloudinit-bastion" {
   template = file("../../modules/exoscale/aparavi-instances/init-bastion.tpl")
 
   vars = {
-    eip = exoscale_ipaddress.bastion-ingress.ip_address
+    ext_ip_address = exoscale_ipaddress.appagent-ingress.ip_address
+    int_ip_address = "192.168.100.7"
   }
 }
 
+resource "exoscale_nic" "eth_intra_appagent" {
+ # count = length(exoscale_compute.machine)
+
+  compute_id = exoscale_compute.aparavi-appagent.id
+  network_id = exoscale_private_network.network.id
+}
+
+
+resource "exoscale_nic" "eth_intra_bastion" {
+ # count = length(exoscale_compute.machine)
+
+  compute_id = exoscale_compute.aparavi-bastion.id
+  network_id = exoscale_private_network.network.id
+}
+
+resource "exoscale_nic" "eth_intra_monitoring" {
+ # count = length(exoscale_compute.machine)
+
+  compute_id = exoscale_compute.aparavi-monitoring.id
+  network_id = exoscale_private_network.network.id
+}
 
 resource "exoscale_compute" "aparavi-appagent" {
     display_name               = "aparavi-appagent"
     zone                = var.zone
-    #display_name = "test"
-    template_id = data.exoscale_compute_template.ubuntu.id
-    #type               = "standard.medium"
+    template_id = data.exoscale_compute_template.debian.id
     size = var.appagent_vm_instance_type
     disk_size = 50
-    #elastic_ip_ids = [exoscale_elastic_ip.aparavi-1.id]
-    #public_ip_address = exoscale_elastic_ip.aparavi-1.id
     key_pair = exoscale_ssh_key.instance-key.id
     security_group_ids = [ exoscale_security_group.sg-appagent.id, ]
     user_data = data.template_file.cloudinit-appagent.rendered
@@ -180,16 +200,13 @@ resource "exoscale_compute" "aparavi-appagent" {
     }
 }
 
+
 resource "exoscale_compute" "aparavi-monitoring" {
     display_name               = "aparavi-monitoring"
     zone                = var.zone
-    #display_name = "test"
-    template_id = data.exoscale_compute_template.ubuntu.id
-    #type               = "standard.medium"
+    template_id = data.exoscale_compute_template.debian.id
     size = var.monitoring_vm_instance_type
     disk_size = 50
-    #elastic_ip_ids = [exoscale_elastic_ip.aparavi-1.id]
-    #public_ip_address = exoscale_elastic_ip.aparavi-1.id
     key_pair = exoscale_ssh_key.instance-key.id
     security_group_ids = [ exoscale_security_group.sg-monitoring.id, ]
     user_data = data.template_file.cloudinit-monitoring.rendered
@@ -203,13 +220,9 @@ resource "exoscale_compute" "aparavi-monitoring" {
 resource "exoscale_compute" "aparavi-bastion" {
     display_name               = "aparavi-bastion"
     zone                = var.zone
-    #display_name = "test"
-    template_id = data.exoscale_compute_template.ubuntu.id
-    #type               = "standard.medium"
+    template_id = data.exoscale_compute_template.debian.id
     size = var.bastion_vm_instance_type
     disk_size = 50
-    #elastic_ip_ids = [exoscale_elastic_ip.aparavi-1.id]
-    #public_ip_address = exoscale_elastic_ip.aparavi-1.id
     key_pair = exoscale_ssh_key.instance-key.id
     security_group_ids = [ exoscale_security_group.sg-bastion.id, ]
     user_data = data.template_file.cloudinit-bastion.rendered

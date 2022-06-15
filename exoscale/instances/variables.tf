@@ -21,12 +21,12 @@ variable "name" {
 }
 
 variable "platform_host" {
-  description = "Aparavi platform host to connect aggregator to"
+  description = "Aparavi platform host to connect appagent to"
   type        = string
 }
 
 variable "platform_node_id" {
-  description = "Aparavi platform node ID to connect aggregator to"
+  description = "Aparavi platform node ID to connect appagent to"
   type        = string
 }
 
