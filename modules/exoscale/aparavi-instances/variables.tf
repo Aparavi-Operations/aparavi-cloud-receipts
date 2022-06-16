@@ -54,3 +54,8 @@ variable "bastion_vm_instance_type" {
   type        = string
   default     = "Tiny"
 }
+variable "public_key" {
+  description = "SSH public key"
+  type        = string
+  default     = ""
+}

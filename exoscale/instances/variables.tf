@@ -58,3 +58,9 @@ variable "dbaas_plan" {
   type        = string
   default     = "startup-8"
 }
+
+variable "public_key" {
+  description = "SSH public key"
+  type        = string
+  default     = ""
+}

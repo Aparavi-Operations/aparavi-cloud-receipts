@@ -25,7 +25,7 @@ data "exoscale_compute_template" "debian" {
 ################################################################################
 resource "exoscale_ssh_key" "instance-key" {
   name       = "debian"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFypoAJKpC/PhqV6LnYYaSjQ1Q9yFXLN3cqPfMqnvDY2E2sApIKgQse1P13Vrv8bKcNheR6f4wXtpG+lBvFGpUyH2/D8bhBH3H5ClehQDRALr9nwDPjGT32BZQ1md++ez6/F1qpFqDRGlJjPjMJTaXKtFlkahG2qYrrASRXbOFMHbqaUYTlMTEBz+YhqZV4EKMA24xw2qQh87Xr2N+FP6ysQ8BCpuPIWg6ha68oo694Pgfllr3RrICRvtlUdA9PpwOKPA7TSZXgsJqVU3WjY51CAkHiVkzORbIJnjDLVRzlvbMhUgeHvnZOGqKCWiMe7jtFU2p78c76A9tf4M/iZS+4h7NPOHdPstehgRWhQaBGKQDWyqryXoSlyNfYcgmdhwyWmdDhYAr45ZRXuYHxi70GPKzdkzS7yiwj3acwSQeqtgYvfoqa2U/4vn4d6jLJkc/VPyjQBhSEEac8OSKhlWcYl17WJm8mKaXrRk3a2SyIh/XDbOxPCWAeg8g4rUwDVs="
+  public_key = var.public_key
 }
 ################################### Database ###################################
 
@@ -141,11 +141,11 @@ data "template_file" "cloudinit-appagent" {
   vars = {
     ext_ip_address = exoscale_ipaddress.appagent-ingress.ip_address
     int_ip_address = "192.168.100.5"
-    #platform_bind_addr = var.platform_host
-    #db_addr = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
-    #db_port = 21699
-    #db_user = local.admin_username
-    #db_passwd = random_password.db_password.result
+    platform_bind_addr = var.platform_host
+    db_addr = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
+    db_port = 21699
+    db_user = local.admin_username
+    db_passwd = random_password.db_password.result
     parentId = var.platform_node_id
   }
 }
@@ -169,23 +169,17 @@ data "template_file" "cloudinit-bastion" {
 }
 
 resource "exoscale_nic" "eth_intra_appagent" {
- # count = length(exoscale_compute.machine)
-
   compute_id = exoscale_compute.aparavi-appagent.id
   network_id = exoscale_private_network.network.id
 }
 
 
-# resource "exoscale_nic" "eth_intra_bastion" {
-#  # count = length(exoscale_compute.machine)
-
-#   compute_id = exoscale_compute.aparavi-bastion.id
-#   network_id = exoscale_private_network.network.id
-# }
+resource "exoscale_nic" "eth_intra_bastion" {
+  compute_id = exoscale_compute.aparavi-bastion.id
+  network_id = exoscale_private_network.network.id
+}
 
 resource "exoscale_nic" "eth_intra_monitoring" {
- # count = length(exoscale_compute.machine)
-
   compute_id = exoscale_compute.aparavi-monitoring.id
   network_id = exoscale_private_network.network.id
 }
@@ -223,21 +217,21 @@ resource "exoscale_compute" "aparavi-monitoring" {
     }
 }
 
-# resource "exoscale_compute" "aparavi-bastion" {
-#     display_name               = "aparavi-bastion"
-#     zone                = var.zone
-#     template_id = data.exoscale_compute_template.debian.id
-#     size = var.bastion_vm_instance_type
-#     disk_size = 50
-#     key_pair = exoscale_ssh_key.instance-key.id
-#     security_group_ids = [ exoscale_security_group.sg-bastion.id, ]
-#     user_data = data.template_file.cloudinit-bastion.rendered
+resource "exoscale_compute" "aparavi-bastion" {
+    display_name               = "aparavi-bastion"
+    zone                = var.zone
+    template_id = data.exoscale_compute_template.debian.id
+    size = var.bastion_vm_instance_type
+    disk_size = 50
+    key_pair = exoscale_ssh_key.instance-key.id
+    security_group_ids = [ exoscale_security_group.sg-bastion.id, ]
+    user_data = data.template_file.cloudinit-bastion.rendered
 
-#     tags = {
-#         managedby = "terraform"
-#         app = "aparavi-bastion"
-#     }
-# }
+    tags = {
+        managedby = "terraform"
+        app = "aparavi-bastion"
+    }
+}
 
 
 ################################################################################
