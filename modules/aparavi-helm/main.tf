@@ -11,7 +11,7 @@ resource "kubernetes_persistent_volume_claim" "data" {
   }
   spec {
     storage_class_name = var.data_pvc_storage_class_name
-    access_modes       = ["ReadWriteOnce"]
+    access_modes       = var.data_pvc_access_modes
     resources {
       requests = {
         storage = "2Gi"

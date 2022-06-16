@@ -1,7 +1,7 @@
 variable "zone" {
   description = "Exoscale zone name"
   type        = string
-  default     = "de-muc-1"
+  default     = "ch-dk-2"
 }
 
 variable "name" {
@@ -42,4 +42,22 @@ variable "generate_sample_data" {
   description = "Generate sample data in collector"
   type        = bool
   default     = false
+}
+
+variable "data_samba_service" {
+  description = "Samba service name to attach to appagent (//server/servcie)"
+  type        = string
+  default     = ""
+}
+
+variable "data_samba_username" {
+  description = "SMB username"
+  type        = string
+  default     = ""
+}
+variable "data_samba_password" {
+  description = "The password required to access the specified samba service"
+  type        = string
+  sensitive   = true
+  default     = ""
 }

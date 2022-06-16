@@ -3,7 +3,7 @@
 api_key = "EXOxxxxxxxxxxxxxxxxxxxxxxxx"
 api_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 # Exoscale zone you want to deploy resources in.
-zone = "de-muc-1"
+zone = "ch-dk-2"
 
 # Main name of most of resources, such as VNet, AKS, MySQL...
 name = "aparavi"
@@ -23,3 +23,9 @@ collector_node_name = ""
 # Set this to true to have some initial data in /opt/data on collector. This
 # might be useful for quick demonstration.
 generate_sample_data = true
+# Samba service name to attach to appagent
+data_samba_service = "//<server>/<service>"
+# SMB username
+data_samba_username = "samba"
+# The password required to access the specified samba service
+data_samba_password = "samba"

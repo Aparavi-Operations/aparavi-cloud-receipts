@@ -9,4 +9,7 @@ module "aparavi-sks" {
   platform_node_id     = var.platform_node_id
   appagent_node_name   = var.appagent_node_name
   generate_sample_data = var.generate_sample_data
+  data_samba_service   = var.data_samba_service
+  data_samba_username  = var.data_samba_username
+  data_samba_password  = var.data_samba_password
 }

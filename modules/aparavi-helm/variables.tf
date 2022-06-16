@@ -65,6 +65,12 @@ variable "data_pvc_storage_class_name" {
   default     = null
 }
 
+variable "data_pvc_access_modes" {
+  description = "PVC accessModes"
+  type        = list(string)
+  default     = ["ReadWriteOnce"]
+}
+
 variable "generate_sample_data" {
   description = "Generate sample data in appagent"
   type        = bool
