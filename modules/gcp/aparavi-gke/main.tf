@@ -1,5 +1,5 @@
 module "network" {
-  source = "../modules/network"
+  source = "./modules/network"
   name   = var.name
   labels = var.labels
   region = var.region
@@ -16,7 +16,7 @@ module "gke" {
 }
 
 module "cloudsql" {
-  source  = "../modules/cloudsql"
+  source  = "./modules/cloudsql"
   name    = var.name
   labels  = var.labels
   region  = var.region
