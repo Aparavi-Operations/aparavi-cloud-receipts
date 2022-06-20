@@ -1,12 +1,4 @@
-# Aparavi on Exoscale Scalable Kubernetes Service (SKS) Terraform Module
-
-This module deploys Aparavi aggregator and collector on Exoscale Scalable
-Kubernetes Service (SKS). Resources this module will create are:
-
-- Private Network
-- SKS cluster and SKS Node Pool
-- DBaaS MySQL instance
-- Aparavi Helm release
+# Aparavi on Exoscale VM Terraform Module
 
 ## Usage
 

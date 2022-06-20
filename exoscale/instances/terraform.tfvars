@@ -16,5 +16,5 @@ platform_node_id = "111111-bbbb-bbbb-bbbb-11111111"
 # empty, will default to "${var.name}-appagent", where ${var.name} is the
 # value given above to variable 'name'.
 appagent_node_name = "exoscale"
-public_key = ""
+public_key = "123123123"
 #vm_instance_type = "Tiny"
