@@ -1,0 +1,19 @@
+---
+
+- job_name: 'nodeexporter_exoscale'
+
+  static_configs:
+    - labels:
+        service: 'aparavi'
+        component: 'appagent'
+        subcomponent: 'app'
+        env: '<<deployment>>'
+      targets:
+        - '<<appagent_ip>>:9100'
+    - labels:
+        service: 'monitoring'
+        component: 'monitoring'
+        subcomponent: 'app'
+        env: '<<deployment>>'
+      targets:
+        - '<<monitoring_ip>>:9100'
