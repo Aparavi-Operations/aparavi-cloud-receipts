@@ -1,8 +1,8 @@
 # Aparavi on Amazon Web Services (AWS) Elastic Kubernetes Service (EKS)
 # Terraform Module
 
-This module deploys Aparavi aggregator and collector on Amazon Web Services
-(AWS) Elastic Kubernetes Service (EKS). Resources this module will create are:
+This module deploys Aparavi appagent on Amazon Web Services (AWS) Elastic
+Kubernetes Service (EKS). Resources this module will create are:
 
 - VPC, public and private subnets, NAT and Internet gateways
 - EKS cluster and EKS Node Pool

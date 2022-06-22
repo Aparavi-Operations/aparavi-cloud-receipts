@@ -7,7 +7,9 @@ module "aparavi-sks" {
   dbaas_plan           = var.dbaas_plan
   platform_host        = var.platform_host
   platform_node_id     = var.platform_node_id
-  aggregator_node_name = var.aggregator_node_name
-  collector_node_name  = var.collector_node_name
+  appagent_node_name   = var.appagent_node_name
   generate_sample_data = var.generate_sample_data
+  data_samba_service   = var.data_samba_service
+  data_samba_username  = var.data_samba_username
+  data_samba_password  = var.data_samba_password
 }

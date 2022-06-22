@@ -46,7 +46,7 @@ resource "random_password" "password" {
 }
 
 resource "google_sql_user" "user" {
-  name     = "aggregator"
+  name     = "aparavi"
   instance = google_sql_database_instance.this.name
   host     = "%"
   password = random_password.password.result

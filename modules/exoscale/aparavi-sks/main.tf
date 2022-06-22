@@ -28,7 +28,7 @@ resource "random_password" "db_password" {
 }
 
 locals {
-  admin_username = "aggregator"
+  admin_username = "aparavi"
 }
 
 resource "exoscale_database" "db" {
@@ -58,64 +58,13 @@ resource "exoscale_database" "db" {
 
 ################################# SKS Cluster ##################################
 
-resource "exoscale_sks_cluster" "sks" {
-  zone         = var.zone
-  name         = var.name
-  auto_upgrade = true
-}
+module "sks" {
+  source = "./modules/sks"
 
-resource "exoscale_security_group" "sks" {
-  name = "sks"
-}
-
-resource "exoscale_security_group_rule" "sks" {
-
-  for_each = {
-    kubelet = {
-      description = "SKS kubelet"
-      protocol    = "TCP",
-      port        = 10250,
-      sg          = exoscale_security_group.sks.id
-    }
-    nodeports = {
-      description = "NodePort services"
-      protocol    = "TCP",
-      port        = "30000-32767",
-      cidr        = local.network.cidr
-    }
-    calico_vxlan_sg = {
-      description = "Calico traffic"
-      protocol    = "UDP",
-      port        = 4789,
-      sg          = exoscale_security_group.sks.id
-    }
-  }
-
-  description       = each.value.description
-  security_group_id = exoscale_security_group.sks.id
-  protocol          = each.value.protocol
-  type              = "INGRESS"
-  start_port = try(
-    split("-", each.value.port)[0],
-    each.value.port,
-    null
-  )
-  end_port = try(
-    split("-", each.value.port)[1],
-    each.value.port,
-    null
-  )
-  user_security_group_id = try(each.value.sg, null)
-  cidr                   = try(each.value.cidr, null)
-}
-
-resource "exoscale_sks_nodepool" "default" {
   zone                = var.zone
-  cluster_id          = exoscale_sks_cluster.sks.id
-  name                = "default"
+  name                = var.name
+  cidr                = local.network.cidr
   instance_type       = var.sks_instance_type
-  size                = 2
-  security_group_ids  = [exoscale_security_group.sks.id]
   private_network_ids = [exoscale_private_network.network.id]
 }
 
@@ -123,89 +72,110 @@ resource "exoscale_sks_nodepool" "default" {
 
 ################################### Aparavi ####################################
 
-resource "exoscale_sks_kubeconfig" "kubeconfig" {
-  zone                  = var.zone
-  ttl_seconds           = 3600
-  early_renewal_seconds = 300
-  cluster_id            = exoscale_sks_cluster.sks.id
-  user                  = "kubernetes-admin"
-  groups                = ["system:masters"]
+provider "kubernetes" {
+  host                   = module.sks.host
+  cluster_ca_certificate = module.sks.cluster_ca_certificate
+  client_key             = module.sks.client_key
+  client_certificate     = module.sks.client_certificate
 }
 
-locals {
-  kubeconfig = yamldecode(exoscale_sks_kubeconfig.kubeconfig.kubeconfig)
+resource "kubernetes_secret" "smbcreds" {
+  count = var.data_samba_service != "" ? 1 : 0
+
+  metadata {
+    name      = "smbcreds"
+    namespace = "default"
+  }
+
+  data = {
+    username = var.data_samba_username
+    password = var.data_samba_password
+  }
+
+  type = "Opaque"
+}
+
+resource "kubernetes_persistent_volume" "data" {
+  count = var.data_samba_service != "" ? 1 : 0
+
+  metadata {
+    name = "aparavi-data"
+  }
+  spec {
+    capacity = {
+      storage = "2Gi" # irrelevant
+    }
+    access_modes                     = ["ReadWriteMany"]
+    persistent_volume_reclaim_policy = "Retain"
+    storage_class_name               = "aparavi"
+    persistent_volume_source {
+      csi {
+        driver    = "smb.csi.k8s.io"
+        read_only = false
+        volume_attributes = {
+          source = var.data_samba_service
+        }
+        volume_handle = "aparavi-data"
+        node_stage_secret_ref {
+          name      = kubernetes_secret.smbcreds[0].metadata[0].name
+          namespace = kubernetes_secret.smbcreds[0].metadata[0].namespace
+        }
+      }
+    }
+    mount_options = [
+      "cache=strict",
+      "dir_mode=0777",
+      "file_mode=0777",
+      "mfsymlinks",
+      "noperm",
+      "noserverino",
+      "uid=1000",
+      "gid=1000"
+    ]
+  }
 }
 
 provider "helm" {
   kubernetes {
-    host = local.kubeconfig.clusters[0].cluster.server
-    cluster_ca_certificate = base64decode(
-      local.kubeconfig.clusters[0].cluster.certificate-authority-data
-    )
-    client_key = base64decode(
-      local.kubeconfig.users[0].user.client-key-data
-    )
-    client_certificate = base64decode(
-      local.kubeconfig.users[0].user.client-certificate-data
-    )
+    host                   = module.sks.host
+    cluster_ca_certificate = module.sks.cluster_ca_certificate
+    client_key             = module.sks.client_key
+    client_certificate     = module.sks.client_certificate
   }
-}
-
-provider "kubernetes" {
-  host = local.kubeconfig.clusters[0].cluster.server
-  cluster_ca_certificate = base64decode(
-    local.kubeconfig.clusters[0].cluster.certificate-authority-data
-  )
-  client_key = base64decode(
-    local.kubeconfig.users[0].user.client-key-data
-  )
-  client_certificate = base64decode(
-    local.kubeconfig.users[0].user.client-certificate-data
-  )
-}
-
-resource "helm_release" "longhorn" {
-  count            = var.generate_sample_data ? 1 : 0
-  name             = "longhorn"
-  repository       = "https://charts.longhorn.io"
-  chart            = "longhorn"
-  version          = "1.2.4"
-  namespace        = "longhorn-system"
-  create_namespace = true
-
-  depends_on = [exoscale_sks_nodepool.default]
-}
-
-locals {
-  aggregator_node_name = coalesce(
-    var.aggregator_node_name,
-    "${var.name}-aggregator"
-  )
-  collector_node_name = coalesce(
-    var.collector_node_name,
-    "${var.name}-collector"
-  )
 }
 
 module "aparavi" {
   source = "../../aparavi-helm"
 
-  name                 = "aparavi"
-  chart_version        = "0.15.0"
-  mysql_hostname       = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
-  mysql_port           = 21699
-  mysql_username       = local.admin_username
-  mysql_password       = random_password.db_password.result
-  platform_host        = var.platform_host
-  platform_node_id     = var.platform_node_id
-  aggregator_node_name = local.aggregator_node_name
-  collector_node_name  = local.collector_node_name
+  name             = "aparavi"
+  chart_version    = "0.16.0"
+  mysql_hostname   = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
+  mysql_port       = 21699
+  mysql_username   = local.admin_username
+  mysql_password   = random_password.db_password.result
+  platform_host    = var.platform_host
+  platform_node_id = var.platform_node_id
+  appagent_node_name = coalesce(
+    var.appagent_node_name,
+    "${var.name}-appagent"
+  )
+  data_pv_name = try(
+    kubernetes_persistent_volume.data[0].metadata[0].name,
+    null
+  )
+  data_pvc_storage_class_name = try(
+    kubernetes_persistent_volume.data[0].spec[0].storage_class_name,
+    null
+  )
+  data_pvc_access_modes = try(
+    kubernetes_persistent_volume.data[0].spec[0].access_modes,
+    null
+  )
   generate_sample_data = var.generate_sample_data
 
   depends_on = [
     exoscale_database.db,
-    exoscale_sks_nodepool.default,
-    helm_release.longhorn
+    module.sks
   ]
 }
 

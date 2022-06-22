@@ -11,7 +11,7 @@ variable "api_secret" {
 variable "zone" {
   description = "Exoscale zone name"
   type        = string
-  default     = "de-muc-1"
+  default     = "ch-dk-2"
 }
 
 variable "name" {
@@ -33,23 +33,17 @@ variable "dbaas_plan" {
 }
 
 variable "platform_host" {
-  description = "Aparavi platform host to connect aggregator to"
+  description = "Aparavi platform host"
   type        = string
 }
 
 variable "platform_node_id" {
-  description = "Aparavi platform node ID to connect aggregator to"
+  description = "Aparavi platform node ID"
   type        = string
 }
 
-variable "aggregator_node_name" {
-  description = "Aggregator node name. Default: \"$${var.name}-aggregator\""
-  type        = string
-  default     = ""
-}
-
-variable "collector_node_name" {
-  description = "Collector node name. Default: \"$${var.name}-collector\""
+variable "appagent_node_name" {
+  description = "Appagent node name. Default: \"$${var.name}-appagent\""
   type        = string
   default     = ""
 }
@@ -58,4 +52,22 @@ variable "generate_sample_data" {
   description = "Generate sample data for collector"
   type        = bool
   default     = false
+}
+
+variable "data_samba_service" {
+  description = "Samba service name to attach to appagent (//server/servcie)"
+  type        = string
+  default     = ""
+}
+
+variable "data_samba_username" {
+  description = "SMB username"
+  type        = string
+  default     = ""
+}
+variable "data_samba_password" {
+  description = "The password required to access the specified samba service"
+  type        = string
+  sensitive   = true
+  default     = ""
 }
