@@ -19,8 +19,7 @@ module "aparavi" {
   dbaas_plan           = "hobbyist-2"
   platform_host        = "preview.aparavi.com"
   platform_node_id     = "11111111-aaaa-2222-bbbb-333333333333"
-  aggregator_node_name = "aggregator"
-  collector_node_name  = "collector"
+  appagent_node_name   = "appagent"
 }
 ```
 

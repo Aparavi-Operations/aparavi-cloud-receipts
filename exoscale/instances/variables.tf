@@ -45,7 +45,7 @@ variable "appagent_vm_instance_type" {
 variable "monitoring_vm_instance_type" {
   description = "monitoring instance type"
   type        = string
-  default     = "Tiny"
+  default     = "Small"
 }
 variable "bastion_vm_instance_type" {
   description = "bastion instance type"
@@ -61,6 +61,11 @@ variable "dbaas_plan" {
 
 variable "public_key" {
   description = "SSH public key"
+  type        = string
+  default     = ""
+}
+variable "template_id" {
+  description = "custom template id"
   type        = string
   default     = ""
 }

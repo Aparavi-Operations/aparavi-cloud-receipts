@@ -20,7 +20,9 @@ resource "exoscale_private_network" "network" {
 
 data "exoscale_compute_template" "debian" {
     zone = var.zone
-    name = "Linux Debian 11 (Bullseye) 64-bit"
+    #to revert to Exoscale main templates set either id or name
+    #name = "Linux Debian 11 (Bullseye) 64-bit"
+    id = var.template_id
 }
 ################################################################################
 resource "exoscale_ssh_key" "instance-key" {
@@ -189,14 +191,14 @@ resource "exoscale_compute" "aparavi-appagent" {
     zone                = var.zone
     template_id = data.exoscale_compute_template.debian.id
     size = var.appagent_vm_instance_type
-    disk_size = 50
+    disk_size = 155
     key_pair = exoscale_ssh_key.instance-key.id
     security_group_ids = [ exoscale_security_group.sg-appagent.id, ]
     user_data = data.template_file.cloudinit-appagent.rendered
 
     tags = {
         managedby = "terraform"
-        app = "aparavi-agent"
+        app = "aparavi-appagent"
     }
 }
 
@@ -206,7 +208,7 @@ resource "exoscale_compute" "aparavi-monitoring" {
     zone                = var.zone
     template_id = data.exoscale_compute_template.debian.id
     size = var.monitoring_vm_instance_type
-    disk_size = 50
+    disk_size = 155
     key_pair = exoscale_ssh_key.instance-key.id
     security_group_ids = [ exoscale_security_group.sg-monitoring.id, ]
     user_data = data.template_file.cloudinit-monitoring.rendered
@@ -222,7 +224,7 @@ resource "exoscale_compute" "aparavi-bastion" {
     zone                = var.zone
     template_id = data.exoscale_compute_template.debian.id
     size = var.bastion_vm_instance_type
-    disk_size = 50
+    disk_size = 155
     key_pair = exoscale_ssh_key.instance-key.id
     security_group_ids = [ exoscale_security_group.sg-bastion.id, ]
     user_data = data.template_file.cloudinit-bastion.rendered

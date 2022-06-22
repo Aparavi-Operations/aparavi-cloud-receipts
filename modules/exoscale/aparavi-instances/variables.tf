@@ -41,7 +41,7 @@ variable "appagent_node_name" {
 variable "appagent_vm_instance_type" {
   description = "AppAgent instance type"
   type        = string
-  default     = "Large"
+  default     = "Tiny"
 }
 
 variable "monitoring_vm_instance_type" {
@@ -56,6 +56,11 @@ variable "bastion_vm_instance_type" {
 }
 variable "public_key" {
   description = "SSH public key"
+  type        = string
+  default     = ""
+}
+variable "template_id" {
+  description = "Exoscale custom template id"
   type        = string
   default     = ""
 }

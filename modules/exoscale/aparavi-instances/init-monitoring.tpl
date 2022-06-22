@@ -6,8 +6,8 @@ package_upgrade: true
 write_files:
   - path: /etc/network/interfaces.d/51-lan-network
     content: |
-      auto eth1
-      iface eth1 inet static
+      auto ens6
+      iface ens6 inet static
           address ${int_ip_address}/24
   - path: /opt/debian_userdata_monitoring.sh
     content: |
@@ -60,7 +60,7 @@ write_files:
       apt -y install docker-ce docker-ce-cli containerd.io
       systemctl enable --now docker
 
-      wget -q https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
+      wget -q https://github.com/docker/compose/releases/download/v2.3.0/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
       chmod 0750 /usr/local/bin/docker-compose
 
       cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git

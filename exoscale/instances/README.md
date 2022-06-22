@@ -13,12 +13,22 @@ Be careful not to overwrite existing keys
 ssh-keygen -f ~/.ssh/id_rsa_aparavi
 cat ~/.ssh/id_rsa_aparavi
 ```
+Obtain and install Exoscale CLI [here](https://community.exoscale.com/documentation/tools/exoscale-command-line-interface/)
+
+## Preparation
+Be sure to install Aparavi custom template
+```
+exo compute instance-template register aparavi-custom-template https://aparavi.jfrog.io/artifactory/aparavi-images/aparavi-hardened.qcow2 57d11cb19c2648851c40a6688ef2f141 --description "Aparavi custom template"
+```
+Note, that you will need separate custom template for each region
 
 ## Deployment
 Review terraform.tfvars or variables.tf contents to make adjustments (project id, VM type, etc)
 save contents of key file to terraform.tfvars to variable called "public_key"
 Be sure to save Exoscale API key and API secret to terraform.tfvars
 You can obtain Exoscale API key and API secret in Exscale UI
+Adjust settings in terraform.tfvars to fit your environment, don`t forget to set your public ssh key
+
 
 Run 
 ```
