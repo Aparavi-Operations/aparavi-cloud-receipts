@@ -33,13 +33,13 @@ variable "eks_instance_types" {
 variable "rds_instance_class" {
   description = "The instance type of the RDS instance"
   type        = string
-  default     = "db.t4g.micro"
+  default     = "db.m5.xlarge"
 }
 
 variable "rds_allocated_storage" {
   description = "RDS allocated storage in gigabytes"
   type        = number
-  default     = 10
+  default     = 100
 }
 
 variable "rds_max_allocated_storage" {

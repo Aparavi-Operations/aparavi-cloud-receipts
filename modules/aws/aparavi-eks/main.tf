@@ -39,22 +39,27 @@ module "rds" {
   source  = "terraform-aws-modules/rds/aws"
   version = "~> 4.3.0"
 
-  identifier                = var.name
-  tags                      = var.tags
-  engine                    = "mysql"
-  engine_version            = "8.0.28"
-  allocated_storage         = var.rds_allocated_storage
-  max_allocated_storage     = var.rds_max_allocated_storage
-  instance_class            = var.rds_instance_class
-  username                  = "aparavi"
-  vpc_security_group_ids    = [aws_security_group.allow_mysql.id]
-  subnet_ids                = module.vpc.private_subnets
-  create_db_subnet_group    = true
-  db_subnet_group_name      = var.name
-  create_db_option_group    = false
-  create_db_parameter_group = false
-  apply_immediately         = true
-  skip_final_snapshot       = true
+  identifier                   = var.name
+  tags                         = var.tags
+  engine                       = "mysql"
+  engine_version               = "8.0.28"
+  allocated_storage            = var.rds_allocated_storage
+  max_allocated_storage        = var.rds_max_allocated_storage
+  instance_class               = var.rds_instance_class
+  username                     = "aparavi"
+  vpc_security_group_ids       = [aws_security_group.allow_mysql.id]
+  subnet_ids                   = module.vpc.private_subnets
+  create_db_subnet_group       = true
+  db_subnet_group_name         = var.name
+  create_db_option_group       = false
+  create_db_parameter_group    = false
+  apply_immediately            = true
+  skip_final_snapshot          = true
+  performance_insights_enabled = true
+  monitoring_interval          = 60
+  create_monitoring_role       = true
+  monitoring_role_name         = "${var.name}-rds-monitoring-role"
+
 
   depends_on = [module.vpc]
 }
