@@ -77,7 +77,7 @@ resource "exoscale_security_group_rule" "sks" {
 resource "exoscale_sks_nodepool" "default" {
   zone                = var.zone
   cluster_id          = exoscale_sks_cluster.sks.id
-  name                = "default"
+  name                = var.name
   instance_type       = var.instance_type
   size                = 1
   security_group_ids  = [exoscale_security_group.sks.id]
