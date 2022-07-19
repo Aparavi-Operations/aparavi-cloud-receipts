@@ -34,7 +34,6 @@ module "aparavi" {
   platform_host        = "preview.aparavi.com"
   platform_node_id     = "11111111-aaaa-2222-bbbb-333333333333"
   appagent_node_name   = "appagent"
-  generate_sample_data = true
 }
 ```
 
@@ -51,7 +50,6 @@ Then perform the following commands on the root folder:
 |------|-------------|------|---------|:--------:|
 | <a name="input_appagent_node_name"></a> [appagent\_node\_name](#input\_appagent\_node\_name) | Appagent node name | `string` | `"appagent"` | no |
 | <a name="input_cloudsql_tier"></a> [cloudsql\_tier](#input\_cloudsql\_tier) | The machine type to use in Cloud SQL instance | `string` | `"db-f1-micro"` | no |
-| <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data for collector | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | GCE machine type name to use in default node group | `string` | `"custom-8-16384"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources that support it | `map(string)` | <pre>{"service": "aparavi"}</pre> | no |
 | <a name="input_name"></a> [name](#input\_name) | Main name of resources, such as network, GKE cluster, Cloud SQl... | `string` | `"aparavi"` | no |

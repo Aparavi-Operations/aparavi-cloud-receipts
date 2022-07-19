@@ -35,12 +35,6 @@ provider "helm" {
   }
 }
 
-provider "kubernetes" {
-  host                   = "https://${module.gke.endpoint}"
-  token                  = data.google_client_config.current.access_token
-  cluster_ca_certificate = base64decode(module.gke.cluster_ca_certificate)
-}
-
 module "aparavi" {
   source = "../../aparavi-helm"
 
@@ -55,7 +49,6 @@ module "aparavi" {
     var.appagent_node_name,
     "${var.name}-appagent"
   )
-  generate_sample_data = var.generate_sample_data
 
   depends_on = [module.gke, module.cloudsql]
 }

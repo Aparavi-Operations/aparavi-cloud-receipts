@@ -37,27 +37,3 @@ variable "appagent_node_name" {
   type        = string
   default     = ""
 }
-
-variable "generate_sample_data" {
-  description = "Generate sample data in collector"
-  type        = bool
-  default     = false
-}
-
-variable "data_samba_service" {
-  description = "Samba service name to attach to appagent (//server/servcie)"
-  type        = string
-  default     = ""
-}
-
-variable "data_samba_username" {
-  description = "SMB username"
-  type        = string
-  default     = ""
-}
-variable "data_samba_password" {
-  description = "The password required to access the specified samba service"
-  type        = string
-  sensitive   = true
-  default     = ""
-}

@@ -32,7 +32,6 @@ module "aparavi" {
   platform_host             = "preview.aparavi.com"
   platform_node_id          = "11111111-aaaa-2222-bbbb-333333333333"
   appagent_node_name        = "appagent"
-  generate_sample_data      = true
 }
 ```
 
@@ -51,7 +50,6 @@ Then perform the following commands on the root folder:
 | <a name="input_appagent_node_name"></a> [appagent\_node\_name](#input\_appagent\_node\_name) | Appagent node name. Default: "${var.name}-appagent" | `string` | `""` | no |
 | <a name="input_azs"></a> [azs](#input\_azs) | List of desired availability zones names or ids to deploy subnets in | `list(string)` | `[]` | no |
 | <a name="input_eks_instance_types"></a> [eks\_instance\_types](#input\_eks\_instance\_types) | Set of instance types associated with default Node Group. | `list(string)` | <pre>[<br>  "t3.2xlarge"<br>]</pre> | no |
-| <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data for collector | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of most of resources | `string` | `"aparavi"` | no |
 | <a name="input_platform_host"></a> [platform\_host](#input\_platform\_host) | Aparavi platform hostname[:port] | `string` | n/a | yes |
 | <a name="input_platform_node_id"></a> [platform\_node\_id](#input\_platform\_node\_id) | Aparavi platform node ID | `string` | n/a | yes |

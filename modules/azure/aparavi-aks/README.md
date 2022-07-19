@@ -28,7 +28,6 @@ module "aparavi" {
   platform_host        = "preview.aparavi.com"
   platform_node_id     = "11111111-aaaa-2222-bbbb-333333333333"
   appagent_node_name = "appagent"
-  generate_sample_data = true
 }
 ```
 
@@ -45,7 +44,6 @@ Then perform the following commands on the root folder:
 |------|-------------|------|---------|:--------:|
 | <a name="input_appagent_node_name"></a> [appagent\_node\_name](#input\_appagent\_node\_name) | Appagent node name. Default: "${var.name}-appagent" | `string` | `""` | no |
 | <a name="input_aks_agents_size"></a> [aks\_agents\_size](#input\_aks\_agents\_size) | Virtual machine size for the Kubernetes agents | `string` | `"Standard_B4ms"` | no |
-| <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data in collector | `bool` | `false` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure location where resources reside | `string` | `"eastus"` | no |
 | <a name="input_mysql_sku_name"></a> [mysql\_sku\_name](#input\_mysql\_sku\_name) | The SKU Name for MySQL Server. The name of the SKU follows the<br>tier + family + cores pattern (e.g. B\_Gen4\_1, GP\_Gen5\_8) | `string` | `"GP_Gen5_2"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Main name of resources, such as Resource Groups, AKS Cluster,<br>SQL Database... | `string` | `"aparavi"` | no |

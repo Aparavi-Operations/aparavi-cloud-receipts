@@ -4,10 +4,6 @@ terraform {
       source  = "exoscale/exoscale"
       version = ">= 0.37.1"
     }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.5.1"
-    }
   }
 }
 
@@ -105,34 +101,4 @@ locals {
   client_certificate = base64decode(
     local.kubeconfig.users[0].user.client-certificate-data
   )
-}
-
-provider "helm" {
-  kubernetes {
-    host                   = local.host
-    cluster_ca_certificate = local.cluster_ca_certificate
-    client_key             = local.client_key
-    client_certificate     = local.client_certificate
-  }
-}
-
-resource "helm_release" "longhorn" {
-  name             = "longhorn"
-  repository       = "https://charts.longhorn.io"
-  chart            = "longhorn"
-  version          = "1.2.4"
-  namespace        = "longhorn-system"
-  create_namespace = true
-
-  depends_on = [exoscale_sks_nodepool.default]
-}
-
-resource "helm_release" "csi-driver-smb" {
-  name       = "csi-driver-smb"
-  repository = "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts"
-  chart      = "csi-driver-smb"
-  version    = "1.7.0"
-  namespace  = "kube-system"
-
-  depends_on = [exoscale_sks_nodepool.default]
 }

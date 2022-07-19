@@ -38,8 +38,8 @@ Then perform the following commands on the root folder:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_appagent_node_name"></a> [appagent\_node\_name](#input\_appagent\_node\_name) | Appagent node name. Default: chart default | `string` | `""` | no |
+| <a name="input_appagent_node_selector"></a> [appagent\_node\_selector](#input\_appagent\_node\_selector) | Appagent pod's nodeSelector. | `map(string)` | `{}` | no |
 | <a name="input_chart_version"></a> [chart\_version](#input\_chart\_version) | Aparavi Helm chart version. Default: latest | `string` | `""` | no |
-| <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data in collector | `bool` | `false` | no |
 | <a name="input_mysql_hostname"></a> [mysql\_hostname](#input\_mysql\_hostname) | MySQL hostname for aggregator | `string` | n/a | yes |
 | <a name="input_mysql_password"></a> [mysql\_password](#input\_mysql\_password) | MySQL password for aggregator | `string` | n/a | yes |
 | <a name="input_mysql_port"></a> [mysql\_port](#input\_mysql\_port) | MySQL port | `number` | `3306` | no |

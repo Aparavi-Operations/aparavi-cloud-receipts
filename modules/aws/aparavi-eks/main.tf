@@ -91,36 +91,6 @@ data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
 }
 
-provider "kubernetes" {
-  host  = data.aws_eks_cluster.cluster.endpoint
-  token = data.aws_eks_cluster_auth.cluster.token
-  cluster_ca_certificate = base64decode(
-    data.aws_eks_cluster.cluster.certificate_authority[0].data
-  )
-}
-
-resource "kubernetes_persistent_volume" "data" {
-  count = var.data_ebs_volume_id != "" ? 1 : 0
-
-  metadata {
-    name = "aparavi-data"
-  }
-  spec {
-    capacity = {
-      storage = "2Gi" # irrelevant
-    }
-    access_modes                     = ["ReadWriteOnce"]
-    persistent_volume_reclaim_policy = "Retain"
-    storage_class_name               = "aparavi"
-    persistent_volume_source {
-      aws_elastic_block_store {
-        fs_type   = "ext4"
-        volume_id = var.data_ebs_volume_id
-      }
-    }
-  }
-}
-
 provider "helm" {
   kubernetes {
     host  = data.aws_eks_cluster.cluster.endpoint
@@ -145,24 +115,6 @@ module "aparavi" {
     var.appagent_node_name,
     "${var.name}-appagent"
   )
-  appagent_node_selector = try(
-    {
-      "topology.kubernetes.io/zone" = regex(
-        "^aws://(.*)/.*",
-        var.data_ebs_volume_id
-      )[0]
-    },
-    {}
-  )
-  data_pv_name = try(
-    kubernetes_persistent_volume.data[0].metadata[0].name,
-    null
-  )
-  data_pvc_storage_class_name = try(
-    kubernetes_persistent_volume.data[0].spec[0].storage_class_name,
-    null
-  )
-  generate_sample_data = var.generate_sample_data
 
   depends_on = [module.eks, module.rds]
 }
