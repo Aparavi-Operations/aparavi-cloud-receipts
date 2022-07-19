@@ -22,15 +22,6 @@ resource "exoscale_private_network" "network" {
 
 ################################### Database ###################################
 
-resource "random_password" "db_password" {
-  length  = 32
-  special = false # APARAVI Data IA Installer misbehaves on some of these.
-}
-
-locals {
-  admin_username = "aparavi"
-}
-
 resource "exoscale_database" "db" {
   zone                   = var.zone
   name                   = var.name
@@ -40,11 +31,8 @@ resource "exoscale_database" "db" {
 
   mysql {
     version        = "8"
-    admin_username = local.admin_username
-    admin_password = random_password.db_password.result
-    # TODO: try to use the new data source exoscale_instance_pool in version
-    # 0.37.0 for a more specific ip filter matching only SKS nodes.
-    ip_filter = ["0.0.0.0/0"]
+    admin_username = "aparavi"
+    ip_filter      = ["0.0.0.0/0"] # Is there a better way?
   }
 
   lifecycle {
@@ -52,6 +40,13 @@ resource "exoscale_database" "db" {
       mysql
     ]
   }
+}
+
+locals {
+  db_creds = regex(
+    "mysql://(?P<username>.*):(?P<password>.*)@(?P<hostname>.*):(?P<port>.*)/.*",
+    exoscale_database.db.uri
+  )
 }
 
 ################################################################################
@@ -149,10 +144,10 @@ module "aparavi" {
 
   name             = "aparavi"
   chart_version    = "0.16.0"
-  mysql_hostname   = regex(".*@(.*):.*", exoscale_database.db.uri)[0]
-  mysql_port       = 21699
-  mysql_username   = local.admin_username
-  mysql_password   = random_password.db_password.result
+  mysql_hostname   = local.db_creds["hostname"]
+  mysql_port       = local.db_creds["port"]
+  mysql_username   = local.db_creds["username"]
+  mysql_password   = local.db_creds["password"]
   platform_host    = var.platform_host
   platform_node_id = var.platform_node_id
   appagent_node_name = coalesce(
