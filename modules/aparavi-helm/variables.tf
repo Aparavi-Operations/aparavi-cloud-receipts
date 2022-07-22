@@ -52,3 +52,8 @@ variable "appagent_node_selector" {
   type        = map(string)
   default     = {}
 }
+
+variable "data_sources" {
+  description = "External data mount parameters"
+  default     = {}
+}

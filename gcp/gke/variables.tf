@@ -56,3 +56,8 @@ variable "appagent_node_name" {
   type        = string
   default     = ""
 }
+
+variable "data_sources" {
+  description = "External data mount parameters"
+  default     = {}
+}

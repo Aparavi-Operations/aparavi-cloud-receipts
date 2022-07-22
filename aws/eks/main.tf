@@ -10,4 +10,6 @@ module "aparavi-eks" {
   platform_host             = var.platform_host
   platform_node_id          = var.platform_node_id
   appagent_node_name        = var.appagent_node_name
+  appagent_node_selector    = var.appagent_node_selector
+  data_sources              = var.data_sources
 }

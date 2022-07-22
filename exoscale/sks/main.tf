@@ -8,4 +8,5 @@ module "aparavi-sks" {
   platform_host      = var.platform_host
   platform_node_id   = var.platform_node_id
   appagent_node_name = var.appagent_node_name
+  data_sources       = var.data_sources
 }

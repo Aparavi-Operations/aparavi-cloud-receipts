@@ -88,3 +88,14 @@ variable "appagent_node_name" {
   type        = string
   default     = ""
 }
+
+variable "appagent_node_selector" {
+  description = "Appagent pod's nodeSelector"
+  type        = map(string)
+  default     = {}
+}
+
+variable "data_sources" {
+  description = "External data mount parameters"
+  default     = {}
+}

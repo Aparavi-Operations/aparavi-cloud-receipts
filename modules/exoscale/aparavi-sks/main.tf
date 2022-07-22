@@ -76,6 +76,13 @@ provider "helm" {
   }
 }
 
+provider "kubernetes" {
+  host                   = module.sks.host
+  cluster_ca_certificate = module.sks.cluster_ca_certificate
+  client_key             = module.sks.client_key
+  client_certificate     = module.sks.client_certificate
+}
+
 module "aparavi" {
   source = "../../aparavi-helm"
 
@@ -91,6 +98,7 @@ module "aparavi" {
     var.appagent_node_name,
     "${var.name}-appagent"
   )
+  data_sources = var.data_sources
 
   depends_on = [
     exoscale_database.db,

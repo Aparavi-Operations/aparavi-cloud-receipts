@@ -77,6 +77,13 @@ provider "helm" {
   }
 }
 
+provider "kubernetes" {
+  host                   = module.aks.host
+  cluster_ca_certificate = base64decode(module.aks.cluster_ca_certificate)
+  client_key             = base64decode(module.aks.client_key)
+  client_certificate     = base64decode(module.aks.client_certificate)
+}
+
 module "aparavi" {
   source = "../../aparavi-helm"
 
@@ -91,6 +98,7 @@ module "aparavi" {
     var.appagent_node_name,
     "${var.name}-appagent"
   )
+  data_sources = var.data_sources
 
   depends_on = [module.aks, module.mysql]
 }

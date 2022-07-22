@@ -2,6 +2,13 @@ locals {
   namespace = "default"
 }
 
+module "data-mount" {
+  source = "./modules/data-mount"
+
+  namespace = local.namespace
+  sources   = var.data_sources
+}
+
 resource "local_file" "values" {
   filename = "${path.cwd}/values.yaml"
   content = templatefile(
@@ -15,6 +22,7 @@ resource "local_file" "values" {
       platformNodeId       = var.platform_node_id
       appagentNodeName     = var.appagent_node_name
       appagentNodeSelector = yamlencode(var.appagent_node_selector)
+      claimNames           = module.data-mount.pvc_names
     }
   )
   file_permission = "0664"
