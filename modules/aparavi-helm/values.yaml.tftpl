@@ -12,14 +12,16 @@ appagent:
       host: ${platformHost}
       nodeId: ${platformNodeId}
     nodeName: ${appagentNodeName}
-  %{~ if claimName != null ~}
   nodeSelector:
-    ${appagentNodeSelector}
+    ${ appagentNodeSelector ~}
   extraVolumes:
-    - name: data
+    %{~ for claimName in claimNames ~}
+    - name: ${claimName}
       persistentVolumeClaim:
         claimName: ${claimName}
+    %{~ endfor ~}
   extraVolumeMounts:
-    - name: data
-      mountPath: /opt/data
-  %{~ endif ~}
+    %{~ for claimName in claimNames ~}
+    - name: ${claimName}
+      mountPath: /opt/data/${claimName}
+    %{~ endfor ~}

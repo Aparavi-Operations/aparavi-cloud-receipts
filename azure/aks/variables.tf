@@ -49,8 +49,7 @@ variable "appagent_node_name" {
   default     = ""
 }
 
-variable "generate_sample_data" {
-  description = "Generate sample data for collector"
-  type        = bool
-  default     = false
+variable "data_sources" {
+  description = "External data mount parameters"
+  default     = {}
 }

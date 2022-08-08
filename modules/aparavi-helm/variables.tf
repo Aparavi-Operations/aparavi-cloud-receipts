@@ -53,26 +53,7 @@ variable "appagent_node_selector" {
   default     = {}
 }
 
-variable "data_pv_name" {
-  description = "If not empty, a PVC will be created using this as volumeName"
-  type        = string
-  default     = null
-}
-
-variable "data_pvc_storage_class_name" {
-  description = "PVC storageClassName"
-  type        = string
-  default     = null
-}
-
-variable "data_pvc_access_modes" {
-  description = "PVC accessModes"
-  type        = list(string)
-  default     = ["ReadWriteOnce"]
-}
-
-variable "generate_sample_data" {
-  description = "Generate sample data in appagent"
-  type        = bool
-  default     = false
+variable "data_sources" {
+  description = "External data mount parameters"
+  default     = {}
 }

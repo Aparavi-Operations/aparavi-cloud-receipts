@@ -89,22 +89,13 @@ variable "appagent_node_name" {
   default     = ""
 }
 
-variable "generate_sample_data" {
-  description = "Generate sample data for appagent"
-  type        = bool
-  default     = false
+variable "appagent_node_selector" {
+  description = "Appagent pod's nodeSelector"
+  type        = map(string)
+  default     = {}
 }
 
-variable "data_ebs_volume_id" {
-  description = "EBS volume ID to attach to appagent"
-  type        = string
-  default     = ""
-
-  validation {
-    condition = (
-      var.data_ebs_volume_id == "" ||
-      can(regex("^aws://.*/vol-.*", var.data_ebs_volume_id))
-    )
-    error_message = "The data_ebs_volume_id value must be of the form aws://<az>/<ebs_volume_id>."
-  }
+variable "data_sources" {
+  description = "External data mount parameters"
+  default     = {}
 }

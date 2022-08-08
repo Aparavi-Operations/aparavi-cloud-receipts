@@ -34,7 +34,28 @@ module "aparavi" {
   platform_host        = "preview.aparavi.com"
   platform_node_id     = "11111111-aaaa-2222-bbbb-333333333333"
   appagent_node_name   = "appagent"
-  generate_sample_data = true
+  data_sources = {
+    s1 = {
+      type = "gce"
+      fs_type = "ext4"
+      pd_name = "my-pd"
+    }
+    s2 = {
+      type          = "nfs"
+      server        = "10.10.10.10"
+      path          = "/"
+      mount_options = [
+        "nfsvers=4.2"
+      ]
+    }
+    s3 = {
+      type          = "smb"
+      source        = "//10.10.10.10/data"
+      mount_options = []
+      username      = "user"
+      password      = "pass"
+    }
+  }
 }
 ```
 
@@ -51,7 +72,7 @@ Then perform the following commands on the root folder:
 |------|-------------|------|---------|:--------:|
 | <a name="input_appagent_node_name"></a> [appagent\_node\_name](#input\_appagent\_node\_name) | Appagent node name | `string` | `"appagent"` | no |
 | <a name="input_cloudsql_tier"></a> [cloudsql\_tier](#input\_cloudsql\_tier) | The machine type to use in Cloud SQL instance | `string` | `"db-f1-micro"` | no |
-| <a name="input_generate_sample_data"></a> [generate\_sample\_data](#input\_generate\_sample\_data) | Generate sample data for collector | `bool` | `false` | no |
+| <a name="input_data_sources"></a> [data\_sources](#data\_sources) | Data sources to mount into appagent pod | `any` | `{}` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | GCE machine type name to use in default node group | `string` | `"custom-8-16384"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources that support it | `map(string)` | <pre>{"service": "aparavi"}</pre> | no |
 | <a name="input_name"></a> [name](#input\_name) | Main name of resources, such as network, GKE cluster, Cloud SQl... | `string` | `"aparavi"` | no |
@@ -59,3 +80,26 @@ Then perform the following commands on the root folder:
 | <a name="input_platform_node_id"></a> [platform\_node\_id](#input\_platform\_node\_id) | Aparavi platform node ID | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | GCP region where resources reside | `string` | `"us-west1"` | no |
 | <a name="input_zone"></a> [zone](#input\_zone) | GCP zone to deploy GKE cluster in | `string` | `"us-west1-a"` | no |
+
+### [data_sources](#input_data_sources)
+
+See [usage](#usage) example for full format and options. In general, this is an object
+with arbitrary keys. The keys are used as PV and PVC names in Kubernetes and
+mount point directories under `/opt/data` in appagent pod. For example,
+
+```hcl
+s1 = {
+  type          = "nfs"
+  server        = "10.10.10.10"
+  path          = "/"
+  mount_options = [
+    "nfsvers=4.2"
+  ]
+}
+```
+will create a PV and a PVC both named `s1` and mount the PVC under
+`/opt/data/s1`.
+
+The `type` attribute is what distinguishes between different external data
+sources and determines the overall object structure of the value.
+[Usage](#usage) example demonstrates the full structure.

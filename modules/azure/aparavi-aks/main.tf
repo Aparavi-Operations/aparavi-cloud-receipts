@@ -98,7 +98,7 @@ module "aparavi" {
     var.appagent_node_name,
     "${var.name}-appagent"
   )
-  generate_sample_data = var.generate_sample_data
+  data_sources = var.data_sources
 
   depends_on = [module.aks, module.mysql]
 }
