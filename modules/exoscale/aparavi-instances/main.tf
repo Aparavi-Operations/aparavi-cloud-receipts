@@ -1,11 +1,12 @@
 ############################### Private Network ################################
+
 resource "exoscale_private_network" "network" {
   zone        = var.zone
   name        = var.name
   description = "Aparavi network"
-  start_ip    = local.network.start_ip
-  end_ip      = local.network.end_ip
-  netmask     = local.network.netmask
+  start_ip    = var.network.start_ip
+  end_ip      = var.network.end_ip
+  netmask     = var.network.netmask
 }
 
 data "exoscale_compute_template" "debian" {

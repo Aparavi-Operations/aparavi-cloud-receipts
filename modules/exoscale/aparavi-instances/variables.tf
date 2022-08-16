@@ -1,25 +1,12 @@
-variable "cidr" {
-  description = "Exoscale private network cidr"
-  type        = string
-  default     = "192.168.100.0/24"
-}
-
-variable "start_ip" {
-  description = "Exoscale private network start_ip"
-  type        = string
-  default     = "192.168.100.10"
-}
-
-variable "end_ip" {
-  description = "Exoscale private network end_ip"
-  type        = string
-  default     = "192.168.100.200"
-}
-
-variable "netmask" {
-  description = "Exoscale private network netmask"
-  type        = string
-  default     = "255.255.255.0"
+variable "network" {
+  description = "Exoscale private network"
+  type        = map
+  default = {
+    cidr     = "192.168.100.0/24"
+    start_ip = "192.168.100.10"
+    end_ip   = "192.168.100.200"
+    netmask  = "255.255.255.0"
+  }
 }
 
 variable "zone" {
