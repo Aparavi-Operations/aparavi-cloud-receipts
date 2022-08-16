@@ -84,11 +84,11 @@ resource "exoscale_security_group" "sg-bastion" {
 
 resource "exoscale_security_group_rule" "bastion-ssh" {
     security_group_id = exoscale_security_group.sg-bastion.id
-    type       = "INGRESS"
-    protocol   = "tcp"
-    cidr       = "0.0.0.0/0"
-    start_port = 22
-    end_port   = 22
+    type              = "INGRESS"
+    protocol          = "tcp"
+    cidr              = "0.0.0.0/0"
+    start_port        = 22
+    end_port          = 22
 }
 
 # resource "exoscale_security_group_rule" "appagent-ssh" {
