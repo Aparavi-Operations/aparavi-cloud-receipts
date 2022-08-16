@@ -1,3 +1,14 @@
+variable "network" {
+  description = "Exoscale private network"
+  type        = map
+  default = {
+    cidr     = "192.168.100.0/24"
+    start_ip = "192.168.100.10"
+    end_ip   = "192.168.100.200"
+    netmask  = "255.255.255.0"
+  }
+}
+
 variable "zone" {
   description = "Exoscale zone name"
   type        = string
@@ -62,5 +73,5 @@ variable "public_key" {
 variable "template_id" {
   description = "Exoscale custom template id"
   type        = string
-  default     = ""
+  default     = "0d3da3eb-3528-403c-bb18-58f33b14c069"
 }
