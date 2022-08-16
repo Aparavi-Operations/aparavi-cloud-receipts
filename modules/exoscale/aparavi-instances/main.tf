@@ -1,14 +1,4 @@
 ############################### Private Network ################################
-
-locals {
-  network = {
-    cidr     = "192.168.100.0/24"
-    start_ip = "192.168.100.10"
-    end_ip   = "192.168.100.200"
-    netmask  = "255.255.255.0"
-  }
-}
-
 resource "exoscale_private_network" "network" {
   zone        = var.zone
   name        = var.name
