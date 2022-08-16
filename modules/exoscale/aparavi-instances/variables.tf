@@ -73,5 +73,5 @@ variable "public_key" {
 variable "template_id" {
   description = "Exoscale custom template id"
   type        = string
-  default     = ""
+  default     = "0d3da3eb-3528-403c-bb18-58f33b14c069"
 }
