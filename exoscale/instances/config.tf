@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "exoscale" {
-  key    = var.api_key
-  secret = var.api_secret
-  timeout     = 120
+  key     = var.api_key
+  secret  = var.api_secret
+  timeout = 120
 }
