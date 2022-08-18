@@ -11,7 +11,7 @@ Be sure to have ssh keypair at hand, you can generate it with this command (linu
 Be careful not to overwrite existing keys
 ```
 ssh-keygen -f ~/.ssh/id_rsa_aparavi
-cat ~/.ssh/id_rsa_aparavi
+cat ~/.ssh/id_rsa_aparavi.pub
 ```
 Obtain and install Exoscale CLI [here](https://community.exoscale.com/documentation/tools/exoscale-command-line-interface/)
 

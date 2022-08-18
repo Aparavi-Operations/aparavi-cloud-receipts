@@ -22,8 +22,8 @@ appagent_node_name = "exoscale"
 #set your public key here for ssh access
 public_key = "ssh-rsa AAAAB3NzaC43543564564564567"
 
-#set template id here in 99999999-a234-b234-c567-e1d872954655 here
-template_id = "99999999-a234-b234-c567-e1d872954655"
+#set template id here, the default id "0d3da3eb-3528-403c-bb18-58f33b14c069" is Debian 11
+#template_id = "0d3da3eb-3528-403c-bb18-58f33b14c069"
 
 #set Appagent instance type here
 appagent_vm_instance_type = "Large"
