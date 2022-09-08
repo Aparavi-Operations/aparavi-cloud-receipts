@@ -14,7 +14,7 @@ output "monitoring_ip" {
   value = module.aparavi-azure-vm.monitoring_ip
 }
 output "node_private_ip" {
-  value = module.aparavi-azure-vm.aggregator_private_ip
+  value = module.aparavi-azure-vm.node_private_ip
 }
 output "collector_private_ip" {
   value = module.aparavi-azure-vm.collector_private_ip
