@@ -7,6 +7,9 @@ name = "azuretest"
 # Azure location
 location = "eastus2"
 
+# Platform parameter is the Platform endpoint we will connect to
+platform = "preview.aparavi.com"
+
 # Node id in platform hierarchy to attach resources to
 parent_id = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
 
