@@ -1,0 +1,16 @@
+#cloud-config
+hostname: ${hostname}
+users:
+  - name: aparavi
+    passwd: ${bcrypt(os_password)}
+    lock_passwd: false
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups:
+      - sudo
+ssh_pwauth: yes
+runcmd:
+  - wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run
+  - chmod +x linux-installer-latest.run
+  - ./linux-installer-latest.run -- /APPTYPE=aggregator /BINDTO="${platform_host}" /DBTYPE="mysql" /DBHOST="${mysql_host}" /DBPORT="3306" /DBUSER="${mysql_user}" /DBPSWD="${mysql_password}" /SILENT /NOSTART
+  - sed -i s/'ModuleArg="--moduleType=$AppType"'/'ModuleArg="--moduleType=$AppType --config.node.parentObjectId=${platform_node_id}"'/g /opt/aparavi-data-ia/aggregator/app/support/linux/startapp.sh
+  - /opt/aparavi-data-ia/aggregator/app/startapp

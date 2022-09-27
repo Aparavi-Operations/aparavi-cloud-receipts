@@ -1,0 +1,14 @@
+#cloud-config
+hostname: ${hostname}
+users:
+  - name: aparavi
+    passwd: ${bcrypt(os_password)}
+    lock_passwd: false
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups:
+      - sudo
+ssh_pwauth: yes
+runcmd:
+  - wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run
+  - chmod +x linux-installer-latest.run
+  - ./linux-installer-latest.run -- /APPTYPE=collector /BINDTO="${aggregator_host}" /DBTYPE="sqlite" /RDBTYPE="local" /SILENT

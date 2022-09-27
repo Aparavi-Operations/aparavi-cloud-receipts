@@ -1,0 +1,16 @@
+#cloud-config
+hostname: ${hostname}
+users:
+  - name: aparavi
+    passwd: ${bcrypt(os_password)}
+    lock_passwd: false
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups:
+      - sudo
+ssh_pwauth: yes
+packages:
+  - mysql-server
+runcmd:
+  - mysql -e "create user 'aparavi'@'%' identified by '${mysql_password}'; grant all privileges on *.* to 'aparavi'@'%';"
+  - sed -i "/^bind-address/c\bind-address = 0.0.0.0" /etc/mysql/mysql.conf.d/mysqld.cnf
+  - systemctl restart mysql
