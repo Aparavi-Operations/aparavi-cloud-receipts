@@ -39,3 +39,6 @@ terraform.rc
 
 # Generated Helm values file. Contains sensitive info.
 values.yaml
+
+# Generated cloud-init files. Contain sensitive info.
+cloud-init-*.yml
