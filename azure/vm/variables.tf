@@ -70,6 +70,11 @@ variable "ssh_key" {
   type = string
 }
 
+variable "node_size" {
+  type    = string
+  default = "Standard_E4bs_v5"
+}
+
 variable "tags" {
   description = "Tags associated with resources"
   type        = map(string)
