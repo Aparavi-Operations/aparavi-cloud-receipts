@@ -39,3 +39,4 @@ terraform.rc
 
 # Generated Helm values file. Contains sensitive info.
 values.yaml
+aparavi-connect/azure/vm/example.tfvars

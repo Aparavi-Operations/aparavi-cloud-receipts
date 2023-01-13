@@ -77,3 +77,7 @@ variable "tags" {
   default     = {}
 }
 
+variable "node_size" {
+  type    = string
+  default = "Standard_E4bs_v5"
+}
