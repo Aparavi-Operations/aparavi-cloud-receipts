@@ -69,7 +69,7 @@ apt update
 apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
 DOCKER_COMPOSE_VERSION='2.3.0'
 NODE_EXPORTER_VERSION='1.3.1'
-MONITORING_BRANCH='OPS-1177-Aparavi-Connect-Azure'
+MONITORING_BRANCH='main'
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 add-apt-repository \
