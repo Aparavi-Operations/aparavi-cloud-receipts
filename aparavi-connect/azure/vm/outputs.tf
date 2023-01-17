@@ -45,6 +45,22 @@ output "ssh_config" {
     Hostname      ${module.aparavi-azure-vm.monitoring_private_ip}
     ProxyCommand  ssh ${var.name}-bastion -W %h:%p
     IdentityFile ~/.ssh/id_rsa
+
+  Host ${var.name}-worker1
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.workers_ip_1}
+    ProxyCommand  ssh ${var.name}-bastion -W %h:%p
+    IdentityFile ~/.ssh/id_rsa
+  Host ${var.name}-worker2
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.workers_ip_1}
+    ProxyCommand  ssh ${var.name}-bastion -W %h:%p
+    IdentityFile ~/.ssh/id_rsa
+  Host ${var.name}-worker3
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.workers_ip_1}
+    ProxyCommand  ssh ${var.name}-bastion -W %h:%p
+    IdentityFile ~/.ssh/id_rsa
   ### END Auto-gen SSH Config for ${var.name} appliance ###
     SSHCONFIG
 }
