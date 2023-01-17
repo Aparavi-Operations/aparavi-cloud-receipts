@@ -25,6 +25,9 @@ output "monitoring_private_ip" {
 output "monitoring_dashboard" {
   value = module.aparavi-azure-vm.monitoring_dashboard
 }
+output "workers_ip" {
+  value = module.aparavi-azure-vm.workers_ip
+}
 output "ssh_config" {
   value = <<SSHCONFIG
   ### START Auto-gen SSH Config for ${var.name} appliance ###

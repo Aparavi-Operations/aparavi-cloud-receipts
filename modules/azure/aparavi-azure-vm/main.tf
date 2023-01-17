@@ -58,6 +58,43 @@ systemctl enable node_exporter
 systemctl start node_exporter
 rm -rf $${TEMPORARY_DIR}
 EOF
+  worker_install  = <<EOF
+#!/bin/bash
+set -ex
+
+sudo echo Script started > /tmp/script.log
+NODE_EXPORTER_VERSION='1.3.1'
+MONITORING_BRANCH='main'
+MY_IP=`hostname -I`
+echo $${MY_IP}
+while fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1; do echo 'Waiting for release of dpkg/apt locks'; sleep 5; done;
+sleep 10
+sudo apt install --assume-yes wget
+wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run -O linux-installer-latest.run
+chmod +x linux-installer-latest.run
+./linux-installer-latest.run -- /APPTYPE=worker /BINDTO="${module.node.node_private_ip}:9745" /DBTYPE="sqlite" /RDBTYPE="local" /SILENT /NOSTART
+cat /etc/opt/aparavi-data-ia/worker.inf
+
+/opt/aparavi-data-ia/worker/app/startapp; sleep 15
+# systemctl stop aparavi-data-ia-worker.service
+# sed -i 's/localhost.aparavi.com/${module.node.node_private_ip}/g' /etc/opt/aparavi-data-ia/worker/config/config.json
+# cat /etc/opt/aparavi-data-ia/worker/config/config.json
+# systemctl start aparavi-data-ia-worker.service
+
+wget -q https://raw.githubusercontent.com/Aparavi-Operations/aparavi-cloud-receipts/$${MONITORING_BRANCH}/monitoring/templates/monitoring/node_exporter.service -O /etc/systemd/system/node_exporter.service
+useradd -U -r -s /usr/sbin/nologin node-exp
+TEMPORARY_DIR=`mktemp -d`
+wget -q https://github.com/prometheus/node_exporter/releases/download/v$${NODE_EXPORTER_VERSION}/node_exporter-$${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz -O $${TEMPORARY_DIR}/node_exporter.tar.gz
+cd $${TEMPORARY_DIR}
+tar xzf node_exporter.tar.gz
+sudo mv ./node_exporter-$${NODE_EXPORTER_VERSION}.linux-amd64/node_exporter /usr/local/bin/node_exporter
+sudo chown root:root /usr/local/bin/node_exporter
+sudo chmod 0755 /usr/local/bin/node_exporter
+systemctl daemon-reload
+systemctl enable node_exporter
+systemctl start node_exporter
+rm -rf $${TEMPORARY_DIR}
+EOF
   monitoring_install = <<EOF
 ## template: jinja
 #!/bin/bash
@@ -146,6 +183,18 @@ module "bastion" {
   tags                    = var.tags
 }
 
+locals {
+  db_access_ips = var.workers ? [
+    {ip ="${module.node.node_public_ip}", name = "appagent"},
+    {ip ="${module.workers[0].node_public_ip}", name = "worker1"},
+    {ip ="${module.workers[1].node_public_ip}", name = "worker2"},
+    {ip ="${module.workers[2].node_public_ip}", name = "worker3"}
+  ] : [
+    {ip ="${module.node.node_public_ip}", name = "appagent"}
+  ]
+  db_access_ips_zipped = values(zipmap(local.db_access_ips.*.ip, local.db_access_ips))
+}
+
 module "node_db" {
   source                  = "./modules/database"
   name                    = var.appagent ? "${var.name}-appagentdb" : "${var.name}-aggregatordb"
@@ -155,7 +204,7 @@ module "node_db" {
   db_size                 = ceil(var.collector_storage_size / 2) * 1024
   db_user                 = var.db_user
   db_password             = var.db_password
-  db_access_ip            = module.node.node_public_ip
+  db_access_ips_zipped    = local.db_access_ips_zipped
   tags                    = var.tags
 }
 
@@ -193,6 +242,26 @@ module "collector" {
   ssh_key                 = var.ssh_key
   disk_size               = var.collector_storage_size + 50
   custom_data             = base64encode(local.collector_install)
+  fw_ports = {
+    "node_forwarder" = {
+      "priority" = 210,
+      "port"     = 9100,
+    }
+  }
+  tags = var.tags
+}
+
+module "workers" {
+  count                   = var.appagent ? var.workers ? 3 : 0 : 0
+  source                  = "./modules/node"
+  name                    = "${var.name}-worker-${count.index}"
+  resource_group_location = azurerm_resource_group.main.location
+  resource_group_name     = azurerm_resource_group.main.name
+  vm_subnet               = module.network.public_subnet
+  vm_size                 = var.workers_size
+  ssh_key                 = var.ssh_key
+  disk_size               = var.workers_storage_size + 50
+  custom_data             = base64encode(local.worker_install)
   fw_ports = {
     "node_forwarder" = {
       "priority" = 210,

@@ -38,6 +38,10 @@ variable "collector_storage_size" {
   type = number
 }
 
+variable "workers_storage_size" {
+  type = number
+}
+
 variable "db_user" {
   type    = string
   default = "aparavi"

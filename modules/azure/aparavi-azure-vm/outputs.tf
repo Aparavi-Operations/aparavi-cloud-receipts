@@ -25,3 +25,6 @@ output "monitoring_private_ip" {
 output "monitoring_dashboard" {
   value = "http://${module.monitoring.node_public_ip}"
 }
+output "workers_ip" {
+  value = ["${module.workers.*.node_private_ip}"]
+}

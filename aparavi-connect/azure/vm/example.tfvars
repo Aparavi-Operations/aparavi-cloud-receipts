@@ -15,8 +15,8 @@ db_password = "supers3CretP@ssw0rd"
 
 # Collector attached storage.
 # Also used for appagent and DB storage calculation.
-collector_storage_size = 200
-
+collector_storage_size = 100
+workers_storage_size = 100
 # VM shapes
 # appagent_size = "Standard_E2bs_v5"
 

@@ -13,3 +13,7 @@ output "node_endpoint" {
 output "node_identity" {
   value = azurerm_linux_virtual_machine.node.identity
 }
+
+output "node_name" {
+  value = azurerm_linux_virtual_machine.node.name
+}

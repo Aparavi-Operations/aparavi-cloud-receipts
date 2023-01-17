@@ -10,6 +10,13 @@ variable "appagent" {
   default     = false
 }
 
+
+variable "workers" {
+  description = "Should we install workers?"
+  type        = bool
+  default     = false
+}
+
 variable "vnet_cidr" {
   description = "Virtual network common CIDR"
   type        = string
@@ -43,6 +50,9 @@ variable "collector_storage_size" {
   type = number
 }
 
+variable "workers_storage_size" {
+  type = number
+}
 variable "db_user" {
   type    = string
   default = "aparavi"
@@ -60,6 +70,11 @@ variable "node_size" {
 variable "collector_size" {
   type    = string
   default = "Standard_E4bs_v5"
+}
+
+variable "workers_size" {
+  type    = string
+  default = "Standard_DS1"
 }
 
 variable "monitoring_size" {

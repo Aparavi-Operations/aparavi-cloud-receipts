@@ -17,6 +17,10 @@ variable "resource_group_name" {
 variable "db_access_ip" {
   description = "IP address to access DB from"
   type        = string
+  default     = null
+}
+
+variable "db_access_ips_zipped" {
 }
 
 variable "db_shape" {
