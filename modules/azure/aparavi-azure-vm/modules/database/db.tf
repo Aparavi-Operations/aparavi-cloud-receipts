@@ -1,12 +1,3 @@
-resource "azurerm_mysql_firewall_rule" "db-access" {
-  count               = length(var.db_access_ips_zipped)
-  name                = "${var.name}-db-access-${var.db_access_ips_zipped[count.index].name}"
-  resource_group_name = var.resource_group_name
-  server_name         = azurerm_mysql_server.db.name
-  start_ip_address    = "${var.db_access_ips_zipped[count.index].ip}"
-  end_ip_address      = "${var.db_access_ips_zipped[count.index].ip}"
-}
-
 resource "azurerm_mysql_server" "db" {
   name                             = "${var.name}-db"
   location                         = var.resource_group_location

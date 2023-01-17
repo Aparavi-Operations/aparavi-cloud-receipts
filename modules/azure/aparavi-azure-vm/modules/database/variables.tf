@@ -20,9 +20,6 @@ variable "db_access_ip" {
   default     = null
 }
 
-variable "db_access_ips_zipped" {
-}
-
 variable "db_shape" {
   description = "Azure DB instance shape"
   type        = string

@@ -183,31 +183,6 @@ module "bastion" {
   tags                    = var.tags
 }
 
-locals {
-  db_access_ips = var.workers ? [
-    {ip ="${module.node.node_public_ip}", name = "appagent"},
-    {ip ="${module.workers[0].node_public_ip}", name = "worker1"},
-    {ip ="${module.workers[1].node_public_ip}", name = "worker2"},
-    {ip ="${module.workers[2].node_public_ip}", name = "worker3"}
-  ] : [
-    {ip ="${module.node.node_public_ip}", name = "appagent"}
-  ]
-  db_access_ips_zipped = values(zipmap(local.db_access_ips.*.ip, local.db_access_ips))
-}
-
-module "node_db" {
-  source                  = "./modules/database"
-  name                    = var.appagent ? "${var.name}-appagentdb" : "${var.name}-aggregatordb"
-  resource_group_location = azurerm_resource_group.main.location
-  resource_group_name     = azurerm_resource_group.main.name
-  db_shape                = var.db_shape
-  db_size                 = ceil(var.collector_storage_size / 2) * 1024
-  db_user                 = var.db_user
-  db_password             = var.db_password
-  db_access_ips_zipped    = local.db_access_ips_zipped
-  tags                    = var.tags
-}
-
 module "node" {
   source                  = "./modules/node"
   name                    = var.appagent ? "${var.name}-appagent" : "${var.name}-aggregator"
@@ -269,6 +244,34 @@ module "workers" {
     }
   }
   tags = var.tags
+}
+
+module "node_db" {
+  source                  = "./modules/database"
+  name                    = var.appagent ? "${var.name}-appagentdb" : "${var.name}-aggregatordb"
+  resource_group_location = azurerm_resource_group.main.location
+  resource_group_name     = azurerm_resource_group.main.name
+  db_shape                = var.db_shape
+  db_size                 = ceil(var.collector_storage_size / 2) * 1024
+  db_user                 = var.db_user
+  db_password             = var.db_password
+  tags                    = var.tags
+}
+
+resource "azurerm_mysql_firewall_rule" "db-access" {
+  for_each = var.workers ? {
+    appagent = "${module.node.node_public_ip}"
+    worker1 = "${module.workers[0].node_public_ip}"
+    worker2 = "${module.workers[1].node_public_ip}"
+    worker3 = "${module.workers[2].node_public_ip}"
+  } : {
+    appagent = "${module.node.node_public_ip}"
+  }
+  name                = "${var.name}-db-access-${each.key}"
+  resource_group_name = azurerm_resource_group.main.name
+  server_name         = module.node_db.server_name
+  start_ip_address    = "${each.value}"
+  end_ip_address      = "${each.value}"
 }
 
 module "monitoring" {
