@@ -37,3 +37,6 @@ output "workers_ip_2" {
 output "workers_ip_3" {
   value = var.workers ? "${module.workers[2].node_private_ip}": "null"
 }
+output "rds_password" {
+  value = module.node_db.rds_password
+}

@@ -12,7 +12,7 @@ sleep 10
 sudo apt install --assume-yes wget
 wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run 
 chmod +x linux-installer-latest.run
-./linux-installer-latest.run -- /APPTYPE=${local.aggregator_type} /BINDTO="${var.platform}" /DBTYPE="mysql" /DBHOST="${module.node_db.endpoint}" /DBPORT="3306" /DBUSER="${var.db_user}@${module.node_db.endpoint}" /DBPSWD="${var.db_password}" /SILENT /NOSTART
+./linux-installer-latest.run -- /APPTYPE=${local.aggregator_type} /BINDTO="${var.platform}" /DBTYPE="mysql" /DBHOST="${module.node_db.endpoint}" /DBPORT="3306" /DBUSER="${var.db_user}@${module.node_db.endpoint}" /DBPSWD="${module.node_db.rds_password}" /SILENT /NOSTART
 sed -i s/'ModuleArg="--moduleType=$AppType"'/'ModuleArg="--moduleType=$AppType --config.node.parentObjectId=${var.parent_id}"'/g /opt/aparavi-data-ia/${local.aggregator_type}/app/support/linux/startapp.sh
 /opt/aparavi-data-ia/${local.aggregator_type}/app/startapp
 
@@ -246,6 +246,17 @@ module "workers" {
   tags = var.tags
 }
 
+locals {
+  db_access_ips = var.workers ? {
+    appagent = "${module.node.node_public_ip}"
+    worker1 = "${module.workers[0].node_public_ip}"
+    worker2 = "${module.workers[1].node_public_ip}"
+    worker3 = "${module.workers[2].node_public_ip}"
+  } : {
+    appagent = "${module.node.node_public_ip}"
+  }
+}
+
 module "node_db" {
   source                  = "./modules/database"
   name                    = var.appagent ? "${var.name}-appagentdb" : "${var.name}-aggregatordb"
@@ -254,24 +265,8 @@ module "node_db" {
   db_shape                = var.db_shape
   db_size                 = ceil(var.collector_storage_size / 2) * 1024
   db_user                 = var.db_user
-  db_password             = var.db_password
+  db_access_ips           = local.db_access_ips
   tags                    = var.tags
-}
-
-resource "azurerm_mysql_firewall_rule" "db-access" {
-  for_each = var.workers ? {
-    appagent = "${module.node.node_public_ip}"
-    worker1 = "${module.workers[0].node_public_ip}"
-    worker2 = "${module.workers[1].node_public_ip}"
-    worker3 = "${module.workers[2].node_public_ip}"
-  } : {
-    appagent = "${module.node.node_public_ip}"
-  }
-  name                = "${var.name}-db-access-${each.key}"
-  resource_group_name = azurerm_resource_group.main.name
-  server_name         = module.node_db.server_name
-  start_ip_address    = "${each.value}"
-  end_ip_address      = "${each.value}"
 }
 
 module "monitoring" {

@@ -64,3 +64,7 @@ output "ssh_config" {
   ### END Auto-gen SSH Config for ${var.name} appliance ###
     SSHCONFIG
 }
+output "rds_password" {
+  value     = module.aparavi-azure-vm.rds_password
+  sensitive = true
+}

@@ -47,10 +47,6 @@ variable "db_user" {
   default = "aparavi"
 }
 
-variable "db_password" {
-  type = string
-}
-
 variable "aggregator_size" {
   type    = string
   default = "Standard_E4bs_v5"

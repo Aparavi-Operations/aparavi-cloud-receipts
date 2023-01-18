@@ -58,10 +58,6 @@ variable "db_user" {
   default = "aparavi"
 }
 
-variable "db_password" {
-  type = string
-}
-
 variable "node_size" {
   type    = string
   default = "Standard_E4bs_v5"

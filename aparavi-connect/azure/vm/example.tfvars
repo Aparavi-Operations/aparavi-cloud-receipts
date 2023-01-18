@@ -7,16 +7,17 @@ name = "azuretest"
 # Azure location
 location = "eastus2"
 
+#Address of the platform to connect to.
+platform = "preview.aparavi.com"
+
 # Node id in platform hierarchy to attach resources to
 parent_id = "bbbbbbbb-bbbb-bbbb-bbbb-blpolezhaeva"
-
-# appagent admin database password
-db_password = "supers3CretP@ssw0rd"
 
 # Collector attached storage.
 # Also used for appagent and DB storage calculation.
 collector_storage_size = 100
 workers_storage_size = 100
+
 # VM shapes
 # appagent_size = "Standard_E2bs_v5"
 
