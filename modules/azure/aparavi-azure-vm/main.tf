@@ -73,13 +73,7 @@ sudo apt install --assume-yes wget
 wget https://aparavi.jfrog.io/artifactory/aparavi-installers-public/linux-installer-latest.run -O linux-installer-latest.run
 chmod +x linux-installer-latest.run
 ./linux-installer-latest.run -- /APPTYPE=worker /BINDTO="${module.node.node_private_ip}:9745" /DBTYPE="sqlite" /RDBTYPE="local" /SILENT /NOSTART
-cat /etc/opt/aparavi-data-ia/worker.inf
-
-/opt/aparavi-data-ia/worker/app/startapp; sleep 15
-# systemctl stop aparavi-data-ia-worker.service
-# sed -i 's/localhost.aparavi.com/${module.node.node_private_ip}/g' /etc/opt/aparavi-data-ia/worker/config/config.json
-# cat /etc/opt/aparavi-data-ia/worker/config/config.json
-# systemctl start aparavi-data-ia-worker.service
+/opt/aparavi-data-ia/worker/app/startapp
 
 wget -q https://raw.githubusercontent.com/Aparavi-Operations/aparavi-cloud-receipts/$${MONITORING_BRANCH}/monitoring/templates/monitoring/node_exporter.service -O /etc/systemd/system/node_exporter.service
 useradd -U -r -s /usr/sbin/nologin node-exp
