@@ -16,7 +16,7 @@ To change this configuration you can set variables `appagent` and `workers` in `
    `terraform init`
 
 3. Run Terraform   
-   `terraform apply -var-file=<your_tfvars_file>`
+   `terraform apply -var-file=example.tfvars`
 
 4. Use output information to connect to monitoring dashboard and instances   
 
@@ -24,7 +24,7 @@ To change this configuration you can set variables `appagent` and `workers` in `
 
 ## Destroying
 
-`terraform destroy -var-file=<your_tfvars_file>`   
+`terraform destroy -var-file=example.tfvars`   
 It can be required to run destroy multiple times due to timeouts and async deletion.   
 
 **Note** in some cases you need to run `terraform destroy` several times to destroy everything due of normal behavior of Azure terraform provider.
