@@ -1,5 +1,5 @@
 # Azure VM terraform deploy code
-By default tit will create Application in this configuration:
+By default it will create Application in this configuration:
 
 1. AppAgent (Aggregator + Collector on one instance)
 2. Three workers connected to the AppAgent
