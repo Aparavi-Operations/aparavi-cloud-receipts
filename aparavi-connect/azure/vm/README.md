@@ -27,4 +27,4 @@ To change this configuration you can set variables `appagent` and `workers` in `
 `terraform destroy -var-file=example.tfvars`   
 It can be required to run destroy multiple times due to timeouts and async deletion.   
 
-**Note** in some cases you need to run `terraform destroy` several times to destroy everything due of normal behavior of Azure terraform provider.
+**Note** in some cases you need to run `terraform destroy -var-file=example.tfvars` several times to destroy everything due of normal behavior of Azure terraform provider.
