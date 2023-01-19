@@ -31,22 +31,22 @@
       targets:
         - '<<monitoring_ip>>:9100'
     - labels:
-        service: 'worker_1'
-        component: 'worker'
+        service: 'aparavi'
+        component: 'worker1'
         subcomponent: 'app'
         env: '<<deployment>>'
       targets:
         - '<<worker_1_ip>>:9100'
     - labels:
-        service: 'worker_2'
-        component: 'worker'
+        service: 'aparavi'
+        component: 'worker2'
         subcomponent: 'app'
         env: '<<deployment>>'
       targets:
         - '<<worker_2_ip>>:9100'
     - labels:
-        service: 'worker_3'
-        component: 'worker'
+        service: 'aparavi'
+        component: 'worker3'
         subcomponent: 'app'
         env: '<<deployment>>'
       targets:

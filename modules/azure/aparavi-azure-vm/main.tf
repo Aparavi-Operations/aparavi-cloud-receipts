@@ -115,10 +115,9 @@ systemctl enable --now docker
 wget -q https://github.com/docker/compose/releases/download/v$${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
 chmod 0750 /usr/local/bin/docker-compose
 
-
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
 cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
-cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
+cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/; cd /root/
 sed -i 's/<<deployment>>/${azurerm_resource_group.main.name}/g' `find . -type f -name 'scrape_azure*.yml'`
 if [[ ${local.aggregator_type} -eq "aggregator-collector" ]]; then
   sed -i 's/<<appagent_ip>>/${module.node.node_private_ip}/g' `find . -type f -name 'scrape_azure*.yml'`
