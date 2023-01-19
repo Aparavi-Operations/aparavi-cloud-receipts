@@ -100,7 +100,7 @@ apt update
 apt install --assume-yes software-properties-common git apt-transport-https ca-certificates gnupg2 curl wget
 DOCKER_COMPOSE_VERSION='2.3.0'
 NODE_EXPORTER_VERSION='1.3.1'
-MONITORING_BRANCH='main'
+MONITORING_BRANCH='OPS-2090'
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 add-apt-repository \
@@ -115,17 +115,18 @@ systemctl enable --now docker
 wget -q https://github.com/docker/compose/releases/download/v$${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
 chmod 0750 /usr/local/bin/docker-compose
 
+
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
 cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/
-sed -i 's/<<deployment>>/${azurerm_resource_group.main.name}/g' /root/monitoring/vmagent/scrape_azure.yml
+sed -i 's/<<deployment>>/${azurerm_resource_group.main.name}/g' `find . -type f -name 'scrape_azure*.yml'`
 if [[ ${local.aggregator_type} -eq "aggregator-collector" ]]; then
-  sed -i 's/<<appagent_ip>>/${module.node.node_private_ip}/g' /root/monitoring/vmagent/scrape_azure*.yml
+  sed -i 's/<<appagent_ip>>/${module.node.node_private_ip}/g' `find . -type f -name 'scrape_azure*.yml'`
 elif [[ ${local.aggregator_type} -eq "aggregator" ]]; then
-  sed -i 's/<<aggregator_ip>>/${module.node.node_private_ip}/g' /root/monitoring/vmagent/scrape_azure*.yml
-  sed -i 's/<<collector_ip>>/${local.collector_ip}/g' /root/monitoring/vmagent/scrape_azure*.yml
+  sed -i 's/<<aggregator_ip>>/${module.node.node_private_ip}/g' `find . -type f -name 'scrape_azure*.yml'`
+  sed -i 's/<<collector_ip>>/${local.collector_ip}/g' `find . -type f -name 'scrape_azure*.yml'`
 fi
-sed -i 's/<<monitoring_ip>>/{{ ds.meta_data.imds.network.interface[0].ipv4.ipAddress[0].privateIpAddress }}/g' /root/monitoring/vmagent/scrape_azure*.yml
+sed -i 's/<<monitoring_ip>>/{{ ds.meta_data.imds.network.interface[0].ipv4.ipAddress[0].privateIpAddress }}/g' `find . -type f -name 'scrape_azure*.yml'` 
 if [[ ${var.workers} ]]; then
   rm /root/monitoring/vmagent/scrape_azure.yml
   sed -i 's/<<worker_1_ip>>/${module.workers[0].node_private_ip}/g' /root/monitoring/vmagent/scrape_azure_workers.yml
