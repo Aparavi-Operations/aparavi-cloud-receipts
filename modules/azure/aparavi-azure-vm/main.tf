@@ -111,10 +111,8 @@ add-apt-repository \
 apt update
 apt -y install docker-ce docker-ce-cli containerd.io
 systemctl enable --now docker
-
 wget -q https://github.com/docker/compose/releases/download/v$${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -O /usr/local/bin/docker-compose
 chmod 0750 /usr/local/bin/docker-compose
-
 cd /root && git clone https://github.com/Aparavi-Operations/aparavi-cloud-receipts.git
 cd /root/aparavi-cloud-receipts && git checkout $${MONITORING_BRANCH}
 cp -r /root/aparavi-cloud-receipts/monitoring/templates/monitoring /root/; cd /root/
@@ -140,7 +138,6 @@ cp /root/monitoring/aparavi-monitoring.service /etc/systemd/system/aparavi-monit
 systemctl daemon-reload
 systemctl enable aparavi-monitoring
 systemctl start aparavi-monitoring
-
 useradd -U -r -s /usr/sbin/nologin node-exp
 TEMPORARY_DIR=`mktemp -d`
 wget -q https://github.com/prometheus/node_exporter/releases/download/v$${NODE_EXPORTER_VERSION}/node_exporter-$${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz -O $${TEMPORARY_DIR}/node_exporter.tar.gz
