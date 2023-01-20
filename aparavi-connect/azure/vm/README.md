@@ -3,7 +3,7 @@ By default it will create Application in this configuration:
 
 1. AppAgent (Aggregator + Collector on one instance)
 2. Three workers connected to the AppAgent
-3. Monitoring solition (Graphana dashboard, NodeExportes, vmagent, vmalert, and alermanager)
+3. Monitoring solution (Graphana dashboard, NodeExportes, vmagent, vmalert, and alermanager)
 
 To change this configuration you can set variables `appagent` and `workers` in `main.tf` file to `false`.
 
