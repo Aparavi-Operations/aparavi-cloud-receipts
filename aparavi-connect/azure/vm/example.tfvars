@@ -18,8 +18,5 @@ parent_id = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
 collector_storage_size = 100
 workers_storage_size = 100
 
-# VM shapes
-# appagent_size = "Standard_E2bs_v5"
-
 # SSH key for aparavi user on all VMs
 ssh_key = "ssh-rsa XXXXX...."
