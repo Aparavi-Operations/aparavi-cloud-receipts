@@ -1,11 +1,15 @@
+resource "random_password" "rds_password" {
+  length  = 24
+  special = false
+}
 resource "azurerm_mysql_firewall_rule" "db-access" {
-  name                = "${var.name}-db-access"
+  for_each            = var.db_access_ips
+  name                = "${var.name}-db-access-${each.key}"
   resource_group_name = var.resource_group_name
   server_name         = azurerm_mysql_server.db.name
-  start_ip_address    = var.db_access_ip
-  end_ip_address      = var.db_access_ip
+  start_ip_address    = "${each.value}"
+  end_ip_address      = "${each.value}"
 }
-
 resource "azurerm_mysql_server" "db" {
   name                             = "${var.name}-db"
   location                         = var.resource_group_location
@@ -16,7 +20,7 @@ resource "azurerm_mysql_server" "db" {
   ssl_minimal_tls_version_enforced = "TLSEnforcementDisabled"
 
   administrator_login          = "aparavi"
-  administrator_login_password = var.db_password
+  administrator_login_password = random_password.rds_password.result
 
   sku_name   = var.db_shape
   storage_mb = var.db_size

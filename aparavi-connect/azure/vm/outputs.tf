@@ -25,3 +25,46 @@ output "monitoring_private_ip" {
 output "monitoring_dashboard" {
   value = module.aparavi-azure-vm.monitoring_dashboard
 }
+output "workers_ip" {
+  value = module.aparavi-azure-vm.workers_ip
+}
+output "ssh_config" {
+  value = <<SSHCONFIG
+  ### START Auto-gen SSH Config for ${var.name} appliance ###
+  Host ${var.name}-bastion
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.bastion_ip}
+    IdentityFile ~/.ssh/id_rsa
+  Host ${var.name}-node
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.node_private_ip}
+    ProxyCommand  ssh ${var.name}-bastion -W %h:%p
+    IdentityFile ~/.ssh/id_rsa
+  Host ${var.name}-monitoring
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.monitoring_private_ip}
+    ProxyCommand  ssh ${var.name}-bastion -W %h:%p
+    IdentityFile ~/.ssh/id_rsa
+
+  Host ${var.name}-worker1
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.workers_ip_1}
+    ProxyCommand  ssh ${var.name}-bastion -W %h:%p
+    IdentityFile ~/.ssh/id_rsa
+  Host ${var.name}-worker2
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.workers_ip_2}
+    ProxyCommand  ssh ${var.name}-bastion -W %h:%p
+    IdentityFile ~/.ssh/id_rsa
+  Host ${var.name}-worker3
+    User          aparavi
+    Hostname      ${module.aparavi-azure-vm.workers_ip_3}
+    ProxyCommand  ssh ${var.name}-bastion -W %h:%p
+    IdentityFile ~/.ssh/id_rsa
+  ### END Auto-gen SSH Config for ${var.name} appliance ###
+    SSHCONFIG
+}
+output "rds_password" {
+  value     = module.aparavi-azure-vm.rds_password
+  sensitive = true
+}

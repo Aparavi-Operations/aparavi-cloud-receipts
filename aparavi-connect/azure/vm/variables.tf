@@ -38,13 +38,13 @@ variable "collector_storage_size" {
   type = number
 }
 
+variable "workers_storage_size" {
+  type = number
+}
+
 variable "db_user" {
   type    = string
   default = "aparavi"
-}
-
-variable "db_password" {
-  type = string
 }
 
 variable "aggregator_size" {
@@ -77,3 +77,7 @@ variable "tags" {
   default     = {}
 }
 
+variable "node_size" {
+  type    = string
+  default = "Standard_E4bs_v5"
+}

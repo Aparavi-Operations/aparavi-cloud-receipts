@@ -14,9 +14,8 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "db_access_ip" {
-  description = "IP address to access DB from"
-  type        = string
+variable "db_access_ips" {
+  description = "IP addresses to access DB from"
 }
 
 variable "db_shape" {
@@ -33,11 +32,6 @@ variable "db_user" {
   description = "DB superadmin username"
   type        = string
   default     = "aparavi"
-}
-
-variable "db_password" {
-  description = "DB superadmin password"
-  type        = string
 }
 
 variable "tags" {
