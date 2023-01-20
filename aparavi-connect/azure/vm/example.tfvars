@@ -2,7 +2,7 @@
 vnet_cidr = "10.240.8.0/21"
 
 # Common name prefix for resources
-name = "azuretest"
+name = "azure"
 
 # Azure location
 location = "eastus2"
