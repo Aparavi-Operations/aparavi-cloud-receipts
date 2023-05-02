@@ -11,6 +11,11 @@ variable "subnet_id" {
   type = string
 }
 
+variable "elastic_ip" {
+  type    = string
+  default = ""
+}
+
 variable "associate_public_ip" {
   type    = bool
   default = true
@@ -35,7 +40,7 @@ variable "tags" {
   type = map(string)
 }
 
-variable "subcomponent" {
+variable "component" {
   type = string
 }
 

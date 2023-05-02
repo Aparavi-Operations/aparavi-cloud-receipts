@@ -1,5 +1,5 @@
 resource "aws_security_group" "rds" {
-  name        = "${var.name}-rds}"
+  name        = "${var.name}-rds"
   description = "${var.name} - Set of rules for RDS access"
   vpc_id      = var.vpc_id
 

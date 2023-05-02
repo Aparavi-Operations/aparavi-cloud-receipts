@@ -90,8 +90,39 @@ variable "parent_object" {
   type = string
 }
 
+variable "platform_endpoint" {
+  type    = string
+  default = "preview.aparavi.com"
+}
+
+variable "logstash_endpoint" {
+  type    = string
+  default = "logstash-hz.paas.aparavi.com"
+}
 
 variable "tags" {
   type = map(string)
 }
 
+variable "subnet_id" {
+  description = "Existing subnet to create instance in"
+  type        = string
+  default     = ""
+}
+
+variable "db_subnet_ids" {
+  description = "Existing subnet(s) to create db subnets in"
+  type        = list(string)
+  default     = []
+}
+
+variable "db_subnet_group" {
+  description = "Existing db subnet group"
+  type        = string
+  default     = ""
+}
+
+variable "appagt_elastic_ip" {
+  type    = string
+  default = ""
+}

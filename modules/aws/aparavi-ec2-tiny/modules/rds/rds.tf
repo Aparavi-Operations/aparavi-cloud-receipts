@@ -1,16 +1,6 @@
-resource "aws_db_subnet_group" "rds_subnet_group" {
-  name       = var.name
-  subnet_ids = var.subnet_ids
-
-  tags = merge(var.tags, {
-    Name         = var.name
-    subcomponent = var.subcomponent
-  })
-}
-
 resource "aws_db_instance" "rds" {
   identifier             = var.name
-  db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.id
+  db_subnet_group_name   = var.subnet_group
   allocated_storage      = var.size
   port                   = var.mysql_port
   engine                 = "mysql"
@@ -25,6 +15,7 @@ resource "aws_db_instance" "rds" {
 
   tags = merge(var.tags, {
     Name         = var.name
-    subcomponent = var.subcomponent
+    component    = var.component
+    subcomponent = "rds"
   })
 }

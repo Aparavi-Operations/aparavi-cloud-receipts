@@ -11,13 +11,13 @@ variable "tags" {
   type = map(string)
 }
 
-variable "subcomponent" {
+variable "component" {
   type = string
 }
 
 # Database variables
-variable "subnet_ids" {
-  type = list(string)
+variable "subnet_group" {
+  type = string
 }
 
 variable "size" {

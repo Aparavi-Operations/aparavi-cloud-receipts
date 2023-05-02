@@ -1,3 +1,14 @@
+data "aws_eip" "eip" {
+  count     = var.elastic_ip != "" ? 1 : 0
+  public_ip = var.elastic_ip
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  count         = var.elastic_ip != "" ? 1 : 0
+  instance_id   = aws_instance.host.id
+  allocation_id = join("", data.aws_eip.eip[*].id)
+}
+
 resource "aws_instance" "host" {
   subnet_id                   = var.subnet_id
   associate_public_ip_address = var.associate_public_ip
@@ -25,6 +36,7 @@ EOF
 
   tags = merge(var.tags, {
     Name         = var.name
-    subcomponent = var.subcomponent
+    component    = var.component
+    subcomponent = "app"
   })
 }
