@@ -9,9 +9,7 @@ resource "aws_security_group" "ec2" {
     to_port     = 9104
     protocol    = "tcp"
     cidr_blocks = [
-      "52.54.1.79/32",
-      "34.231.218.142/32",
-      "52.54.237.132/32"
+      "3.223.232.7/32",
     ]
   }
   ingress {
@@ -20,9 +18,7 @@ resource "aws_security_group" "ec2" {
     to_port     = 9100
     protocol    = "tcp"
     cidr_blocks = [
-      "52.54.1.79/32",
-      "34.231.218.142/32",
-      "52.54.237.132/32"
+      "3.223.232.7/32",
     ]
   }
   ingress {
