@@ -39,7 +39,7 @@ module "platform" {
   init_repo_org       = var.platform_init_repo_org
   init_repo_branch    = var.platform_init_repo_branch
   init_script         = var.platform_init_script
-  init_options        = var.platform_init_options != "" ? var.platform_init_options : "-n platform-only -h ${module.platform-rds.connect_address} -f ${var.platform_mysql_port} -m ${var.platform_mysql_username} -j '${var.platform_mysql_password}' -p ${var.fqdn_address}"
+  init_options        = var.platform_init_options != "" ? var.platform_init_options : "-n platform-only -h ${module.platform-rds.connect_address} -f ${var.platform_mysql_port} -m ${var.platform_mysql_username} -j '${var.platform_mysql_password}' -p ${var.fqdn_address} -t ${var.gh_token}"
   key_name            = var.key_name
   elastic_ip          = var.platform_elastic_ip
   gh_token            = var.gh_token

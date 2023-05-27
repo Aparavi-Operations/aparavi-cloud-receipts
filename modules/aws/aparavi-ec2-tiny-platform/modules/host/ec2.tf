@@ -32,9 +32,7 @@ curl -L -o /root/${var.init_repo}-${var.init_repo_branch}.zip https://${var.gh_t
 apt update && apt install -y unzip
 unzip /root/${var.init_repo}-${var.init_repo_branch}.zip "${var.init_repo}-${var.init_repo_branch}/misc/aparavi_installer_ng/*" -d /root
 rm /root/${var.init_repo}-${var.init_repo_branch}.zip
-export GH_TOKEN=${var.gh_token}
 /root/${var.init_repo}-${var.init_repo_branch}/misc/aparavi_installer_ng/${var.init_script} ${var.init_options}
-unset GH_TOKEN
 EOF
 
   tags = merge(var.tags, {
